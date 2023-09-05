@@ -11,16 +11,20 @@
             
                         <h2 class="main__title">Inicio de Sesión</h2>
             
-                        <form class="main__form">
-            
-                            <input type="text" placeholder="Usuario" class="main__input">
-            
-                            <input type="password" placeholder="Contraseña" class="main__input">
+                        <form runat="server" class="main__form">
+                        
+                            
+                            <asp:TextBox ID="txtUsuario" runat="server" class="main__input" placeholder="Usuario"></asp:TextBox>
+                            <%--<input type="text" placeholder="Usuario" class="main__input">--%>
+                            
+                            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" class="main__input" placeholder="Contraseña"></asp:TextBox>
+                       
+                            <%--<input type="password" placeholder="Contraseña" class="main__input">--%>
 
                             <p class="main__paragraph">Olvido su contraseña?</p>
             
-                            <input type="submit" value="Ingresar" class="main__input main__input--send">
-            
+                            <%--<input type="submit" value="Ingresar" class="main__input main__input--send">--%>
+                            <asp:Button ID="btnSignIn" runat="server" Text="Ingresar" class="main__input main__input--send" OnClick="btnSignIn_Click" />
                         </form>
             
                         
