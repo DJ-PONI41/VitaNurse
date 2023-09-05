@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NurseProjecDAO", "NurseProjecDAO\NurseProjecDAO.csproj", "{40A14E5C-389A-4C40-AD23-8DE49FF68427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NurseProjectWEB", "NurseProjectWEB\NurseProjectWEB.csproj", "{0799AC5F-ED37-4AA5-B85E-F3AD89FFB4BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40A14E5C-389A-4C40-AD23-8DE49FF68427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A14E5C-389A-4C40-AD23-8DE49FF68427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A14E5C-389A-4C40-AD23-8DE49FF68427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A14E5C-389A-4C40-AD23-8DE49FF68427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0799AC5F-ED37-4AA5-B85E-F3AD89FFB4BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0799AC5F-ED37-4AA5-B85E-F3AD89FFB4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0799AC5F-ED37-4AA5-B85E-F3AD89FFB4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0799AC5F-ED37-4AA5-B85E-F3AD89FFB4BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2CE34619-2E0B-4035-95BF-18E6B6E7F099}
+	EndGlobalSection
+EndGlobal
