@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CrudPaciente.aspx" />
     <Content Include="Css\Styles.css" />
     <Content Include="Css\Styles_login.css" />
     <Content Include="Home.aspx" />
@@ -82,6 +83,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrudPaciente.aspx.cs">
+      <DependentUpon>CrudPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrudPaciente.aspx.designer.cs">
+      <DependentUpon>CrudPaciente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

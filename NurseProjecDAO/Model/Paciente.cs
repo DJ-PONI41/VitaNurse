@@ -26,6 +26,9 @@ namespace NurseProjecDAO.Model
             
             Historial = historial;
         }
-
+        public Paciente()
+        {
+            
+        }
     }
 }

@@ -14,11 +14,37 @@ namespace NurseProjecDAO.Implementacion
     {
         public int Delete(Paciente t)
         {
-            throw new NotImplementedException();
+            query = @"UPDATE Person SET status = 0, lastUpdate = CURRENT_TIMESTAMP, userID = @userID
+              WHERE id = @idPerson;
+              UPDATE Paciente SET status = 0, lastUpdate = CURRENT_TIMESTAMP, userID = @userID
+              WHERE id = @idPaciente
+               UPDATE [User] SET status = 0, lastUpdate = CURRENT_TIMESTAMP, userID = @userID
+              WHERE id = @idUser";
+
+
+
+
+            SqlCommand command = CreateBasicCommand(query);
+            command.Parameters.AddWithValue("@idPerson", t.Id);
+            command.Parameters.AddWithValue("@idPaciente", t.Id);
+            command.Parameters.AddWithValue("@idUser", t.Id);
+
+            try
+            {
+                return ExecuteBasicCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public int Insert(Paciente t)
         {
+                   
+
+
             query = @"INSERT INTO Person(names,lastName,secondLastName,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
 		            VALUES(@names,@lastName,@secondLastName,@birthdate,@phone,@ci,@email,@addres,@latitude,@longitude,@municipio)";
 
@@ -49,9 +75,73 @@ namespace NurseProjecDAO.Implementacion
             return ExecuteNBasicCommand(commands);
         }
 
+
+        public Paciente Get(short Id)
+        {
+            Paciente t = null;
+            string query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
+                        P.email AS Correo,P.addres Direccion,P.latitude,P.longitude,E.historial AS 'Historial Medico'
+                        FROM Person P 
+                        INNER JOIN Paciente E ON P.id = E.id
+						
+                        WHERE P.id = @id";
+
+            SqlCommand command = CreateBasicCommand(query);
+            command.Parameters.AddWithValue("@id", Id);
+
+            DataTable table = ExecuteDataTableCommand(command);
+            if (table.Rows.Count > 0)
+            {
+                t = new Paciente();
+                t.Id = short.Parse(table.Rows[0]["id"].ToString());
+                t.Name = table.Rows[0]["Nombre"].ToString();
+                t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
+                t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
+                t.Ci = table.Rows[0]["CI"].ToString();
+                t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];
+               
+                t.Phone = table.Rows[0]["Celular"].ToString();
+                t.Email = table.Rows[0]["Correo"].ToString();
+                t.Addres = table.Rows[0]["Direccion"].ToString();
+                t.Latitude = table.Rows[0]["latitude"].ToString();
+                t.Longitude = table.Rows[0]["longitude"].ToString();
+                t.Historial = table.Rows[0]["Historial Medico"].ToString();
+            }
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return t;
+
+        }
+
+
+
         public DataTable Select()
         {
-            throw new NotImplementedException();
+            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
+                        P.email AS Correo,P.addres Direccion,U.role AS Rol,P.latitude,P.longitude,E.historial AS 'Historial Medico'
+                        FROM Person P 
+                        INNER JOIN Paciente E ON P.id = E.id
+						INNER JOIN [User] U ON E.id = U.id
+                        WHERE P.status = 1 ";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public int Update(Paciente t)
