@@ -25,7 +25,7 @@ namespace NurseProjectWEB
                 if (userRole != "Enfermera")
                 {
                     // El usuario no tiene el rol adecuado, redirigir a una página de acceso no autorizado o a la página principal
-                    Response.Redirect("Nurse_home.aspx");
+                    Response.Redirect("Login.aspx");
                 }
             }
         }

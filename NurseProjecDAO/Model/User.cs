@@ -18,17 +18,17 @@ namespace NurseProjecDAO
         public string Role { get; set; }
 
 
-        public User(int id,string name, string lastName, string secondLastName, string photo, string birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string nameUser, string password, string role)
-        : base(name, lastName, secondLastName, photo, birthdate, phone, ci, email, addres, latitude, longitude, municipio)
-        {
-            Id = id; 
-            NameUser = nameUser;
-            Password = password;
-            Role = role;
-        }
+        //public User(int id,string name, string lastName, string secondLastName/*, string photo*/, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string nameUser, string password, string role)
+        //: base(name, lastName, secondLastName/*, photo*/, birthdate, phone, ci, email, addres, latitude, longitude, municipio)
+        //{
+        //    Id = id; 
+        //    NameUser = nameUser;
+        //    Password = password;
+        //    Role = role;
+        //}
 
-        public User(string name, string lastName, string secondLastName, string photo, string birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string nameUser, string password, string role)
-         :base( name,  lastName,  secondLastName,  photo,  birthdate,  phone,  ci,  email,  addres,  latitude,  longitude,  municipio)
+        public User(string name, string lastName, string secondLastName/*/*, string photo*/, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string nameUser, string password, string role)
+         :base( name,  lastName,  secondLastName/*,  photo*/,  birthdate,  phone,  ci,  email,  addres,  latitude,  longitude,  municipio)
         {
             NameUser = nameUser;
             Password = password;

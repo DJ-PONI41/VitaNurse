@@ -29,6 +29,7 @@ namespace NurseProjecDAO.Implementacion
             return command;
         }
 
+        //Herencia para 2 listas 
         public List<SqlCommand> Create2BasicCommand(string sql1, string sql2)
         {
             List<SqlCommand> commands = new List<SqlCommand>();
@@ -42,6 +43,26 @@ namespace NurseProjecDAO.Implementacion
 
             return commands;
         }
+
+
+        //Herencia para 3 listas
+        public List<SqlCommand> Create3BasicCommand(string sql1, string sql2 ,string sql3)
+        {
+            List<SqlCommand> commands = new List<SqlCommand>();
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            SqlCommand command1 = new SqlCommand(sql1, connection);
+            commands.Add(command1);
+
+            SqlCommand command2 = new SqlCommand(sql2, connection);
+            commands.Add(command2);
+
+            SqlCommand command3 = new SqlCommand(sql3, connection);
+            commands.Add(command3);
+
+            return commands;
+        }
+
 
         // TRANSACCIONES
 

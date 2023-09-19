@@ -78,6 +78,7 @@
     <Content Include="Images\undraw_medical_care_movn.svg" />
     <Content Include="Login.aspx" />
     <Content Include="Nurse_home.aspx" />
+    <Content Include="RegisterPaciente.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,13 @@
     </Compile>
     <Compile Include="Nurse_home.Master.designer.cs">
       <DependentUpon>Nurse_home.Master</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterPaciente.aspx.cs">
+      <DependentUpon>RegisterPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterPaciente.aspx.designer.cs">
+      <DependentUpon>RegisterPaciente.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

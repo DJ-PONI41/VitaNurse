@@ -1,4 +1,5 @@
 ﻿using NurseProjecDAO.Interfaz;
+using NurseProjecDAO.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace NurseProjecDAO.Implementacion
 {
-    public class UserImpl : BaseImpl, IUser
+    public class PacienteImpl : BaseImpl, IPaciente
     {
-        public int Delete(User t)
+        public int Delete(Paciente t)
         {
             throw new NotImplementedException();
         }
 
-        public int Insert(User t)
+        public int Insert(Paciente t)
         {
             query = @"INSERT INTO Person(names,lastName,secondLastName,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
 		            VALUES(@names,@lastName,@secondLastName,@birthdate,@phone,@ci,@email,@addres,@latitude,@longitude,@municipio)";
 
-            string query2 = @"INSERT INTO [User](id,nameUser,password,role)
-			                Values(@id,@nameUser,HASHBYTES('MD5',@password),@role)";
+            string query2 = @"INSERT INTO Paciente(id,historial)
+			                Values(@id,@historial)";
 
             List<SqlCommand> commands = Create2BasicCommand(query, query2);
 
@@ -38,16 +39,12 @@ namespace NurseProjecDAO.Implementacion
             commands[0].Parameters.AddWithValue("@latitude", t.Latitude);
             commands[0].Parameters.AddWithValue("@longitude", t.Longitude);
             commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
-            
+
 
             short id = short.Parse(GetGenerateIDTable("Person"));
 
             commands[1].Parameters.AddWithValue("@id", id);
-            commands[1].Parameters.AddWithValue("@nameUser", t.NameUser);
-            commands[1].Parameters.AddWithValue("@password", t.Password).SqlDbType = SqlDbType.VarChar;
-            commands[1].Parameters.AddWithValue("@role", t.Role);
-            
-            
+            commands[1].Parameters.AddWithValue("@historial", t.Historial);
 
             return ExecuteNBasicCommand(commands);
         }
@@ -57,28 +54,9 @@ namespace NurseProjecDAO.Implementacion
             throw new NotImplementedException();
         }
 
-        public int Update(User t)
+        public int Update(Paciente t)
         {
             throw new NotImplementedException();
-        }
-        public DataTable Login(string nameUser, string password)
-        {
-            query = @"SELECT id, nameUser,role
-                    FROM [User]
-                    WHERE status= 1 AND nameUser=@nameUser 
-                    AND password=HASHBYTES('MD5',@password)";
-            SqlCommand command = CreateBasicCommand(query);
-            command.Parameters.AddWithValue("nameUser", nameUser);
-            command.Parameters.AddWithValue("password", password).SqlDbType = SqlDbType.VarChar;
-            try
-            {
-                return ExecuteDataTableCommand(command);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
         }
     }
 }
