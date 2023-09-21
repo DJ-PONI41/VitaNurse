@@ -17,6 +17,8 @@ namespace NurseProjecDAO.Implementacion
             throw new NotImplementedException();
         }
 
+
+        // este no se usa 
         public int Insert(User t)
         {
             query = @"INSERT INTO Person(names,lastName,secondLastName,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
