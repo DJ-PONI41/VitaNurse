@@ -10,7 +10,8 @@
                     <h1 class="hero__title">Por Que Tu Bienestar Nos Importa</h1>
                     <p class="hero__subtitle">La pagina brinda la opcion a ser atendido por una enfermera desde la comodidad de tu hogar  </p>
                     <a href="Login.aspx" class="hero__cta" id="btn_ingres">Ingresar</a>
-                    <a href="#" class="hero__cta" id="btn_register">Registrarse</a>
+                    <%--<a href="#" class="hero__cta" id="btn_register" >Registrarse</a>--%>
+                    <asp:Button ID="btn_register" runat="server" Text="Registrarse" class="hero__cta" OnClick="btn_register_Click"/>
                     <a href="Imf_service.html" class="hero__cta" id="btn_info">Información del servicio</a>
                 </div>
                 <figure class="hero__picture">

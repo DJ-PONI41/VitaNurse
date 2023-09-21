@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CrudPaciente.aspx" />
     <Content Include="Css\Styles.css" />
     <Content Include="Css\Styles_login.css" />
     <Content Include="Home.aspx" />
@@ -78,9 +79,17 @@
     <Content Include="Images\undraw_medical_care_movn.svg" />
     <Content Include="Login.aspx" />
     <Content Include="Nurse_home.aspx" />
+    <Content Include="RegisterPaciente.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrudPaciente.aspx.cs">
+      <DependentUpon>CrudPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrudPaciente.aspx.designer.cs">
+      <DependentUpon>CrudPaciente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -123,6 +132,13 @@
     </Compile>
     <Compile Include="Nurse_home.Master.designer.cs">
       <DependentUpon>Nurse_home.Master</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterPaciente.aspx.cs">
+      <DependentUpon>RegisterPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterPaciente.aspx.designer.cs">
+      <DependentUpon>RegisterPaciente.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

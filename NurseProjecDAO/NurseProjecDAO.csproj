@@ -42,10 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementacion\BaseImpl.cs" />
+    <Compile Include="Implementacion\PacienteImpl.cs" />
     <Compile Include="Implementacion\UserImpl.cs" />
     <Compile Include="Interfaz\IBase.cs" />
+    <Compile Include="Interfaz\IPaciente.cs" />
     <Compile Include="Interfaz\IUser.cs" />
     <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\Nurse.cs" />
+    <Compile Include="Model\Paciente.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Persona.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
