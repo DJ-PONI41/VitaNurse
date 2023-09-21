@@ -47,14 +47,14 @@ namespace NurseProjectWEB
             
             try
             {
-                P = new Paciente(nombre, apellidoPaterno, apellidoMaterno,fechaNamiento,celular,ci,correo,direccion,latitud,longitud,municipio,historial);
+                P = new Paciente(nombre, apellidoPaterno, apellidoMaterno, fechaNamiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
                 implPaciente = new PacienteImpl();
-                int n = implPaciente.Insert(P);
+                //int n = implPaciente.Insert(P);
 
                 U =  new User(nombre, apellidoPaterno, apellidoMaterno, fechaNamiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario,contraseña,rol);
                 implUser = new UserImpl();
-                int u = implUser.Insert(U);
-                if (n > 0)
+                int u = implUser.Insert2(U,P);
+                if (u > 0)
                 {
                     
                     label1.Text = "El registro fue exitoso";
