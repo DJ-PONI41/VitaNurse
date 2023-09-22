@@ -14,7 +14,8 @@
         <div class="container">
             <h1 class="text-center">Registro de Paciente</h1>
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
+                    <!-- Columna 1 -->
                     <div class="form-group">
                         <label for="txtNombre">Nombre</label>
                         <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
@@ -33,12 +34,13 @@
                     </div>
                     <div class="form-group">
                         <label for="txtFechaNacimiento">Fecha de Nacimiento</label>
-                        <asp:Calendar ID="TxtFechaNacimiento" runat="server" CssClass="form-control" />
+                        <asp:TextBox ID="txtFechaNacimiento" CssClass="form-control" TextMode="Date" runat="server" />
                     </div>
                     <div class="form-group">
-                        <label for="txtDireccion">Dirección</label>
-                        <asp:TextBox ID="txtDireccion" CssClass="form-control" runat="server" />
+                        <label for="txtCelular">Número de Celular</label>
+                        <asp:TextBox ID="txtCelular" CssClass="form-control" runat="server" />
                     </div>
+                    
                     <div class="form-group" style="display: none;">
                         <label for="txtLat">Latitud</label>
                         <asp:TextBox ID="txtLat" Text="-17.33059869950836" CssClass="form-control" runat="server"></asp:TextBox>
@@ -47,9 +49,32 @@
                         <label for="txtLong">Longitud</label>
                         <asp:TextBox ID="txtLong" Text="-66.22559118521447" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Columna 2 -->
                     <div class="form-group">
-                        <label for="txtCelular">Número de Celular</label>
-                        <asp:TextBox ID="txtCelular" CssClass="form-control" runat="server" />
+                        <label for="txtUsuario">Usuario</label>
+                        <asp:TextBox ID="txtUsuario" CssClass="form-control" runat="server" />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtContrasena">Contraseña</label>
+                        <asp:TextBox ID="txtContrasena" CssClass="form-control" runat="server" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <asp:Label  ID="label1" CssClass="alert alert-success" runat="server" style="display:none;"></asp:Label>
+                       
+                    </div>
+                    <div class="form-group">
+                        <label for="txtMapa">Mapa</label>
+                        <div id="ModalMapPreview" style="width: 100%; height: 300px;"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Columna 3 -->
+                    <div class="form-group">
+                        <label for="txtDireccion">Dirección</label>
+                        <asp:TextBox ID="txtDireccion" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
                         <label for="txtMunicipio">Municipio</label>
@@ -63,69 +88,52 @@
                         <label for="txtHistorial">Historial Médico</label>
                         <asp:TextBox ID="txtHistorial" CssClass="form-control" runat="server" />
                     </div>
-                </div>
-                <div class="col-md-5">
                     <div class="form-group">
-                        <label for="txtUsuario">Usuario</label>
-                        <asp:TextBox ID="txtUsuario" CssClass="form-control" runat="server" />
-                    </div>
-                    <div class="form-group">
-                        <label for="txtContrasena">Contraseña</label>
-                        <asp:TextBox ID="txtContrasena" CssClass="form-control" runat="server" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <asp:Label  ID="label1" runat="server"></asp:Label>
-                       
-                    </div>
-                    <div class="form-group">
-                        <label for="txtMapa">Mapa</label>
-                        <div id="ModalMapPreview" style="width: 100%; height: 300px;"></div>
+                        <label for="fileUpload">Subir Archivo</label>
+                        <asp:FileUpload ID="fileUpload" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
                         <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" OnClick="btnRegistrar_Click" CssClass="btn btn-primary" />
                     </div>
-
                 </div>
-
             </div>
         </div>
     </form>
 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
-                var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
-                    center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
-                    zoom: 18
-                });
+<script>
+    $(document).ready(function () {
+        $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
+            var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
+                center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
+                zoom: 18
+            });
 
-                var marker = new google.maps.Marker({
-                    position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
-                    map: map,
-                    draggable: true
-                });
+            var marker = new google.maps.Marker({
+                position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
+                map: map,
+                draggable: true
+            });
 
-                google.maps.event.addListener(marker, 'dragend', function (event) {
-                    var lat = event.latLng.lat();
-                    var lng = event.latLng.lng();
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
 
-                    $('#<%=txtLat.ClientID%>').val(lat);
-                    $('#<%=txtLong.ClientID%>').val(lng);
-                });
+                $('#<%=txtLat.ClientID%>').val(lat);
+                $('#<%=txtLong.ClientID%>').val(lng);
+            });
 
-                google.maps.event.addListener(map, 'click', function (event) {
-                    var lat = event.latLng.lat();
-                    var lng = event.lng.lat();
+            google.maps.event.addListener(map, 'click', function (event) {
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
 
-                    marker.setPosition({ lat: lat, lng: lng });
+                marker.setPosition({ lat: lat, lng: lng });
 
-                    $('#<%=txtLat.ClientID%>').val(lat);
-                    $('#<%=txtLong.ClientID%>').val(lng);
-                });
+                $('#<%=txtLat.ClientID%>').val(lat);
+                $('#<%=txtLong.ClientID%>').val(lng);
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

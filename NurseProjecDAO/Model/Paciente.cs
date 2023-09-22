@@ -13,15 +13,15 @@ namespace NurseProjecDAO.Model
 
 
 
-        public Paciente(int id, string name, string lastName, string secondLastName/*, string photo*/, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string historial)
-        : base(name, lastName, secondLastName/*, photo*/, birthdate, phone, ci, email, addres, latitude, longitude, municipio)
+        public Paciente(int id, string name, string lastName, string secondLastName, byte[] photoData, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string historial)
+        : base(name, lastName, secondLastName, photoData , birthdate, phone, ci, email, addres, latitude, longitude, municipio)
         {
             Id = id;            
             Historial = historial;
         }
 
-        public Paciente( string name, string lastName, string secondLastName/*, string photo*/, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string historial)
-        : base(name, lastName, secondLastName/*, photo*/, birthdate, phone, ci, email, addres, latitude, longitude, municipio)
+        public Paciente( string name, string lastName, string secondLastName, byte[] photoData, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string historial)
+        : base(name, lastName, secondLastName, photoData, birthdate, phone, ci, email, addres, latitude, longitude, municipio)
         {
             
             Historial = historial;

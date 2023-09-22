@@ -55,10 +55,11 @@ namespace NurseProjecDAO.Implementacion
             return ExecuteNBasicCommand(commands);
         }
 
+        //este se usa 
         public int Insert2(User t, Paciente t2)
         {
-            query = @"INSERT INTO Person(names,lastName,secondLastName,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
-		            VALUES(@names,@lastName,@secondLastName,@birthdate,@phone,@ci,@email,@addres,@latitude,@longitude,@municipio)";
+            query = @"INSERT INTO Person(names,lastName,secondLastName,photo,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
+		            VALUES(@names,@lastName,@secondLastName,@photo,@birthdate,@phone,@ci,@email,@addres,@latitude,@longitude,@municipio)";
 
             string query2 = @"INSERT INTO [User](id,nameUser,password,role)
 			                Values(@id,@nameUser,HASHBYTES('MD5',@password),@role)";
@@ -71,7 +72,7 @@ namespace NurseProjecDAO.Implementacion
             commands[0].Parameters.AddWithValue("@names", t.Name);
             commands[0].Parameters.AddWithValue("@lastName", t.LastName);
             commands[0].Parameters.AddWithValue("@secondLastName", t.SecondLastName);
-            //commands[0].Parameters.AddWithValue("@photo", t.Photo);
+            commands[0].Parameters.AddWithValue("@photo", t.PhotoData);
             commands[0].Parameters.AddWithValue("@birthdate", t.Birthdate);
             commands[0].Parameters.AddWithValue("@phone", t.Phone);
             commands[0].Parameters.AddWithValue("@ci", t.Ci);

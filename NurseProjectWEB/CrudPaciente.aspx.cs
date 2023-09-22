@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Globalization;
 
 namespace NurseProjectWEB
 {
@@ -25,19 +26,30 @@ namespace NurseProjectWEB
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            Select();
-            load();
-            LoadType();
+            if (!IsPostBack)
+            {
+                Select();
+                load();
+                LoadType();
+
+            }
+
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
+            //obtener datos de la imagene
+            int img = fileUpload.PostedFile.ContentLength;
+            byte[] ImgOriginal = new byte[img];
+            fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
+
             string nombre = txtNombre.Text;
             string apellidoPaterno = txtApellidoPaterno.Text;
             string apellidoMaterno = txtApellidoMaterno.Text;
+
             string ci = txtCi.Text;
-            DateTime fechaNacimiento = Convert.ToDateTime(TxtFechaNacimiento.Text);
+            //DateTime fechaNamiento = TxtFechaNacimiento.SelectedDate;
+            DateTime fechaNacimiento = DateTime.ParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             string direccion = txtDireccion.Text;
             string latitud = txtLat.Text;
             string longitud = txtLong.Text;
@@ -46,46 +58,45 @@ namespace NurseProjectWEB
             string correo = txtCorreo.Text;
             string usuario = txtUsuario.Text;
             string contraseña = txtContrasena.Text;
+            //string repetirContrasena = txtRepetirContrasena.Text;
             string historial = txtHistorial.Text;
-            string rol = cbnRol.SelectedValue;
+            string rol = "Paciente";
 
-
-            try
+            if (DateTime.TryParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaNacimiento))
             {
-
-                P = new Paciente(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
-                implPaciente = new PacienteImpl();
-                int n = implPaciente.Insert(P);
-
-                U = new User(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);
-                implUser = new UserImpl();
-                int u = implUser.Insert(U);
-
-                if (n > 0 && u > 0)
+                try
                 {
-                    label.Text = "El registro fue exitoso";
+                    P = new Paciente(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
+                    implPaciente = new PacienteImpl();
+                    //int n = implPaciente.Insert(P);
+
+                    U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);
+                    implUser = new UserImpl();
+                    int u = implUser.Insert2(U, P);
+                    if (u > 0)
+                    {
+
+                        label1.CssClass = "alert alert-success";
+                        label1.Text = "El registro se ha realizado con éxito.";
+                        label1.Style["display"] = "block";
+                        Response.Redirect("Login.aspx");
+                    }
+                    else
+                    {
+                        label1.CssClass = "alert alert-danger";
+                        label1.Text = "¡Error! No se pudo realizar el registro.";
+                        label1.Style["display"] = "block";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    label.Text = "La inserción no tuvo éxito";
+
+                    throw ex;
                 }
             }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
         }
 
-        protected void btnUpdate_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
 
         void Select()
@@ -95,16 +106,31 @@ namespace NurseProjectWEB
                 implPaciente = new PacienteImpl();
                 DataTable dt = implPaciente.Select();
                 DataTable table = new DataTable("Paciente");
-                table.Columns.Add("", typeof(string));
-                table.Columns.Add("", typeof(string));
-                table.Columns.Add("", typeof(string));
-                table.Columns.Add("", typeof(string));
+                table.Columns.Add("Nombre", typeof(string));
+                table.Columns.Add("Apellido Paterno", typeof(string));
+                table.Columns.Add("Apellido Materno", typeof(string));
+                table.Columns.Add("Fecha de nacimiento", typeof(DateTime));
+                table.Columns.Add("Celular", typeof(string));
+                table.Columns.Add("CI", typeof(string));
+                table.Columns.Add("Correo", typeof(string));
+                table.Columns.Add("Direccion", typeof(string));
+                table.Columns.Add("Rol", typeof(string));
+                table.Columns.Add("Historial Medico", typeof(string));
                 table.Columns.Add("Seleccionar", typeof(string));
                 table.Columns.Add("Borrar", typeof(string));
 
+
                 foreach (DataRow dr in dt.Rows)
                 {
-                    table.Rows.Add(dr[""].ToString(), dr[""].ToString(), dr[""].ToString(), dr[""].ToString(), "", "");
+                    //
+                    DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
+                    string fechaSinHora = fechaNacimiento.ToString("yyyy-MM-dd");
+
+                    table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
+                                    dr["Apellido Materno"].ToString(), fechaSinHora,
+                                    dr["Celular"].ToString(),dr["CI"].ToString(), dr["Correo"].ToString(), 
+                                    dr["Direccion"].ToString(), dr["Rol"].ToString(),
+                                    dr["Historial Medico"].ToString(), "", "");
                 }
 
                 GridDat.DataSource = table;
@@ -115,9 +141,9 @@ namespace NurseProjectWEB
                     string id = dt.Rows[i]["Id"].ToString();
                     string up = "<a class='btn btn-sm btn-warning' href='webAdmProviders.aspx?id=" + id + "&type=U'> Seleccionar</a>";
 
-                    string del = "<a class='btn btn-sm btn-danger' href='webAdmProviders.aspx?id=" + id + "&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'></i></a>";
-                    GridDat.Rows[i].Cells[4].Text = up;
-                    GridDat.Rows[i].Cells[5].Text = del;
+                    string del = "<a class='btn btn-sm btn-danger' href='webAdmProviders.aspx?id=" + id + "&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Borrar</i></a>";
+                    GridDat.Rows[i].Cells[10].Text = up;
+                    GridDat.Rows[i].Cells[11].Text = del;
                     GridDat.Rows[i].Attributes["data-id"] = id;
 
                 }

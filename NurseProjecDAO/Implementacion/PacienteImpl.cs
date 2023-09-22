@@ -14,11 +14,11 @@ namespace NurseProjecDAO.Implementacion
     {
         public int Delete(Paciente t)
         {
-            query = @"UPDATE Person SET status = 0, lastUpdate = CURRENT_TIMESTAMP, userID = @userID
+            query = @"UPDATE Person SET status = 0, lastUpdate = CURRENT_TIMESTAMP
               WHERE id = @idPerson;
-              UPDATE Paciente SET status = 0, lastUpdate = CURRENT_TIMESTAMP, userID = @userID
+              UPDATE Paciente SET status = 0, lastUpdate = CURRENT_TIMESTAMP
               WHERE id = @idPaciente
-               UPDATE [User] SET status = 0, lastUpdate = CURRENT_TIMESTAMP, userID = @userID
+               UPDATE [User] SET status = 0, lastUpdate = CURRENT_TIMESTAMP
               WHERE id = @idUser";
 
 
@@ -39,7 +39,7 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
-
+        //este no se 
         public int Insert(Paciente t)
         {
                    
@@ -71,6 +71,50 @@ namespace NurseProjecDAO.Implementacion
 
             commands[1].Parameters.AddWithValue("@id", id);
             commands[1].Parameters.AddWithValue("@historial", t.Historial);
+
+            return ExecuteNBasicCommand(commands);
+        }
+
+
+        //este se usa 
+        public int Insert2(User t, Paciente t2)
+        {
+            query = @"INSERT INTO Person(names,lastName,secondLastName,photo,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
+		            VALUES(@names,@lastName,@secondLastName,@photo,@birthdate,@phone,@ci,@email,@addres,@latitude,@longitude,@municipio)";
+
+            string query2 = @"INSERT INTO [User](id,nameUser,password,role)
+			                Values(@id,@nameUser,HASHBYTES('MD5',@password),@role)";
+
+            string query3 = @"INSERT INTO Paciente(id,historial)
+			                Values(@id2,@historial)";
+
+            List<SqlCommand> commands = Create3BasicCommand(query, query2, query3);
+
+            commands[0].Parameters.AddWithValue("@names", t.Name);
+            commands[0].Parameters.AddWithValue("@lastName", t.LastName);
+            commands[0].Parameters.AddWithValue("@secondLastName", t.SecondLastName);
+            commands[0].Parameters.AddWithValue("@photo", t.PhotoData);
+            commands[0].Parameters.AddWithValue("@birthdate", t.Birthdate);
+            commands[0].Parameters.AddWithValue("@phone", t.Phone);
+            commands[0].Parameters.AddWithValue("@ci", t.Ci);
+            commands[0].Parameters.AddWithValue("@email", t.Email);
+            commands[0].Parameters.AddWithValue("@addres", t.Addres);
+            commands[0].Parameters.AddWithValue("@latitude", t.Latitude);
+            commands[0].Parameters.AddWithValue("@longitude", t.Longitude);
+            commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
+
+
+            short id = short.Parse(GetGenerateIDTable("Person"));
+
+            commands[1].Parameters.AddWithValue("@id", id);
+            commands[1].Parameters.AddWithValue("@nameUser", t.NameUser);
+            commands[1].Parameters.AddWithValue("@password", t.Password).SqlDbType = SqlDbType.VarChar;
+            commands[1].Parameters.AddWithValue("@role", t.Role);
+
+            commands[2].Parameters.AddWithValue("@id2", id);
+            commands[2].Parameters.AddWithValue("@historial", t2.Historial);
+
+
 
             return ExecuteNBasicCommand(commands);
         }
@@ -126,7 +170,7 @@ namespace NurseProjecDAO.Implementacion
         public DataTable Select()
         {
             query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
-                        P.email AS Correo,P.addres Direccion,U.role AS Rol,P.latitude,P.longitude,E.historial AS 'Historial Medico'
+                        P.email AS Correo,P.addres Direccion,U.role AS Rol,E.historial AS 'Historial Medico'
                         FROM Person P 
                         INNER JOIN Paciente E ON P.id = E.id
 						INNER JOIN [User] U ON E.id = U.id
