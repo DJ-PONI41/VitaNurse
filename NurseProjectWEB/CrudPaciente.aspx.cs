@@ -29,12 +29,13 @@ namespace NurseProjectWEB
         {
             if (!IsPostBack)
             {
-                
+
                 load();
                 LoadType();
+                Select();
 
             }
-            Select();
+
 
         }
 
@@ -46,7 +47,7 @@ namespace NurseProjectWEB
             fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
 
             Bitmap ImgBin = new Bitmap(fileUpload.PostedFile.InputStream);
-            string ImagenDataUrl64 = "data:image/jpg;base64"+Convert.ToBase64String(ImgOriginal);
+            string ImagenDataUrl64 = "data:image/jpg;base64" + Convert.ToBase64String(ImgOriginal);
             imgPreview.ImageUrl = ImagenDataUrl64;
 
 
@@ -88,8 +89,9 @@ namespace NurseProjectWEB
                     label1.Text = "El registro se ha realizado con éxito.";
                     label1.Style["display"] = "block";
 
-                    Clear();
                     Select();
+                    Clear();
+
 
                 }
                 else
@@ -150,9 +152,9 @@ namespace NurseProjectWEB
                 for (int i = 0; i < GridDat.Rows.Count; i++)
                 {
                     string id = dt.Rows[i]["Id"].ToString();
-                    string up = "<a class='btn btn-sm btn-warning' href='webAdmProviders.aspx?id=" + id + "&type=U'> Seleccionar</a>";
+                    string up = "<a class='btn btn-sm btn-warning' href='CrudPaciente.aspx?id=" + id + "&type=U'> Seleccionar</a>";
 
-                    string del = "<a class='btn btn-sm btn-danger' href='CrudPaciente.aspx?id=" + id + "&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'></i></a>";
+                    string del = "<a class='btn btn-sm btn-danger' href='CrudPaciente.aspx?id=" + id + "&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Eliminar</i></a>";
                     GridDat.Rows[i].Cells[10].Text = up;
                     GridDat.Rows[i].Cells[11].Text = del;
                     GridDat.Rows[i].Attributes["data-id"] = id;
@@ -224,7 +226,47 @@ namespace NurseProjectWEB
 
                 if (type == "U")
                 {
-                    // Get();
+                    txtUsuario.Visible = false;
+                    txtContrasena.Visible = false;
+                     Get();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        void Get()
+        {
+            P = null;
+            
+            id = short.Parse(Request.QueryString["id"]);
+            try
+            {
+                if (id > 0)
+                {
+                    implPaciente = new PacienteImpl();
+                    P = implPaciente.Get(id);
+                    
+                    if (P != null)
+                    {
+                        if (!IsPostBack)
+                        {
+                            txtNombre.Text = P.Name.ToString();
+                            txtApellidoPaterno.Text = P.LastName.ToString();
+                            txtApellidoMaterno.Text = P.SecondLastName.ToString();
+                            txtFechaNacimiento.Text = P.Birthdate.ToString("dd/MM/yyyy");
+                            txtCelular.Text = P.Phone.ToString();
+                            txtCi.Text = P.Ci.ToString();
+                            txtCorreo.Text = P.Email.ToString();
+                            txtDireccion.Text = P.Addres.ToString();
+                            txtLat.Text = P.Latitude.ToString();
+                            txtLong.Text = P.Longitude.ToString();
+                            txtMunicipio.Text = P.Municipio.ToString();
+                            txtHistorial.Text = P.Historial.ToString();
+
+                        }
+                    }
                 }
             }
             catch (Exception ex)

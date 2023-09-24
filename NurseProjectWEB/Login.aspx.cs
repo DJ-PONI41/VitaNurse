@@ -40,7 +40,10 @@ namespace NurseProjectWEB
                         case "Enfermera":
                             Response.Redirect("Nurse_home.aspx");
                             break;
-                        
+                        case "Paciente":
+                            Response.Redirect("Nurse_home.aspx");
+                            break;
+
                         default:
                             // En caso de que el rol no coincida con ninguno de los casos anteriores, redireccionar a una página de error o a la página principal
                             // Response.Redirect("Error.aspx");
