@@ -24,10 +24,12 @@ namespace NurseProjectWEB
                 // Verificar si el usuario tiene el rol adecuado para acceder a esta ventana
                 if (userRole != "Enfermera")
                 {
-                    // El usuario no tiene el rol adecuado, redirigir a una página de acceso no autorizado o a la página principal
-                    Response.Redirect("Login.aspx");
+                    // El usuario no tiene el rol adecuado, mostrar un mensaje de error o redirigir a una página de acceso no autorizado
+                    Response.Write("Acceso no autorizado. Debes tener el rol de Enfermera para acceder a esta página.");
+                    // También puedes redirigir a una página de acceso no autorizado en lugar de mostrar un mensaje aquí.
                 }
             }
+
         }
     }
 }

@@ -17,6 +17,10 @@ namespace NurseProjectWEB
 {
     public partial class CrudNurse : System.Web.UI.Page
     {
+
+
+
+
         NurseImpl implNurse;
         Nurse N;
 
@@ -27,11 +31,32 @@ namespace NurseProjectWEB
         private string type;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["UserID"] == null)
+            {
+                // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                // El usuario ha iniciado sesión, verificar el rol
+                string userRole = Session["UserRole"].ToString();
+
+                // Verificar si el usuario tiene el rol adecuado para acceder a esta ventana
+                if (userRole != "Administrador")
+                {
+                    // El usuario no tiene el rol adecuado, mostrar un mensaje de error o redirigir a una página de acceso no autorizado
+                    Response.Write("Acceso no autorizado. Debes tener el rol de Administrador para acceder a esta página.");
+                    // También puedes redirigir a una página de acceso no autorizado en lugar de mostrar un mensaje aquí.
+                }
+            }
+
+
+
             if (!IsPostBack)
             {
 
                 load();
-                //LoadType();
+                LoadType();
                 Select();
 
             }
@@ -231,6 +256,64 @@ namespace NurseProjectWEB
                 {
                     throw ex;
                 }
+            }
+        }
+        void LoadType()
+        {
+            try
+            {
+                type = Request.QueryString["type"];
+
+                if (type == "U")
+                {
+                    //txtUsuario.Visible = false;
+                    //txtContrasena.Visible = false;
+                    Get();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        void Get()
+        {
+            N = null;
+
+            id = short.Parse(Request.QueryString["id"]);
+            try
+            {
+                if (id > 0)
+                {
+                    implNurse = new NurseImpl();
+                    N = implNurse.Get(id);
+
+                    if (N != null)
+                    {
+                        if (!IsPostBack)
+                        {
+                            txtNombre.Text = N.Name.ToString();
+                            txtApellidoPaterno.Text = N.LastName.ToString();
+                            txtApellidoMaterno.Text = N.SecondLastName.ToString();
+                            txtFechaNacimiento.Text = N.Birthdate.ToString("dd/MM/yyyy");
+                            txtCelular.Text = N.Phone.ToString();
+                            txtCi.Text = N.Ci.ToString();
+                            txtCorreo.Text = N.Email.ToString();
+                            txtDireccion.Text = N.Addres.ToString();
+                            txtLat.Text = N.Latitude.ToString();
+                            txtLong.Text = N.Longitude.ToString();
+                            txtMunicipio.Text = N.Municipio.ToString();
+                            txtEspecialidad.Text = N.Especialidad.ToString();
+                            txtTitulacion.Text = N.AñoTitulacion.ToString();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
