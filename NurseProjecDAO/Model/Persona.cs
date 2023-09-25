@@ -13,7 +13,7 @@ namespace NurseProjecDAO.Model
         public string Name { get; set; }
         public string LastName { get; set; }
         public string SecondLastName { get; set; }
-        public string Photo { get; set; }
+        public byte[] PhotoData { get; set; }
         public DateTime Birthdate { get; set; }
         public string Phone { get; set; }
         public string Ci { get; set; }
@@ -39,13 +39,13 @@ namespace NurseProjecDAO.Model
         /// <param name="latitude"></param>
         /// <param name="longitude"></param>
         /// <param name="municipio"></param>
-        public Persona( string name, string lastName, string secondLastName/*, string photo*/, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio)
+        public Persona( string name, string lastName, string secondLastName, byte[] photoData, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio)
         {
             
             Name = name;
             LastName = lastName;
             SecondLastName = secondLastName;
-            //Photo = photo;
+            PhotoData = photoData;
             Birthdate = birthdate;
             Phone = phone;
             Ci = ci;

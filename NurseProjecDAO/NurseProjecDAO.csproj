@@ -42,9 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementacion\BaseImpl.cs" />
+    <Compile Include="Implementacion\NurseImpl.cs" />
     <Compile Include="Implementacion\PacienteImpl.cs" />
     <Compile Include="Implementacion\UserImpl.cs" />
     <Compile Include="Interfaz\IBase.cs" />
+    <Compile Include="Interfaz\INurse.cs" />
     <Compile Include="Interfaz\IPaciente.cs" />
     <Compile Include="Interfaz\IUser.cs" />
     <Compile Include="Model\BaseModel.cs" />

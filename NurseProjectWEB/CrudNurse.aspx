@@ -1,18 +1,18 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegisterPaciente.aspx.cs" Inherits="NurseProjectWEB.RegisterPaciente" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CrudNurse.aspx.cs" Inherits="NurseProjectWEB.CrudNurse" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Registro de Paciente</title>
-   
+    <title>Registro de Enfermera</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+
     <form id="form1" runat="server">
         <div class="container">
-            <h1 class="text-center">Registro de Paciente</h1>
+            <h1 class="text-center">Registro de Enfermera</h1>
             <div class="row">
                 <div class="col-md-4">
                     <!-- Columna 1 -->
@@ -40,7 +40,7 @@
                         <label for="txtCelular">Número de Celular</label>
                         <asp:TextBox ID="txtCelular" CssClass="form-control" runat="server" />
                     </div>
-                    
+
                     <div class="form-group" style="display: none;">
                         <label for="txtLat">Latitud</label>
                         <asp:TextBox ID="txtLat" Text="-17.33059869950836" CssClass="form-control" runat="server"></asp:TextBox>
@@ -53,26 +53,6 @@
                 <div class="col-md-4">
                     <!-- Columna 2 -->
                     <div class="form-group">
-                        <label for="txtUsuario">Usuario</label>
-                        <asp:TextBox ID="txtUsuario" CssClass="form-control" runat="server" />
-                    </div>
-                    <div class="form-group">
-                        <label for="txtContrasena">Contraseña</label>
-                        <asp:TextBox ID="txtContrasena" CssClass="form-control" runat="server" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <asp:Label  ID="label1" CssClass="alert alert-success" runat="server" style="display:none;"></asp:Label>
-                       
-                    </div>
-                    <div class="form-group">
-                        <label for="txtMapa">Mapa</label>
-                        <div id="ModalMapPreview" style="width: 100%; height: 300px;"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <!-- Columna 3 -->
-                    <div class="form-group">
                         <label for="txtDireccion">Dirección</label>
                         <asp:TextBox ID="txtDireccion" CssClass="form-control" runat="server" />
                     </div>
@@ -81,59 +61,91 @@
                         <asp:TextBox ID="txtMunicipio" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
+                        <asp:Label ID="label1" CssClass="alert alert-success" runat="server" Style="display: none;"></asp:Label>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtMapa">Mapa</label>
+                        <div id="ModalMapPreview" style="width: 100%; height: 300px;"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label for="txtCorreo">Correo Electrónico</label>
                         <asp:TextBox ID="txtCorreo" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
-                        <label for="txtHistorial">Historial Médico</label>
-                        <asp:TextBox ID="txtHistorial" CssClass="form-control" runat="server" />
+                        <label for="txtEspecialidad">Especialidad</label>
+                        <asp:TextBox ID="txtEspecialidad" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
-                        <label for="fileUpload">Subir Archivo</label>
+                        <label for="txtTitulacion">Fecha de Titulacion</label>
+                        <asp:TextBox ID="txtTitulacion" CssClass="form-control" TextMode="Date" runat="server" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fileUpload">Sube tu titulo profesional</label>
+                        <asp:FileUpload ID="fileTitulo" CssClass="form-control" runat="server" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fileUpload">Subir CVC</label>
+                        <asp:FileUpload ID="fileCvc" CssClass="form-control" runat="server" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fileUpload">Subir Tu fotografia</label>
                         <asp:FileUpload ID="fileUpload" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
-                        <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" OnClick="btnRegistrar_Click" CssClass="btn btn-primary" />
+                        <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-primary" OnClick="btnRegistrar_Click"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                        <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
+                            <Columns>
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
-            var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
-                center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
-                zoom: 18
-            });
+    <script>
+        $(document).ready(function () {
+            $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
+                var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
+                    center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
+                    zoom: 18
+                });
 
-            var marker = new google.maps.Marker({
-                position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
-                map: map,
-                draggable: true
-            });
+                var marker = new google.maps.Marker({
+                    position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
+                    map: map,
+                    draggable: true
+                });
 
-            google.maps.event.addListener(marker, 'dragend', function (event) {
-                var lat = event.latLng.lat();
-                var lng = event.latLng.lng();
+                google.maps.event.addListener(marker, 'dragend', function (event) {
+                    var lat = event.latLng.lat();
+                    var lng = event.latLng.lng();
 
-                $('#<%=txtLat.ClientID%>').val(lat);
-                $('#<%=txtLong.ClientID%>').val(lng);
-            });
+                    $('#<%=txtLat.ClientID%>').val(lat);
+                    $('#<%=txtLong.ClientID%>').val(lng);
+                });
 
-            google.maps.event.addListener(map, 'click', function (event) {
-                var lat = event.latLng.lat();
-                var lng = event.latLng.lng();
+                google.maps.event.addListener(map, 'click', function (event) {
+                    var lat = event.latLng.lat();
+                    var lng = event.latLng.lng();
 
-                marker.setPosition({ lat: lat, lng: lng });
+                    marker.setPosition({ lat: lat, lng: lng });
 
-                $('#<%=txtLat.ClientID%>').val(lat);
-                $('#<%=txtLong.ClientID%>').val(lng);
+                    $('#<%=txtLat.ClientID%>').val(lat);
+                    $('#<%=txtLong.ClientID%>').val(lng);
+                });
             });
         });
-    });
-</script>
+    </script>
+
 </body>
 </html>

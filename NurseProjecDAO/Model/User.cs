@@ -27,8 +27,8 @@ namespace NurseProjecDAO
         //    Role = role;
         //}
 
-        public User(string name, string lastName, string secondLastName/*/*, string photo*/, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string nameUser, string password, string role)
-         :base( name,  lastName,  secondLastName/*,  photo*/,  birthdate,  phone,  ci,  email,  addres,  latitude,  longitude,  municipio)
+        public User(string name, string lastName, string secondLastName, byte[] photoData, DateTime birthdate, string phone, string ci, string email, string addres, string latitude, string longitude, string municipio, string nameUser, string password, string role)
+         :base( name,  lastName, secondLastName, photoData,  birthdate,  phone,  ci,  email,  addres,  latitude,  longitude,  municipio)
         {
             NameUser = nameUser;
             Password = password;

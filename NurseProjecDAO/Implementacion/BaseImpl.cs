@@ -11,7 +11,10 @@ namespace NurseProjecDAO.Implementacion
     public class BaseImpl
     {
         string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
-
+        
+        
+        // esta la conexion del host de la base de datos 
+        //string connectionString = @"Server=nurseprojectdb.cyrmtk6nubmb.us-east-2.rds.amazonaws.com;Database=NurseProjectDB;User Id=admin;Password=Univalle";
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {
