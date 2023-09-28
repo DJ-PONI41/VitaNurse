@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -67,10 +70,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdmHome.aspx" />
     <Content Include="CrudNurse.aspx" />
     <Content Include="CrudPaciente.aspx" />
     <Content Include="Css\Styles.css" />
     <Content Include="Css\Styles_login.css" />
+    <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="Images\menu.svg" />
     <Content Include="Images\Nuerses_svg_derecha.svg" />
@@ -85,6 +90,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdmHome.aspx.cs">
+      <DependentUpon>AdmHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdmHome.aspx.designer.cs">
+      <DependentUpon>AdmHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdmMaster.Master.cs">
+      <DependentUpon>AdmMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdmMaster.Master.designer.cs">
+      <DependentUpon>AdmMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="CrudNurse.aspx.cs">
       <DependentUpon>CrudNurse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -105,6 +124,9 @@
     </Compile>
     <Compile Include="Default.Master.designer.cs">
       <DependentUpon>Default.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
@@ -160,6 +182,7 @@
   <ItemGroup>
     <Content Include="Default.Master" />
     <Content Include="Login.Master" />
+    <Content Include="AdmMaster.Master" />
     <None Include="packages.config" />
     <Content Include="Nurse_home.Master" />
     <None Include="Web.Debug.config">

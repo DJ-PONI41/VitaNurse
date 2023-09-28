@@ -67,9 +67,9 @@ namespace NurseProjectWEB
             byte[] ImgOriginal = new byte[img];
             fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
 
-            Bitmap ImgBin = new Bitmap(fileUpload.PostedFile.InputStream);
-            string ImagenDataUrl64 = "data:image/jpg;base64" + Convert.ToBase64String(ImgOriginal);
-            imgPreview.ImageUrl = ImagenDataUrl64;
+            //Bitmap ImgBin = new Bitmap(fileUpload.PostedFile.InputStream);
+            //string ImagenDataUrl64 = "data:image/jpg;base64" + Convert.ToBase64String(ImgOriginal);
+            //imgPreview.ImageUrl = ImagenDataUrl64;
 
 
 
@@ -158,10 +158,10 @@ namespace NurseProjectWEB
                 {
                     //
                     DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
-                    string fechaSinHora = fechaNacimiento.ToString("yyyy-MM-dd");
+                    string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
 
                     table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
-                                    dr["Apellido Materno"].ToString(), dr["Fecha de nacimiento"],
+                                    dr["Apellido Materno"].ToString(), fechaFormateada,
                                     dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
                                     dr["Direccion"].ToString(), dr["Rol"].ToString(),
                                     dr["Historial Medico"].ToString(), "", "");
@@ -276,7 +276,9 @@ namespace NurseProjectWEB
                             txtNombre.Text = P.Name.ToString();
                             txtApellidoPaterno.Text = P.LastName.ToString();
                             txtApellidoMaterno.Text = P.SecondLastName.ToString();
+                           
                             txtFechaNacimiento.Text = P.Birthdate.ToString("dd/MM/yyyy");
+                            
                             txtCelular.Text = P.Phone.ToString();
                             txtCi.Text = P.Ci.ToString();
                             txtCorreo.Text = P.Email.ToString();
@@ -285,6 +287,16 @@ namespace NurseProjectWEB
                             txtLong.Text = P.Longitude.ToString();
                             txtMunicipio.Text = P.Municipio.ToString();
                             txtHistorial.Text = P.Historial.ToString();
+
+                            if (P.PhotoData != null && P.PhotoData.Length > 0)
+                            {
+                                string base64Image = Convert.ToBase64String(P.PhotoData);
+                                imgPreview.ImageUrl = "data:image/jpeg;base64," + base64Image;
+                            }
+                            else
+                            {
+                                  imgPreview.ImageUrl = string.Empty;
+                            }
 
                         }
                     }

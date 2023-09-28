@@ -34,8 +34,9 @@
                     </div>
                     <div class="form-group">
                         <label for="txtFechaNacimiento">Fecha de Nacimiento</label>
-                        <asp:TextBox ID="txtFechaNacimiento" CssClass="form-control" TextMode="Date" runat="server" />
+                        <asp:TextBox ID="txtFechaNacimiento" CssClass="form-control" runat="server" TextMode="Date" />
                     </div>
+
                     <div class="form-group">
                         <label for="txtCelular">Número de Celular</label>
                         <asp:TextBox ID="txtCelular" CssClass="form-control" runat="server" />

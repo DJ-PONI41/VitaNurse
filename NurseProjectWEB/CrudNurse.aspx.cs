@@ -90,6 +90,7 @@ namespace NurseProjectWEB
             int img = fileUpload.PostedFile.ContentLength;
             byte[] ImgOriginal = new byte[img];
             fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
+
             //datos pdf
             int titulo = fileTitulo.PostedFile.ContentLength;
             byte[] PdfOriginal = new byte[titulo];
@@ -201,13 +202,18 @@ namespace NurseProjectWEB
                 {
                     //
                     DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
-                    string fechaSinHora = fechaNacimiento.ToString("yyyy-MM-dd");
+                    string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
+
+                    DateTime fechaTitulacion = (DateTime)dr["Año de Titulacion"];
+                    string fechaFormateadaTitulacion = fechaTitulacion.ToString("yyyy-MM-dd");
+
+
 
                     table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
-                                    dr["Apellido Materno"].ToString(), dr["Fecha de nacimiento"],
+                                    dr["Apellido Materno"].ToString(), fechaFormateada,
                                     dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
                                     dr["Direccion"].ToString(), dr["Rol"].ToString(),
-                                    dr["Especialidad"].ToString(), dr["Año de Titulacion"].ToString(), "", "");
+                                    dr["Especialidad"].ToString(), fechaFormateadaTitulacion, "", "");
                 }
 
                 GridDat.DataSource = table;

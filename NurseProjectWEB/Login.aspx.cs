@@ -34,7 +34,8 @@ namespace NurseProjectWEB
                     {
                         case "Administrador":
                             // Redireccionar al administrador a la página Default.aspx
-                            Response.Redirect("Home.aspx");
+                            Response.Redirect("AdmHome.aspx");
+                            //Response.Redirect("AdmMaster.Master");
                             break;
 
                         case "Enfermera":
