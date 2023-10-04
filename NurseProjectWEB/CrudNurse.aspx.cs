@@ -124,14 +124,14 @@ namespace NurseProjectWEB
 
 
                 N = new Nurse(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añotitulacion, PdfOriginal, CvcOriginal);
-                implNurse = new NurseImpl();
-                int n = implNurse.InsertN2(U, N);
+                //implNurse = new NurseImpl();
+                //int n = implNurse.InsertN2(U, N);
 
                 U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, rol);
                 implUser = new UserImpl();
-                //int u = implUser.Insert2(U, N);
+                int u = implUser.Insert2(U, N);
 
-                if (n > 0)
+                if (u > 0)
                 {
 
                     label1.CssClass = "alert alert-success";
@@ -186,12 +186,13 @@ namespace NurseProjectWEB
                 table.Columns.Add("Apellido Paterno", typeof(string));
                 table.Columns.Add("Apellido Materno", typeof(string));
                 table.Columns.Add("Fecha de nacimiento", typeof(string));
+                table.Columns.Add("Titulo Profesional", typeof(string));
+                table.Columns.Add("CV", typeof(string));
                 table.Columns.Add("Celular", typeof(string));
                 table.Columns.Add("CI", typeof(string));
                 table.Columns.Add("Correo", typeof(string));
                 table.Columns.Add("Direccion", typeof(string));
                 table.Columns.Add("Rol", typeof(string));
-
                 table.Columns.Add("Especialidad", typeof(string));
                 table.Columns.Add("Año de Titulacion", typeof(string));
                 table.Columns.Add("Seleccionar", typeof(string));
@@ -207,13 +208,27 @@ namespace NurseProjectWEB
                     DateTime fechaTitulacion = (DateTime)dr["Año de Titulacion"];
                     string fechaFormateadaTitulacion = fechaTitulacion.ToString("yyyy-MM-dd");
 
+                    string PdfTitulo= "";
+                    string PdfCv = "";
+
+                    if (!Convert.IsDBNull(dr["Titulo Profesional"]))
+                    {
+                        PdfTitulo = $"<a href='WiewPdf.aspx?pdf=titulo&id={dr["Id"]}' target='_blank'>Ver PDF Título</a>";
+                    }
+
+                    if (!Convert.IsDBNull(dr["CV"]))
+                    {
+                        PdfCv = $"<a href='WiewPdf.aspx?pdf=cv&id={dr["Id"]}' target='_blank'>Ver PDF CV</a>";
+                    }
+
+
 
 
                     table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
-                                    dr["Apellido Materno"].ToString(), fechaFormateada,
-                                    dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
-                                    dr["Direccion"].ToString(), dr["Rol"].ToString(),
-                                    dr["Especialidad"].ToString(), fechaFormateadaTitulacion, "", "");
+                                 dr["Apellido Materno"].ToString(), fechaFormateada, "", "",
+                                 dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
+                                 dr["Direccion"].ToString(), dr["Rol"].ToString(),
+                                 dr["Especialidad"].ToString(), fechaFormateadaTitulacion, "", "");
                 }
 
                 GridDat.DataSource = table;
@@ -225,8 +240,15 @@ namespace NurseProjectWEB
                     string up = "<a class='btn btn-sm btn-warning' href='CrudNurse.aspx?id=" + id + "&type=U'> Seleccionar</a>";
 
                     string del = "<a class='btn btn-sm btn-danger' href='CrudNurse.aspx?id=" + id + "&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Eliminar</i></a>";
-                    GridDat.Rows[i].Cells[11].Text = up;
-                    GridDat.Rows[i].Cells[12].Text = del;
+
+                    string PdfTitulo = "<a href='WiewPdf.aspx?id=" + id + "&type=Titulo' target='_blank'>Ver Titulo</a>";
+
+                    string PdfCv = "<a href='WiewPdf.aspx?id=" + id + "&type=CV' target='_blank'>Ver CV</a>";
+
+                    GridDat.Rows[i].Cells[4].Text = PdfTitulo;
+                    GridDat.Rows[i].Cells[5].Text = PdfCv;
+                    GridDat.Rows[i].Cells[13].Text = up;
+                    GridDat.Rows[i].Cells[14].Text = del;
                     GridDat.Rows[i].Attributes["data-id"] = id;
 
                 }
@@ -245,13 +267,13 @@ namespace NurseProjectWEB
                 {
                     implNurse = new NurseImpl();
 
-                    // Obtener el objeto Customer antes de llamar al método Delete
+
                     N = implNurse.Get(id);
 
                     if (N != null)
                     {
                         int n = implNurse.Delete(N);
-                        // Realizar cualquier acción adicional después de la eliminación
+
                     }
                     else
                     {
@@ -274,6 +296,7 @@ namespace NurseProjectWEB
                 {
                     //txtUsuario.Visible = false;
                     //txtContrasena.Visible = false;
+
                     Get();
                 }
             }
@@ -312,6 +335,18 @@ namespace NurseProjectWEB
                             txtMunicipio.Text = N.Municipio.ToString();
                             txtEspecialidad.Text = N.Especialidad.ToString();
                             txtTitulacion.Text = N.AñoTitulacion.ToString();
+
+                            if (N.PhotoData != null && N.PhotoData.Length > 0)
+                            {
+                                string base64Image = Convert.ToBase64String(N.PhotoData);
+                                imgPreview.ImageUrl = "data:image/jpeg;base64," + base64Image;
+                            }
+                            else
+                            {
+                                imgPreview.ImageUrl = string.Empty;
+                            }
+
+
 
                         }
                     }

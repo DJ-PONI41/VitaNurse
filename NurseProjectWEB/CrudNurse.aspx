@@ -84,18 +84,22 @@
                     </div>
                     <div class="form-group">
                         <label for="fileUpload">Sube tu titulo profesional</label>
+                        <asp:HyperLink ID="lnkTituloPdf" runat="server" Text="Ver PDF" Target="_blank" Visible="false" />
                         <asp:FileUpload ID="fileTitulo" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
-                        <label for="fileUpload">Subir CVC</label>
+                        <label for="fileUpload">Subir CV</label>
+                        <asp:HyperLink ID="lnkCvPdf" runat="server" Text="Ver PDF" Target="_blank" Visible="false" />
                         <asp:FileUpload ID="fileCvc" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
+                        <asp:Image ID="imgPreview" runat="server" CssClass="img-thumbnail" Width="300px" Height="300px" />
                         <label for="fileUpload">Subir Tu fotografia</label>
+
                         <asp:FileUpload ID="fileUpload" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
-                        <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-primary" OnClick="btnRegistrar_Click"/>
+                        <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-primary" OnClick="btnRegistrar_Click" />
                     </div>
                 </div>
             </div>
@@ -104,6 +108,7 @@
                     <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
                         <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
                             <Columns>
+                                
                             </Columns>
                         </asp:GridView>
                     </div>

@@ -41,8 +41,7 @@ namespace NurseProjecDAO.Implementacion
         }
         //este no se 
         public int Insert(Paciente t)
-        {
-                   
+        {        
 
 
             query = @"INSERT INTO Person(names,lastName,secondLastName,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
@@ -122,8 +121,12 @@ namespace NurseProjecDAO.Implementacion
 
         public Paciente Get(short Id)
         {
-            Paciente t = null;
-            string query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',ISNULL(P.photo, NULL) AS Fotografia
+            
+
+            try
+            {
+                Paciente t = null;
+                string query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',ISNULL(P.photo, NULL) AS Fotografia
 						,P.phone AS Celular,P.ci AS CI, 
                         P.email AS Correo,P.addres Direccion,P.latitude,P.longitude,P.municipio AS Municipio,E.historial AS 'Historial Medico'
                         FROM Person P 
@@ -131,52 +134,49 @@ namespace NurseProjecDAO.Implementacion
 						
                         WHERE P.id = @id";
 
-            SqlCommand command = CreateBasicCommand(query);
-            command.Parameters.AddWithValue("@id", Id);
+                SqlCommand command = CreateBasicCommand(query);
+                command.Parameters.AddWithValue("@id", Id);
 
-            DataTable table = ExecuteDataTableCommand(command);
-            if (table.Rows.Count > 0)
-            {
-                t = new Paciente();
-                t.Id = short.Parse(table.Rows[0]["id"].ToString());
-                t.Name = table.Rows[0]["Nombre"].ToString();
-                t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
-                t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
-                t.Ci = table.Rows[0]["CI"].ToString();
-                t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];
-               
-                t.Phone = table.Rows[0]["Celular"].ToString();
-                t.Email = table.Rows[0]["Correo"].ToString();
-                t.Addres = table.Rows[0]["Direccion"].ToString();
-                t.Latitude = table.Rows[0]["latitude"].ToString();
-                t.Longitude = table.Rows[0]["longitude"].ToString();
-                t.Municipio = table.Rows[0]["Municipio"].ToString();
-                t.Historial = table.Rows[0]["Historial Medico"].ToString();
-
-                if (table.Rows[0]["Fotografia"] != DBNull.Value)
+                DataTable table = ExecuteDataTableCommand(command);
+                if (table.Rows.Count > 0)
                 {
-                    byte[] photoData = (byte[])table.Rows[0]["Fotografia"];
+                    t = new Paciente();
+                    t.Id = short.Parse(table.Rows[0]["id"].ToString());
+                    t.Name = table.Rows[0]["Nombre"].ToString();
+                    t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
+                    t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
+                    t.Ci = table.Rows[0]["CI"].ToString();
+                    t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];
 
-                    t.PhotoData = photoData;
+                    t.Phone = table.Rows[0]["Celular"].ToString();
+                    t.Email = table.Rows[0]["Correo"].ToString();
+                    t.Addres = table.Rows[0]["Direccion"].ToString();
+                    t.Latitude = table.Rows[0]["latitude"].ToString();
+                    t.Longitude = table.Rows[0]["longitude"].ToString();
+                    t.Municipio = table.Rows[0]["Municipio"].ToString();
+                    t.Historial = table.Rows[0]["Historial Medico"].ToString();
+
+                    if (table.Rows[0]["Fotografia"] != DBNull.Value)
+                    {
+                        byte[] photoData = (byte[])table.Rows[0]["Fotografia"];
+
+                        t.PhotoData = photoData;
+                    }
+                    else
+                    {
+                        t.PhotoData = null;
+                    }
+
+
                 }
-                else
-                {
-                    t.PhotoData = null;
-                }
-
-
-            }
-
-            try
-            {
-
+                return t;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return t;
+            
 
         }
 

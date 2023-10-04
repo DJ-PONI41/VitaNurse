@@ -81,8 +81,8 @@ namespace NurseProjecDAO.Implementacion
             commands[2].Parameters.AddWithValue("@id2", id);
             commands[2].Parameters.AddWithValue("@especialidad", t2.Especialidad);
             commands[2].Parameters.AddWithValue("@añoTitulacion", t2.AñoTitulacion);
-            commands[2].Parameters.AddWithValue("@lugarTitulacion", t2.LugarTitulacion);
-            commands[2].Parameters.AddWithValue("@datos", t2.Cvc);
+            commands[2].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary, -1).Value = t2.LugarTitulacion;
+            commands[2].Parameters.Add("@datos", SqlDbType.VarBinary, -1).Value = t2.Cvc;
 
 
 
@@ -91,8 +91,9 @@ namespace NurseProjecDAO.Implementacion
 
         public DataTable Select()
         {
-            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
-                        P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
+						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV
                         FROM Person P 
                         INNER JOIN Nurse N ON P.id = N.id
 						INNER JOIN [User] U ON N.id = U.id
@@ -113,52 +114,87 @@ namespace NurseProjecDAO.Implementacion
 
         public Nurse Get(int Id)
         {
-            Nurse t = null;
-            string query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
-                        P.email AS Correo,P.addres Direccion,P.latitude,P.longitude,P.municipio AS Municipio,
-                        N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+
+            try
+            {
+                Nurse t = null;
+                string query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
+                       ISNULL(P.photo, NULL) AS Fotografia, P.email AS Correo,P.addres Direccion,P.latitude,P.longitude,P.municipio AS Municipio,
+                        N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion',ISNULL(N.lugarTitulacion, NULL) AS 'Titulo Profesional',ISNULL(n.datos, NULL) CV
                         FROM Person P 
                         INNER JOIN Nurse N ON P.id = N.id
 						
                         WHERE P.id = @id";
 
-            /*,N.lugarTitulacion AS 'Universidad de Egreso',N.datos AS Cvc*/
+                /*,N.lugarTitulacion AS 'Universidad de Egreso',N.datos AS Cvc*/
 
-            SqlCommand command = CreateBasicCommand(query);
-            command.Parameters.AddWithValue("@id", Id);
+                SqlCommand command = CreateBasicCommand(query);
+                command.Parameters.AddWithValue("@id", Id);
 
-            DataTable table = ExecuteDataTableCommand(command);
-            if (table.Rows.Count > 0)
-            {
-                t = new Nurse();
-                t.Id = short.Parse(table.Rows[0]["id"].ToString());
-                t.Name = table.Rows[0]["Nombre"].ToString();
-                t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
-                t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
-                t.Ci = table.Rows[0]["CI"].ToString();
-                t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];
+                DataTable table = ExecuteDataTableCommand(command);
+                if (table.Rows.Count > 0)
+                {
+                    t = new Nurse();
+                    t.Id = short.Parse(table.Rows[0]["id"].ToString());
+                    t.Name = table.Rows[0]["Nombre"].ToString();
+                    t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
+                    t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
+                    t.Ci = table.Rows[0]["CI"].ToString();
+                    t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];
+                    t.Phone = table.Rows[0]["Celular"].ToString();
 
-                t.Phone = table.Rows[0]["Celular"].ToString();
-                t.Email = table.Rows[0]["Correo"].ToString();
-                t.Addres = table.Rows[0]["Direccion"].ToString();
-                t.Latitude = table.Rows[0]["latitude"].ToString();
-                t.Longitude = table.Rows[0]["longitude"].ToString();
-                t.Municipio = table.Rows[0]["Municipio"].ToString();
-                t.Especialidad = table.Rows[0]["Especialidad"].ToString();
-                t.AñoTitulacion = (DateTime)table.Rows[0]["Año de Titulacion"];
+                    t.Email = table.Rows[0]["Correo"].ToString();
+                    t.Addres = table.Rows[0]["Direccion"].ToString();
+                    t.Latitude = table.Rows[0]["latitude"].ToString();
+                    t.Longitude = table.Rows[0]["longitude"].ToString();
+                    t.Municipio = table.Rows[0]["Municipio"].ToString();
+                    t.Especialidad = table.Rows[0]["Especialidad"].ToString();
+                    t.AñoTitulacion = (DateTime)table.Rows[0]["Año de Titulacion"];
 
-            }
 
-            try
-            {
+                    if (table.Rows[0]["Fotografia"] != DBNull.Value)
+                    {
+                        byte[] photoData = (byte[])table.Rows[0]["Fotografia"];
 
+                        t.PhotoData = photoData;
+                    }
+                    else
+                    {
+                        t.PhotoData = null;
+                    }
+
+                    if (table.Rows[0]["Titulo Profesional"] != DBNull.Value)
+                    {
+                        byte[] photoData = (byte[])table.Rows[0]["Titulo Profesional"];
+
+                        t.LugarTitulacion = photoData;
+                    }
+                    else
+                    {
+                        t.LugarTitulacion = null;
+                    }
+
+                    if (table.Rows[0]["CV"] != DBNull.Value)
+                    {
+                        byte[] photoData = (byte[])table.Rows[0]["CV"];
+
+                        t.Cvc = photoData;
+                    }
+                    else
+                    {
+                        t.Cvc = null;
+                    }
+
+
+                }
+                return t;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return t;
+
 
         }
 

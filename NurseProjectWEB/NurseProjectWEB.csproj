@@ -88,6 +88,7 @@
     <Content Include="RegisterNurse.aspx" />
     <Content Include="RegisterPaciente.aspx" />
     <Content Include="Web.config" />
+    <Content Include="WiewPdf.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdmHome.aspx.cs">
@@ -177,6 +178,13 @@
     </Compile>
     <Compile Include="RegisterPaciente.aspx.designer.cs">
       <DependentUpon>RegisterPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WiewPdf.aspx.cs">
+      <DependentUpon>WiewPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WiewPdf.aspx.designer.cs">
+      <DependentUpon>WiewPdf.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
