@@ -150,6 +150,15 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.TextBox txtTitulacion;
 
         /// <summary>
+        /// Control lnkTituloPdf.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkTituloPdf;
+
+        /// <summary>
         /// Control fileTitulo.
         /// </summary>
         /// <remarks>
@@ -159,6 +168,15 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.FileUpload fileTitulo;
 
         /// <summary>
+        /// Control lnkCvPdf.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkCvPdf;
+
+        /// <summary>
         /// Control fileCvc.
         /// </summary>
         /// <remarks>
@@ -166,6 +184,15 @@ namespace NurseProjectWEB
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fileCvc;
+
+        /// <summary>
+        /// Control imgPreview.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgPreview;
 
         /// <summary>
         /// Control fileUpload.

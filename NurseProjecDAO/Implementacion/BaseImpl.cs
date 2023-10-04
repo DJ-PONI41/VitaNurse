@@ -10,11 +10,11 @@ namespace NurseProjecDAO.Implementacion
 {
     public class BaseImpl
     {
-        string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
+        //string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
         
         
         // esta la conexion del host de la base de datos 
-        //string connectionString = @"Server=nurseprojectdb.cyrmtk6nubmb.us-east-2.rds.amazonaws.com;Database=NurseProjectDB;User Id=admin;Password=Univalle";
+        string connectionString = @"Server=NurseProjectDB.mssql.somee.com;Database=NurseProjectDB;User Id=Burgos333_SQLLogin_1;Password=baw1gdbwcg";
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {
@@ -84,6 +84,26 @@ namespace NurseProjecDAO.Implementacion
                 throw;
             }
             finally { command.Connection.Close(); }
+        }
+
+
+        private string GetLastInsertedId(string table)
+        {
+            string query = $"SELECT IDENT_CURRENT('{table}')";
+            SqlCommand command = CreateBasicCommand(query);
+
+            try
+            {
+                command.Connection.Open();                
+                return command.ExecuteScalar().ToString();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { command.Connection.Close(); }
+            
         }
 
 
@@ -157,11 +177,6 @@ namespace NurseProjecDAO.Implementacion
             }
             return table;
         }
-
-
-
-
-
 
     }
 }
