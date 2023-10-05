@@ -18,9 +18,6 @@ namespace NurseProjectWEB
     public partial class CrudNurse : System.Web.UI.Page
     {
 
-
-
-
         NurseImpl implNurse;
         Nurse N;
 

@@ -81,9 +81,10 @@ namespace NurseProjecDAO.Implementacion
             commands[2].Parameters.AddWithValue("@id2", id);
             commands[2].Parameters.AddWithValue("@especialidad", t2.Especialidad);
             commands[2].Parameters.AddWithValue("@añoTitulacion", t2.AñoTitulacion);
-            commands[2].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary, -1).Value = t2.LugarTitulacion;
-            commands[2].Parameters.Add("@datos", SqlDbType.VarBinary, -1).Value = t2.Cvc;
-
+            //commands[2].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary).Value = t2.LugarTitulacion;
+            commands[2].Parameters.AddWithValue("@lugarTitulacion", t2.LugarTitulacion);
+            //commands[2].Parameters.Add("@datos", SqlDbType.VarBinary).Value = t2.Cvc;
+            commands[2].Parameters.AddWithValue("@datos", t2.Cvc);
 
 
             return ExecuteNBasicCommand(commands);
