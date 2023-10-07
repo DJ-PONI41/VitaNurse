@@ -76,7 +76,7 @@ namespace NurseProjecDAO.Implementacion
 
 
         //este se usa 
-        public int Insert2(User t, Paciente t2)
+        public int InsertP2(User t, Paciente t2)
         {
             query = @"INSERT INTO Person(names,lastName,secondLastName,photo,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
 		            VALUES(@names,@lastName,@secondLastName,@photo,@birthdate,@phone,@ci,@email,@addres,@latitude,@longitude,@municipio)";
@@ -120,8 +120,7 @@ namespace NurseProjecDAO.Implementacion
 
 
         public Paciente Get(short Id)
-        {
-            
+        {           
 
             try
             {

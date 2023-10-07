@@ -9,12 +9,10 @@ using System.Data.SqlClient;
 namespace NurseProjecDAO.Implementacion
 {
     public class BaseImpl
-    {
-        //string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
-        
-        
+    {    
+             
         // esta la conexion del host de la base de datos 
-        string connectionString = @"Server=NurseProjectDB.mssql.somee.com;Database=NurseProjectDB;User Id=Burgos333_SQLLogin_1;Password=baw1gdbwcg";
+        string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {

@@ -12,19 +12,16 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Data;
+using System.Globalization;
 
 namespace NurseProjectWEB
 {
     public partial class CrudNurse : System.Web.UI.Page
     {
 
-
-
-
         NurseImpl implNurse;
-        Nurse N;
-
         UserImpl implUser;
+        Nurse N;
         User U;
 
         private short id;
@@ -124,21 +121,21 @@ namespace NurseProjectWEB
 
 
                 N = new Nurse(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añotitulacion, PdfOriginal, CvcOriginal);
-                //implNurse = new NurseImpl();
-                //int n = implNurse.InsertN2(U, N);
+                implNurse = new NurseImpl();
 
                 U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, rol);
-                implUser = new UserImpl();
-                int u = implUser.Insert2(U, N);
+                //implUser = new UserImpl();
+                //int u = implUser.InsertN2(U, N);
+                int n = implNurse.InsertN2(U, N);
 
-                if (u > 0)
+                if (n > 0)
                 {
 
                     label1.CssClass = "alert alert-success";
                     label1.Text = "El registro se ha realizado con éxito.";
                     label1.Style["display"] = "block";
                     Task.Run(() => EnviarCorreo(user, password, correo));
-                    Response.Redirect("Login.aspx");
+                    Select();
                 }
                 else
                 {
@@ -208,21 +205,6 @@ namespace NurseProjectWEB
                     DateTime fechaTitulacion = (DateTime)dr["Año de Titulacion"];
                     string fechaFormateadaTitulacion = fechaTitulacion.ToString("yyyy-MM-dd");
 
-                    string PdfTitulo= "";
-                    string PdfCv = "";
-
-                    if (!Convert.IsDBNull(dr["Titulo Profesional"]))
-                    {
-                        PdfTitulo = $"<a href='WiewPdf.aspx?pdf=titulo&id={dr["Id"]}' target='_blank'>Ver PDF Título</a>";
-                    }
-
-                    if (!Convert.IsDBNull(dr["CV"]))
-                    {
-                        PdfCv = $"<a href='WiewPdf.aspx?pdf=cv&id={dr["Id"]}' target='_blank'>Ver PDF CV</a>";
-                    }
-
-
-
 
                     table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
                                  dr["Apellido Materno"].ToString(), fechaFormateada, "", "",
@@ -288,17 +270,17 @@ namespace NurseProjectWEB
         }
         void LoadType()
         {
+            type = Request.QueryString["type"];
+
+            if (type == "U")
+            {
+
+                Get();
+            }
+
             try
             {
-                type = Request.QueryString["type"];
 
-                if (type == "U")
-                {
-                    //txtUsuario.Visible = false;
-                    //txtContrasena.Visible = false;
-
-                    Get();
-                }
             }
             catch (Exception ex)
             {
@@ -316,6 +298,7 @@ namespace NurseProjectWEB
                 if (id > 0)
                 {
                     implNurse = new NurseImpl();
+
                     N = implNurse.Get(id);
 
                     if (N != null)
@@ -325,7 +308,7 @@ namespace NurseProjectWEB
                             txtNombre.Text = N.Name.ToString();
                             txtApellidoPaterno.Text = N.LastName.ToString();
                             txtApellidoMaterno.Text = N.SecondLastName.ToString();
-                            txtFechaNacimiento.Text = N.Birthdate.ToString("dd/MM/yyyy");
+                            txtFechaNacimiento.Text = N.Birthdate.ToString("yyyy-MM-dd");
                             txtCelular.Text = N.Phone.ToString();
                             txtCi.Text = N.Ci.ToString();
                             txtCorreo.Text = N.Email.ToString();
@@ -334,7 +317,8 @@ namespace NurseProjectWEB
                             txtLong.Text = N.Longitude.ToString();
                             txtMunicipio.Text = N.Municipio.ToString();
                             txtEspecialidad.Text = N.Especialidad.ToString();
-                            txtTitulacion.Text = N.AñoTitulacion.ToString();
+                            txtTitulacion.Text = N.AñoTitulacion.ToString("yyyy-MM-dd");
+
 
                             if (N.PhotoData != null && N.PhotoData.Length > 0)
                             {
@@ -345,8 +329,6 @@ namespace NurseProjectWEB
                             {
                                 imgPreview.ImageUrl = string.Empty;
                             }
-
-
 
                         }
                     }
@@ -409,6 +391,72 @@ namespace NurseProjectWEB
             {
                 label1.Text = ex.Message;
             }
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            short id = short.Parse(Request.QueryString["id"]);
+
+            implNurse = new NurseImpl();
+
+
+            string nombre = txtNombre.Text;
+            string apellidoPaterno = txtApellidoPaterno.Text;
+            string apellidoMaterno = txtApellidoMaterno.Text;
+            DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+            string celular = txtCelular.Text;
+            string ci = txtCi.Text;
+            string correo = txtCorreo.Text;
+            string direccion = txtDireccion.Text;
+            string latitud = txtLat.Text;
+            string longitud = txtLong.Text;
+            string municipio = txtMunicipio.Text;
+            string especialidad = txtEspecialidad.Text;
+            DateTime añotitulacion = DateTime.Parse(txtTitulacion.Text);
+
+
+            // Datos img
+            int img = fileUpload.PostedFile.ContentLength;
+            byte[] ImgOriginal = new byte[img];
+            fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
+
+            // Datos pdf
+            int titulo = fileTitulo.PostedFile.ContentLength;
+            byte[] PdfOriginal = new byte[titulo];
+            fileTitulo.PostedFile.InputStream.Read(PdfOriginal, 0, titulo);
+
+            int Cvc = fileCvc.PostedFile.ContentLength;
+            byte[] CvcOriginal = new byte[Cvc];
+            fileCvc.PostedFile.InputStream.Read(CvcOriginal, 0, Cvc);
+
+            Nurse nurse = new Nurse(id, nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añotitulacion, PdfOriginal, CvcOriginal);
+            int n = implNurse.UpdateN(nurse);
+
+            if (n > 0)
+            {
+                Select(); // Llamamos a la función Select para recargar los datos
+            }
+            else
+            {
+                label1.Text = "Error al actualizar.";
+                label1.CssClass = "error-message";
+            }
+
+
+            try
+            {
+                
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
         }
     }
 }

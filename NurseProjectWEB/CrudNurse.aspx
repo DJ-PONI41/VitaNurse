@@ -84,12 +84,12 @@
                     </div>
                     <div class="form-group">
                         <label for="fileUpload">Sube tu titulo profesional</label>
-                        <asp:HyperLink ID="lnkTituloPdf" runat="server" Text="Ver PDF" Target="_blank" Visible="false" />
+                       
                         <asp:FileUpload ID="fileTitulo" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
                         <label for="fileUpload">Subir CV</label>
-                        <asp:HyperLink ID="lnkCvPdf" runat="server" Text="Ver PDF" Target="_blank" Visible="false" />
+                        
                         <asp:FileUpload ID="fileCvc" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
@@ -98,8 +98,9 @@
 
                         <asp:FileUpload ID="fileUpload" CssClass="form-control" runat="server" />
                     </div>
-                    <div class="form-group">
+                    <div class="btn-group">
                         <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-primary" OnClick="btnRegistrar_Click" />
+                        <asp:Button ID="btnUpdate" runat="server" Text="Modificar" style="color:white; background-color:#dec521;" CssClass="btn btn-warning" OnClick="btnUpdate_Click"/>
                     </div>
                 </div>
             </div>
