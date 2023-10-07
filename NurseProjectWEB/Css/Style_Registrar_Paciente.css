@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,700;1,200;1,300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat+Alternates',sans-serif;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: linear-gradient(-225deg, #31a3c5 0%, #9ae2c2 100%);
+}
+
+.container{
+    max-width: 1400px;
+    max-height: 850px;
+    width: 100%;
+    height: 100%;
+    background-color: #a9fff248;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.container .title{
+    font-size: 25px;
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+    text-align: center;
+}
+
+.container form .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form .user-details .input-box{
+    margin: 20px 0 12px 0;   
+    width: calc(100% / 2 - 20px);
+}
+
+.user-details .input-box .details{
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.user-details .input-box input	{
+    outline: none;
+    border-radius: 15px;
+    height: 45px;
+    width: 100%;
+    border: 5px solid;
+    padding-left: 15px;
+    font-size: 16px;
+    background: transparent;
+    border-color: #ffffffab;
+    transition: all 0.3s ease;
+    color: #fff;
+    font-weight: 500;
+}
+
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+    border-color: #a5faff;
+}
+
+form .button{
+    height: 45px;
+    margin: 0px 0;
+}
+
+form .button input{
+    height: 100%;
+    width: 25%;
+    outline: none;
+    color: #65A29F;
+    font-weight: 600;
+    background: #A1E9E8;
+    border: transparent;
+    border-radius: 15px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    box-shadow: 0px 0px 7px -4px #030303;
+    margin-top: -200px;
+}
+
+
+form .button input:hover{
+    color: #6CB1AE;
+    background-color: #B0FFFE;
+    transition: all 0.3s ease;
+}
+
+.box-mapa{
+    outline: none;
+    border-radius: 15px;
+    height: 45px;
+    width: 100%;
+    border: 5px solid;
+    padding-left: 15px;
+    font-size: 16px;
+    background: transparent;
+    border-color: #ffffffab;
+    transition: all 0.3s ease;
+    color: #fff;
+    font-weight: 500;
+    height: 360px;
+}
+.box-archivo{
+    outline: none;
+    border-radius: 15px;
+    height: 45px;
+    width: 100%;
+    border: 5px solid;
+    padding-left: 15px;
+    font-size: 16px;
+    background: transparent;
+    border-color: #ffffffab;
+    transition: all 0.3s ease;
+    color: #fff;
+    font-weight: 500;
+    height: 170px;
+}
+
+#input-box-nombre{
+    width: 440px;
+}
+#input-box-usuario{
+    width: 440px;
+}
+#input-box-direccion{
+    width: 440px;
+}
+#input-box-contrasenia{
+    width: 440px;
+}
+#input-box-municipio{
+    width: 440px;
+}
+#input-box-apellido-p{
+    width: 440px;
+}
+#input-box-apellido-m{
+    width: 440px;
+}
+
+#input-box-mapa{
+    width: 440px;
+}
+
+#input-box-correo{
+    width: 440px;
+}
+#input-box-ci{
+    margin-top: -300px;
+    width: 440px;
+}
+#input-box-celular{
+    margin-top: -110px;
+    width: 440px;
+}
+#input-box-historial{
+    margin-top: -300px;
+    margin-left: 50px;
+    width: 440px;
+}
+#input-box-fecha{
+    margin-top: -200px;
+    width: 440px;
+}
+#input-box-archivo{
+    margin-top: -200px;
+    margin-left: 250px;
+    width: 440px;
+}
+
+.texto{
+    text-align: center;
+    color: #65A29F;
+    letter-spacing: 1px;
+}
+
+#input-box-file {
+    height: 50px;
+    text-align: center;
+    position: relative;
+    border-radius: 15px;
+    margin: 50px;
+    padding: 10px;
+    width: 250px;
+    font-size: 18px;
+    background-color: #A1E9E8;
+    box-shadow: 0px 0px 7px -4px #030303;
+    margin-right: 100px;
+    margin-top: 0px;
+}
+
+#fileUpload{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+#btnObtenerUbicacion{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+#Button1 {
+    margin-left: 150px;
+}
+
+#btnAtras{
+
+    margin-left: 280px;
+}

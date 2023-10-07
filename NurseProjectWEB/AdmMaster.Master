@@ -6,29 +6,96 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Panel de Administración</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="Css/Side_Menu_styles.css">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-        <div class="position-sticky">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" href="AdmHome.aspx">Inicio
+    <div id="sidemenu" class="menu-collapsed">
+            <div id="header">
+                <div id="menu-btn">
+                    <div class="btn-hamburger"></div>
+                    <div class="btn-hamburger"></div>
+                    <div class="btn-hamburger"></div>
+                </div>
+                <div id="title">
+                    <div id="profile">
+                        <div id="photo"><img src="Images/Logo_svg.svg" alt=""></div>
+        
+                        <div id="name"><span>Jorge Varela</span></div>
+                    </div>
+                </div>
+                
+            </div>
+
+            
+
+            <div id="menu-items">
+                <div class="item">
+                    <div id="submenu-btn" class="submenu-styl-none">
+                        <div class="icon"><img src="Images/icons/Icon personal injury.png" alt=""></div>
+                        <div class="title"><span>Pacientes</span></div>                        
+                        <div class="submenu"><img src="Images/icons/Icon submenu.png" alt=""></div>
+                    </div>
+
+                    <div id="side-submenu" class="submenu-collapsed">
+                        <div class="item">
+                            <a href="CrudPaciente.aspx">
+                                <div id="title-sunmenu" class="title"><span>Registrar Paciente</span></div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#">
+                                <div id="title-sunmenu" class="title"><span>Lista Pacientes</span></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="item">
+                    <div id="submenu-btn-2" class="submenu-styl-none">
+                        <div class="icon"><img src="Images/icons/Icon health and safety.png" alt=""></div>
+                        <div class="title"><span>Enfermeras</span></div>
+                        <div class="submenu"><img src="Images/icons/Icon submenu.png" alt=""></div>
+                    </div>
+
+                    <div id="side-submenu-2" class="submenu-collapsed">
+                        <div class="item">
+                            <a href="CrudNurse.aspx">
+                                <div id="title-sunmenu" class="title"><span>Registrar Enfemera</span></div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#">
+                                <div id="title-sunmenu" class="title"><span>Lista Enfermeras</span></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="item">
+                    <a href="#">
+                        <div class="icon"><img src="Images/icons/Icon notifications.png" alt=""></div>
+                        <div class="title"><span>Solicitudes</span></div>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="CrudNurse.aspx">Enfermeras
+                </div>
+
+                <div class="item">
+                    <a href="#">
+                        <div class="icon"><img src="Images/icons/Icon address card.png" alt=""></div>
+                        <div class="title"><span>Servicios</span></div>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="CrudPaciente.aspx">Pacientes
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </div>
+
+
         </div>
-    </nav>
+         
+        <div id="main-container">
+            hola todos
+        </div>
     <div class="container-fluid">
         <div class="row">
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -38,6 +105,36 @@
         </div>
     </div>
     
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+     <script>
+            const btn = document.querySelector('#menu-btn');
+            const menu = document.querySelector('#sidemenu');
+
+            btn.addEventListener('click', e => {
+                menu.classList.toggle("menu-expanded");
+                menu.classList.toggle("menu-collapsed");
+
+                document.querySelector('body').classList.toggle('body-expanded');
+            });
+
+            const btn_sub = document.querySelector('#submenu-btn');
+            const menu_sub = document.querySelector('#side-submenu');
+
+            btn_sub.addEventListener('click', e => {
+                menu_sub.classList.toggle("submenu-expanded");
+                btn_sub.classList.toggle("submenu-styl");
+                menu_sub.classList.toggle("submenu-collapsed");
+                
+            });
+
+            const btn_sub_2 = document.querySelector('#submenu-btn-2');
+            const menu_sub_2 = document.querySelector('#side-submenu-2');
+
+            btn_sub_2.addEventListener('click', e => {
+                menu_sub_2.classList.toggle("submenu-expanded");
+                btn_sub_2.classList.toggle("submenu-styl");
+                menu_sub_2.classList.toggle("submenu-collapsed");
+                
+            });
+     </script>
 </body>
 </html>

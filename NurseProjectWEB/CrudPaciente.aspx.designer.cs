@@ -33,6 +33,24 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
+        /// Control txtUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUsuario;
+
+        /// <summary>
+        /// Control txtDireccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDireccion;
+
+        /// <summary>
         /// Control txtApellidoPaterno.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,24 @@ namespace NurseProjectWEB
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtApellidoPaterno;
+
+        /// <summary>
+        /// Control txtContrasena.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtContrasena;
+
+        /// <summary>
+        /// Control txtMunicipio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMunicipio;
 
         /// <summary>
         /// Control txtApellidoMaterno.
@@ -51,6 +87,24 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.TextBox txtApellidoMaterno;
 
         /// <summary>
+        /// Control label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label1;
+
+        /// <summary>
+        /// Control txtCorreo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCorreo;
+
+        /// <summary>
         /// Control txtCi.
         /// </summary>
         /// <remarks>
@@ -58,6 +112,15 @@ namespace NurseProjectWEB
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCi;
+
+        /// <summary>
+        /// Control txtHistorial.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtHistorial;
 
         /// <summary>
         /// Control txtFechaNacimiento.
@@ -69,6 +132,15 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.TextBox txtFechaNacimiento;
 
         /// <summary>
+        /// Control imgPreview.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgPreview;
+
+        /// <summary>
         /// Control txtCelular.
         /// </summary>
         /// <remarks>
@@ -76,6 +148,15 @@ namespace NurseProjectWEB
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCelular;
+
+        /// <summary>
+        /// Control fileUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileUpload;
 
         /// <summary>
         /// Control txtLat.
@@ -96,96 +177,6 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.TextBox txtLong;
 
         /// <summary>
-        /// Control txtUsuario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuario;
-
-        /// <summary>
-        /// Control txtContrasena.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtContrasena;
-
-        /// <summary>
-        /// Control label1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
-
-        /// <summary>
-        /// Control txtDireccion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDireccion;
-
-        /// <summary>
-        /// Control txtMunicipio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMunicipio;
-
-        /// <summary>
-        /// Control txtCorreo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCorreo;
-
-        /// <summary>
-        /// Control txtHistorial.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtHistorial;
-
-        /// <summary>
-        /// Control imgPreview.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgPreview;
-
-        /// <summary>
-        /// Control fileUpload.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUpload;
-
-        /// <summary>
-        /// Control btnRegistrar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegistrar;
-
-        /// <summary>
         /// Control GridDat.
         /// </summary>
         /// <remarks>
@@ -193,5 +184,23 @@ namespace NurseProjectWEB
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridDat;
+
+        /// <summary>
+        /// Control btnAtras.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAtras;
+
+        /// <summary>
+        /// Control Button1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }

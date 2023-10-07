@@ -201,7 +201,7 @@ body {
     overflow: hidden;
     padding: .7em;
     border-radius: 1em;
-    max-height: 450px;
+    max-height: 550px;
     display: grid;
     grid-auto-rows: max-content;
     grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
