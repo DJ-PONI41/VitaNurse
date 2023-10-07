@@ -35,23 +35,25 @@ namespace NurseProjectWEB
 
         void LoadType()
         {
+            type = Request.QueryString["type"];
+
+            if (type == "Titulo")
+            {
+                Get();
+            }
+            else if (type == "CV")
+            {
+                Get();
+            }
+            else
+            {
+
+                Response.Write("Tipo de PDF no válido.");
+            }
+
             try
             {
-                type = Request.QueryString["type"];
-
-                if (type == "Titulo" )
-                {
-                    Get();
-                }
-                else if (type == "CV")
-                {
-                    Get();
-                }
-                else
-                {
-
-                    Response.Write("Tipo de PDF no válido.");
-                }
+                
             }
             catch (Exception ex)
             {
@@ -65,54 +67,56 @@ namespace NurseProjectWEB
             N = null;
 
             id = short.Parse(Request.QueryString["id"]);
-            try
+
+            if (id > 0)
             {
-                if (id > 0)
+                implNurse = new NurseImpl();
+                N = implNurse.Get(id);
+
+                if (N != null)
                 {
-                    implNurse = new NurseImpl();
-                    N = implNurse.Get(id);
+                    byte[] pdfData = null;
+                    string contentType = "";
 
-                    if (N != null)
+                    if (type == "Titulo" && N.LugarTitulacion != null)
                     {
-                        byte[] pdfData = null;
-                        string contentType = "";
+                        pdfData = N.LugarTitulacion;
+                        contentType = "application/pdf";
+                    }
+                    else if (type == "CV" && N.Cvc != null)
+                    {
+                        pdfData = N.Cvc;
+                        contentType = "application/pdf";
+                    }
 
-                        if (type == "Titulo" && N.LugarTitulacion != null)
-                        {
-                            pdfData = N.LugarTitulacion;
-                            contentType = "application/pdf";
-                        }
-                        else if (type == "CV" && N.Cvc != null)
-                        {
-                            pdfData = N.Cvc;
-                            contentType = "application/pdf";
-                        }
-
-                        if (pdfData != null)
-                        {
-                            Response.Clear();
-                            Response.ContentType = contentType;
-                            Response.AddHeader("content-disposition", "inline; filename=nombre_del_archivo.pdf");
-                            Response.BinaryWrite(pdfData);
-                            Response.End();
-                        }
-                        else
-                        {
-
-                            Response.Write("El PDF solicitado no se encontró.");
-                        }
+                    if (pdfData != null)
+                    {
+                        Response.Clear();
+                        Response.ContentType = contentType;
+                        Response.AddHeader("content-disposition", "attachment; filename=nombre_del_archivo.pdf");
+                        Response.BinaryWrite(pdfData);
+                        
                     }
                     else
                     {
 
-                        Response.Write("No se encontró el registro del enfermero.");
+                        Response.Write("El PDF solicitado no se encontró.");
                     }
                 }
                 else
                 {
 
-                    Response.Write("ID de enfermera no válido.");
+                    Response.Write("No se encontró el registro del enfermero.");
                 }
+            }
+            else
+            {
+
+                Response.Write("ID de enfermera no válido.");
+            }
+            try
+            {
+                
             }
             catch (Exception ex)
             {

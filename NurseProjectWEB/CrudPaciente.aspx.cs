@@ -19,7 +19,7 @@ namespace NurseProjectWEB
         PacienteImpl implPaciente;
         Paciente P;
 
-        UserImpl implUser;
+        
         User U;
 
         private short id;
@@ -98,12 +98,13 @@ namespace NurseProjectWEB
             {
                 P = new Paciente(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
                 implPaciente = new PacienteImpl();
-                //int n = implPaciente.Insert(P);
+                
 
                 U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);
-                implUser = new UserImpl();
-                int u = implUser.Insert2(U, P);
-                if (u > 0)
+                //implUser = new UserImpl();
+                //int u = implUser.Insert2(U, P);
+                int n = implPaciente.InsertP2(U, P);
+                if (n > 0)
                 {
 
                     label1.CssClass = "alert alert-success";

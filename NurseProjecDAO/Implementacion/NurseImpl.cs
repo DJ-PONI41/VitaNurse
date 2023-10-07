@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,6 @@ namespace NurseProjecDAO.Implementacion
               WHERE id = @idNurse
                UPDATE [User] SET status = 0, lastUpdate = CURRENT_TIMESTAMP
               WHERE id = @idUser";
-
-
-
 
             SqlCommand command = CreateBasicCommand(query);
             command.Parameters.AddWithValue("@idPerson", t.Id);
@@ -81,10 +79,10 @@ namespace NurseProjecDAO.Implementacion
             commands[2].Parameters.AddWithValue("@id2", id);
             commands[2].Parameters.AddWithValue("@especialidad", t2.Especialidad);
             commands[2].Parameters.AddWithValue("@añoTitulacion", t2.AñoTitulacion);
-            //commands[2].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary).Value = t2.LugarTitulacion;
-            commands[2].Parameters.AddWithValue("@lugarTitulacion", t2.LugarTitulacion);
-            //commands[2].Parameters.Add("@datos", SqlDbType.VarBinary).Value = t2.Cvc;
-            commands[2].Parameters.AddWithValue("@datos", t2.Cvc);
+            commands[2].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary).Value = t2.LugarTitulacion;
+            //commands[2].Parameters.AddWithValue("@lugarTitulacion", t2.LugarTitulacion);
+            commands[2].Parameters.Add("@datos", SqlDbType.VarBinary).Value = t2.Cvc;
+            //commands[2].Parameters.AddWithValue("@datos", t2.Cvc);
 
 
             return ExecuteNBasicCommand(commands);
@@ -141,9 +139,8 @@ namespace NurseProjecDAO.Implementacion
                     t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
                     t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
                     t.Ci = table.Rows[0]["CI"].ToString();
-                    t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];
+                    t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];         
                     t.Phone = table.Rows[0]["Celular"].ToString();
-
                     t.Email = table.Rows[0]["Correo"].ToString();
                     t.Addres = table.Rows[0]["Direccion"].ToString();
                     t.Latitude = table.Rows[0]["latitude"].ToString();
@@ -166,9 +163,9 @@ namespace NurseProjecDAO.Implementacion
 
                     if (table.Rows[0]["Titulo Profesional"] != DBNull.Value)
                     {
-                        byte[] photoData = (byte[])table.Rows[0]["Titulo Profesional"];
+                        byte[] TituloData = (byte[])table.Rows[0]["Titulo Profesional"];
 
-                        t.LugarTitulacion = photoData;
+                        t.LugarTitulacion = TituloData;
                     }
                     else
                     {
@@ -177,9 +174,9 @@ namespace NurseProjecDAO.Implementacion
 
                     if (table.Rows[0]["CV"] != DBNull.Value)
                     {
-                        byte[] photoData = (byte[])table.Rows[0]["CV"];
+                        byte[] CvData = (byte[])table.Rows[0]["CV"];
 
-                        t.Cvc = photoData;
+                        t.Cvc = CvData;
                     }
                     else
                     {
@@ -202,6 +199,53 @@ namespace NurseProjecDAO.Implementacion
         public int Update(Nurse t)
         {
             throw new NotImplementedException();
+        }
+        public int UpdateN(Nurse t)
+        {
+
+            query = @"UPDATE Person SET names = @names,lastName = @lastName,secondLastName = @secondLastName,photo = @photo,birthdate = @birthdate , phone = @phone,ci = @ci
+                    ,email = @email,addres = @addres,latitude = @latitude,longitude = @longitude,municipio = @municipio, lastUpdate = CURRENT_TIMESTAMP
+		             WHERE id = @idP";    
+
+            string query2 = @"UPDATE Nurse Set especialidad = @especialidad,añoTitulacion = @añoTitulacion,lugarTitulacion = @lugarTitulacion,datos = @datos, lastUpdate = CURRENT_TIMESTAMP
+			                WHERE id = @idN";
+
+
+            List<SqlCommand> commands = Create2BasicCommand(query, query2);
+
+            commands[0].Parameters.AddWithValue("@idP",t.Id);
+            commands[0].Parameters.AddWithValue("@names", t.Name);
+            commands[0].Parameters.AddWithValue("@lastName", t.LastName);
+            commands[0].Parameters.AddWithValue("@secondLastName", t.SecondLastName);
+            commands[0].Parameters.AddWithValue("@photo", t.PhotoData);
+            commands[0].Parameters.AddWithValue("@birthdate", t.Birthdate);
+            commands[0].Parameters.AddWithValue("@phone", t.Phone);
+            commands[0].Parameters.AddWithValue("@ci", t.Ci);
+            commands[0].Parameters.AddWithValue("@email", t.Email);
+            commands[0].Parameters.AddWithValue("@addres", t.Addres);
+            commands[0].Parameters.AddWithValue("@latitude", t.Latitude);
+            commands[0].Parameters.AddWithValue("@longitude", t.Longitude);
+            commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
+                       
+
+            commands[1].Parameters.AddWithValue("@idN", t.Id);
+            commands[1].Parameters.AddWithValue("@especialidad",t.Especialidad);
+            commands[1].Parameters.AddWithValue("@añoTitulacion", t.AñoTitulacion);
+            commands[1].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary).Value = t.LugarTitulacion;
+            //commands[2].Parameters.AddWithValue("@lugarTitulacion", t2.LugarTitulacion);
+            commands[1].Parameters.Add("@datos", SqlDbType.VarBinary).Value = t.Cvc;
+            //commands[2].Parameters.AddWithValue("@datos", t2.Cvc);
+                       
+
+            try
+            {
+                return ExecuteNBasicCommand(commands);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
