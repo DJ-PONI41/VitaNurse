@@ -111,90 +111,70 @@ namespace NurseProjecDAO.Implementacion
         }
 
 
-        public Nurse Get(int Id)
+        public Nurse Get(int id)
         {
-
             try
             {
-                Nurse t = null;
-                string query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
-                       ISNULL(P.photo, NULL) AS Fotografia, P.email AS Correo,P.addres Direccion,P.latitude,P.longitude,P.municipio AS Municipio,
-                        N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion',ISNULL(N.lugarTitulacion, NULL) AS 'Titulo Profesional',ISNULL(n.datos, NULL) CV
-                        FROM Person P 
-                        INNER JOIN Nurse N ON P.id = N.id
-						
-                        WHERE P.id = @id";
+                Nurse nurse = null;
 
-                /*,N.lugarTitulacion AS 'Universidad de Egreso',N.datos AS Cvc*/
+                string query = @"
+            SELECT
+                P.id, P.names AS Nombre, P.lastName AS ApellidoPaterno, P.secondLastName AS ApellidoMaterno,
+                ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS FechaNacimiento, P.phone AS Celular, P.ci AS CI,
+                ISNULL(P.photo, NULL) AS Fotografia, P.email AS Correo, P.addres AS Direccion,
+                P.latitude, P.longitude, P.municipio AS Municipio,
+                N.especialidad AS Especialidad, N.añoTitulacion AS AñoTitulacion,
+                ISNULL(N.lugarTitulacion, NULL) AS TituloProfesional, ISNULL(N.datos, NULL) AS CV
+            FROM
+                Person P
+            INNER JOIN
+                Nurse N ON P.id = N.id
+            WHERE
+                P.id = @id";
 
-                SqlCommand command = CreateBasicCommand(query);
-                command.Parameters.AddWithValue("@id", Id);
-
-                DataTable table = ExecuteDataTableCommand(command);
-                if (table.Rows.Count > 0)
+                using (SqlCommand command = CreateBasicCommand(query))
                 {
-                    t = new Nurse();
-                    t.Id = short.Parse(table.Rows[0]["id"].ToString());
-                    t.Name = table.Rows[0]["Nombre"].ToString();
-                    t.LastName = table.Rows[0]["Apellido Paterno"].ToString();
-                    t.SecondLastName = table.Rows[0]["Apellido Materno"].ToString();
-                    t.Ci = table.Rows[0]["CI"].ToString();
-                    t.Birthdate = (DateTime)table.Rows[0]["Fecha de nacimiento"];         
-                    t.Phone = table.Rows[0]["Celular"].ToString();
-                    t.Email = table.Rows[0]["Correo"].ToString();
-                    t.Addres = table.Rows[0]["Direccion"].ToString();
-                    t.Latitude = table.Rows[0]["latitude"].ToString();
-                    t.Longitude = table.Rows[0]["longitude"].ToString();
-                    t.Municipio = table.Rows[0]["Municipio"].ToString();
-                    t.Especialidad = table.Rows[0]["Especialidad"].ToString();
-                    t.AñoTitulacion = (DateTime)table.Rows[0]["Año de Titulacion"];
+                    command.Parameters.AddWithValue("@id", id);
 
-
-                    if (table.Rows[0]["Fotografia"] != DBNull.Value)
+                    using (DataTable table = ExecuteDataTableCommand(command))
                     {
-                        byte[] photoData = (byte[])table.Rows[0]["Fotografia"];
+                        if (table.Rows.Count > 0)
+                        {
+                            DataRow row = table.Rows[0];
 
-                        t.PhotoData = photoData;
+                            nurse = new Nurse
+                            {
+                                Id = short.Parse(row["id"].ToString()),
+                                Name = row["Nombre"].ToString(),
+                                LastName = row["ApellidoPaterno"].ToString(),
+                                SecondLastName = row["ApellidoMaterno"].ToString(),
+                                Ci = row["CI"].ToString(),
+                                Birthdate = (DateTime)row["FechaNacimiento"],
+                                Phone = row["Celular"].ToString(),
+                                Email = row["Correo"].ToString(),
+                                Addres = row["Direccion"].ToString(),
+                                Latitude = row["latitude"].ToString(),
+                                Longitude = row["longitude"].ToString(),
+                                Municipio = row["Municipio"].ToString(),
+                                Especialidad = row["Especialidad"].ToString(),
+                                AñoTitulacion = (DateTime)row["AñoTitulacion"],
+                                PhotoData = row["Fotografia"] as byte[],
+                                LugarTitulacion = row["TituloProfesional"] as byte[],
+                                Cvc = row["CV"] as byte[]
+                            };
+                        }
                     }
-                    else
-                    {
-                        t.PhotoData = null;
-                    }
-
-                    if (table.Rows[0]["Titulo Profesional"] != DBNull.Value)
-                    {
-                        byte[] TituloData = (byte[])table.Rows[0]["Titulo Profesional"];
-
-                        t.LugarTitulacion = TituloData;
-                    }
-                    else
-                    {
-                        t.LugarTitulacion = null;
-                    }
-
-                    if (table.Rows[0]["CV"] != DBNull.Value)
-                    {
-                        byte[] CvData = (byte[])table.Rows[0]["CV"];
-
-                        t.Cvc = CvData;
-                    }
-                    else
-                    {
-                        t.Cvc = null;
-                    }
-
-
                 }
-                return t;
+
+                return nurse;
             }
             catch (Exception ex)
             {
+                // Manejar la excepción o registrarla adecuadamente
                 throw ex;
             }
-
-
-
         }
+
 
         public int Update(Nurse t)
         {

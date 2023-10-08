@@ -127,7 +127,7 @@
                 </div>
                 <div class="row">
                         <div class="col-12">
-                            <div class="table-responsive" style="max-height: 1px; overflow-y: auto; max-width: 1px;">
+                            <div class="table-responsive" style="max-height: 300px; overflow-y: auto; max-width: auto;">
                                 <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
                                     <Columns>
                                     </Columns>
