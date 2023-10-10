@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdmHome.aspx" />
+    <Content Include="ApprovalNurse.aspx" />
     <Content Include="CrudNurse.aspx" />
     <Content Include="CrudPaciente.aspx" />
     <Content Include="Css\Styles.css" />
@@ -104,6 +105,13 @@
     </Compile>
     <Compile Include="AdmMaster.Master.designer.cs">
       <DependentUpon>AdmMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalNurse.aspx.cs">
+      <DependentUpon>ApprovalNurse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApprovalNurse.aspx.designer.cs">
+      <DependentUpon>ApprovalNurse.aspx</DependentUpon>
     </Compile>
     <Compile Include="CrudNurse.aspx.cs">
       <DependentUpon>CrudNurse.aspx</DependentUpon>

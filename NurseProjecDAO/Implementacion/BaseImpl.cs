@@ -11,8 +11,7 @@ namespace NurseProjecDAO.Implementacion
     public class BaseImpl
     {
 
-        // esta la conexion del host de la base de datos 
-        //string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";
+        // esta la conexion del host de la base de datos         
         string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
         internal string query = "";
         public SqlCommand CreateBasicCommand()
