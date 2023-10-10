@@ -2,73 +2,34 @@
 using NurseProjecDAO.Implementacion;
 using NurseProjecDAO.Model;
 using System;
+using System.IO;
 using System.Web.UI;
 
 namespace NurseProjectWEB
 {
     public partial class WiewPdf : Page
     {
-        NurseImpl implNurse;
-        Nurse N;
-
-        private short id;
-        private string type;
+        private NurseImpl implNurse;
+        private Nurse N;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (short.TryParse(Request.QueryString["id"], out short NurseId))
+                if (short.TryParse(Request.QueryString["id"], out short nurseId))
                 {
-                    id = NurseId;
-                    LoadType();
-                   
+                    LoadPdfData(nurseId, Request.QueryString["type"]);
                 }
                 else
                 {
-                    //
+                    Response.Write("Enfermera no encontrada");
                 }
             }
-
-           
         }
 
-        void LoadType()
+        private void LoadPdfData(short id, string type)
         {
-            type = Request.QueryString["type"];
-
-            if (type == "Titulo")
-            {
-                Get();
-            }
-            else if (type == "CV")
-            {
-                Get();
-            }
-            else
-            {
-
-                Response.Write("Tipo de PDF no válido.");
-            }
-
             try
-            {
-                
-            }
-            catch (Exception ex)
-            {
-
-                string mensaje = ex.Message;
-            }
-        }
-
-        void Get()
-        {
-            N = null;
-
-            id = short.Parse(Request.QueryString["id"]);
-
-            if (id > 0)
             {
                 implNurse = new NurseImpl();
                 N = implNurse.Get(id);
@@ -77,53 +38,43 @@ namespace NurseProjectWEB
                 {
                     byte[] pdfData = null;
                     string contentType = "";
+                    string fileName = "";
 
                     if (type == "Titulo" && N.LugarTitulacion != null)
                     {
                         pdfData = N.LugarTitulacion;
                         contentType = "application/pdf";
+                        fileName = "nombre_del_archivo_titulo.pdf";
                     }
                     else if (type == "CV" && N.Cvc != null)
                     {
                         pdfData = N.Cvc;
                         contentType = "application/pdf";
+                        fileName = "nombre_del_archivo_cv.pdf";
                     }
 
                     if (pdfData != null)
                     {
                         Response.Clear();
                         Response.ContentType = contentType;
-                        Response.AddHeader("content-disposition", "attachment; filename=nombre_del_archivo.pdf");
+                        Response.AddHeader("content-disposition", $"attachment; filename={fileName}");
                         Response.BinaryWrite(pdfData);
-                        
+                        Response.End();
                     }
                     else
                     {
-
                         Response.Write("El PDF solicitado no se encontró.");
                     }
                 }
                 else
                 {
-
                     Response.Write("No se encontró el registro del enfermero.");
                 }
             }
-            else
-            {
-
-                Response.Write("ID de enfermera no válido.");
-            }
-            try
-            {
-                
-            }
             catch (Exception ex)
             {
-                
-                string mensaje = ex.Message;
+                Response.Write($"Error: {ex.Message}");
             }
         }
-
     }
 }

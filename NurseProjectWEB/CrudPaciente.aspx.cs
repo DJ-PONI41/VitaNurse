@@ -18,10 +18,7 @@ namespace NurseProjectWEB
     {
         PacienteImpl implPaciente;
         Paciente P;
-
-        
         User U;
-
         private short id;
         private string type;
 
@@ -30,55 +27,37 @@ namespace NurseProjectWEB
 
             if (Session["UserID"] == null)
             {
-                // El usuario no ha iniciado sesión, redirigir a la página de inicio de sesión
                 Response.Redirect("Login.aspx");
             }
             else
             {
-                // El usuario ha iniciado sesión, verificar el rol
                 string userRole = Session["UserRole"].ToString();
 
-                // Verificar si el usuario tiene el rol adecuado para acceder a esta ventana
                 if (userRole != "Administrador")
                 {
-                    // El usuario no tiene el rol adecuado, mostrar un mensaje de error o redirigir a una página de acceso no autorizado
                     Response.Write("Acceso no autorizado. Debes tener el rol de Administrador para acceder a esta página.");
-                    // También puedes redirigir a una página de acceso no autorizado en lugar de mostrar un mensaje aquí.
                 }
             }
 
-
             if (!IsPostBack)
             {
-
                 load();
                 LoadType();
                 Select();
-
             }
-
-
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
-            //obtener datos de la imagen
+            
             int img = fileUpload.PostedFile.ContentLength;
             byte[] ImgOriginal = new byte[img];
             fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
 
-            //Bitmap ImgBin = new Bitmap(fileUpload.PostedFile.InputStream);
-            //string ImagenDataUrl64 = "data:image/jpg;base64" + Convert.ToBase64String(ImgOriginal);
-            //imgPreview.ImageUrl = ImagenDataUrl64;
-
-
-
             string nombre = txtNombre.Text;
             string apellidoPaterno = txtApellidoPaterno.Text;
             string apellidoMaterno = txtApellidoMaterno.Text;
-
             string ci = txtCi.Text;
-
             DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
             string direccion = txtDireccion.Text;
             string latitud = txtLat.Text;
@@ -87,34 +66,22 @@ namespace NurseProjectWEB
             string municipio = txtMunicipio.Text;
             string correo = txtCorreo.Text;
             string usuario = txtUsuario.Text;
-            string contraseña = txtContrasena.Text;
-            //string repetirContrasena = txtRepetirContrasena.Text;
+            string contraseña = txtContrasena.Text;            
             string historial = txtHistorial.Text;
-            string rol = "Paciente";
-
-            //if (DateTime.TryParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaNacimiento))
-            //{
+            string rol = "Paciente";            
             try
             {
                 P = new Paciente(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
                 implPaciente = new PacienteImpl();
-                
-
-                U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);
-                //implUser = new UserImpl();
-                //int u = implUser.Insert2(U, P);
+                U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);                
                 int n = implPaciente.InsertP2(U, P);
                 if (n > 0)
                 {
-
                     label1.CssClass = "alert alert-success";
                     label1.Text = "El registro se ha realizado con éxito.";
                     label1.Style["display"] = "block";
-
                     Select();
                     Clear();
-
-
                 }
                 else
                 {
@@ -125,10 +92,9 @@ namespace NurseProjectWEB
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-            //}
+            
         }
 
 
@@ -154,13 +120,10 @@ namespace NurseProjectWEB
                 table.Columns.Add("Seleccionar", typeof(string));
                 table.Columns.Add("Borrar", typeof(string));
 
-
                 foreach (DataRow dr in dt.Rows)
-                {
-                    //
+                {                   
                     DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
                     string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
-
                     table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
                                     dr["Apellido Materno"].ToString(), fechaFormateada,
                                     dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
@@ -194,7 +157,6 @@ namespace NurseProjectWEB
             try
             {
                 type = Request.QueryString["type"];
-
                 if (type == "D")
                 {
                     Delete();
@@ -205,7 +167,6 @@ namespace NurseProjectWEB
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -217,19 +178,15 @@ namespace NurseProjectWEB
             {
                 try
                 {
-                    implPaciente = new PacienteImpl();
-
-                    // Obtener el objeto Customer antes de llamar al método Delete
+                    implPaciente = new PacienteImpl();                    
                     P = implPaciente.Get(id);
-
                     if (P != null)
                     {
-                        int n = implPaciente.Delete(P);
-                        // Realizar cualquier acción adicional después de la eliminación
+                        int n = implPaciente.Delete(P);                       
                     }
                     else
                     {
-                        // El objeto Customer no existe en la base de datos, manejar el caso de error
+                        //error
                     }
                 }
                 catch (Exception ex)
@@ -250,7 +207,7 @@ namespace NurseProjectWEB
                 {
                     txtUsuario.Visible = false;
                     txtContrasena.Visible = false;
-                     Get();
+                    Get();
                 }
             }
             catch (Exception ex)
@@ -261,7 +218,7 @@ namespace NurseProjectWEB
         void Get()
         {
             P = null;
-            
+
             id = short.Parse(Request.QueryString["id"]);
             try
             {
@@ -269,7 +226,7 @@ namespace NurseProjectWEB
                 {
                     implPaciente = new PacienteImpl();
                     P = implPaciente.Get(id);
-                    
+
                     if (P != null)
                     {
                         if (!IsPostBack)
@@ -277,9 +234,7 @@ namespace NurseProjectWEB
                             txtNombre.Text = P.Name.ToString();
                             txtApellidoPaterno.Text = P.LastName.ToString();
                             txtApellidoMaterno.Text = P.SecondLastName.ToString();
-                           
-                            txtFechaNacimiento.Text = P.Birthdate.ToString("dd/MM/yyyy");
-                            
+                            txtFechaNacimiento.Text = P.Birthdate.ToString("yyyy-MM-dd");
                             txtCelular.Text = P.Phone.ToString();
                             txtCi.Text = P.Ci.ToString();
                             txtCorreo.Text = P.Email.ToString();
@@ -288,7 +243,6 @@ namespace NurseProjectWEB
                             txtLong.Text = P.Longitude.ToString();
                             txtMunicipio.Text = P.Municipio.ToString();
                             txtHistorial.Text = P.Historial.ToString();
-
                             if (P.PhotoData != null && P.PhotoData.Length > 0)
                             {
                                 string base64Image = Convert.ToBase64String(P.PhotoData);
@@ -296,7 +250,7 @@ namespace NurseProjectWEB
                             }
                             else
                             {
-                                  imgPreview.ImageUrl = string.Empty;
+                                imgPreview.ImageUrl = string.Empty;
                             }
 
                         }
