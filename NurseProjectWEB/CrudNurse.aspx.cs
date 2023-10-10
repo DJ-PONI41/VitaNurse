@@ -13,9 +13,9 @@ namespace NurseProjectWEB
     public partial class CrudNurse : System.Web.UI.Page
     {
         private NurseImpl implNurse;
-        private UserImpl implUser;
+       
         private Nurse N;
-        private User U;
+       
         private short id;
         private string type;
 

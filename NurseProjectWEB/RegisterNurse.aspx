@@ -7,12 +7,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Registro de Enfermera</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
 <body>
 
     <form id="form1" runat="server">
         <div class="container">
             <h1 class="text-center">Registro de Enfermera</h1>
+
+            <div class="text-center" style="margin-top: 20px;">
+                <label class="switch">
+                    <a href="RegisterPaciente.aspx" class="btn btn-primary">Registro de Paciente</a>
+                </label>
+
+            </div>
+
+
             <div class="row">
                 <div class="col-md-4">
                     <!-- Columna 1 -->
@@ -67,6 +77,7 @@
                     <div class="form-group">
                         <label for="txtMapa">Mapa</label>
                         <div id="ModalMapPreview" style="width: 100%; height: 300px;"></div>
+                        <button type="button" id="btnObtenerUbicacion">Obtener Ubicación</button>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -97,32 +108,45 @@
                     <div class="form-group">
                         <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-primary" OnClick="btnRegistrar_Click" />
                     </div>
+
+                </div>
+                <div class="form-group text-center">
+                    <%--<asp:Button ID="btnVolverInicio" runat="server" Text="Volver a Inicio" CssClass="btn btn-secondary" />--%>
+                    <a href="Home.aspx" class="btn btn-secondary">Volver</a>
                 </div>
             </div>
         </div>
     </form>
+
+
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
-                var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
+        // Función de devolución de llamada para cargar la API de Google Maps
+        function initMap() {
+            var map;
+            var marker;
+
+            // Inicializa el mapa
+            function initializeMap() {
+                var mapOptions = {
                     center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
                     zoom: 18
-                });
+                };
+                map = new google.maps.Map(document.getElementById('ModalMapPreview'), mapOptions);
 
-                var marker = new google.maps.Marker({
+                marker = new google.maps.Marker({
                     position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
-                map: map,
-                draggable: true
-            });
+                    map: map,
+                    draggable: true
+                });
 
                 google.maps.event.addListener(marker, 'dragend', function (event) {
                     var lat = event.latLng.lat();
                     var lng = event.latLng.lng();
 
                     $('#<%=txtLat.ClientID%>').val(lat);
-                $('#<%=txtLong.ClientID%>').val(lng);
-            });
+                    $('#<%=txtLong.ClientID%>').val(lng);
+                });
 
                 google.maps.event.addListener(map, 'click', function (event) {
                     var lat = event.latLng.lat();
@@ -131,11 +155,51 @@
                     marker.setPosition({ lat: lat, lng: lng });
 
                     $('#<%=txtLat.ClientID%>').val(lat);
-                $('#<%=txtLong.ClientID%>').val(lng);
+                    $('#<%=txtLong.ClientID%>').val(lng);
+                });
+            }
+
+            // Función para obtener la ubicación en tiempo real
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var lat = position.coords.latitude;
+                        var lng = position.coords.longitude;
+
+                        marker.setPosition({ lat: lat, lng: lng });
+
+                        $('#<%=txtLat.ClientID%>').val(lat);
+                        $('#<%=txtLong.ClientID%>').val(lng);
+
+                        map.panTo({ lat: lat, lng: lng });
+                        map.setZoom(18);
+                    });
+                } else {
+                    alert("Geolocalización no es soportada por este navegador.");
+                }
+            }
+
+            // Manejador de eventos para el botón "Obtener Ubicación"
+            $("#btnObtenerUbicacion").click(function () {
+                getLocation();
             });
-            });
+
+            // Inicializa el mapa cuando se carga la página
+            initializeMap();
+        }
+
+        // Carga la API de Google Maps utilizando la función de devolución de llamada
+        $(document).ready(function () {
+            var script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap';
+            document.body.appendChild(script);
         });
+
     </script>
+
+
+
+
 
 </body>
 </html>

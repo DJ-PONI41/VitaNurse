@@ -109,8 +109,6 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
-
-
         public Nurse Get(int id)
         {
             try
@@ -174,18 +172,30 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
-
-
         public int Update(Nurse t)
         {
-            throw new NotImplementedException();
+            query = @"UPDATE Nurse Set approval = 1,lastUpdate = CURRENT_TIMESTAMP
+                    WHERE id = @id";
+
+            SqlCommand command = CreateBasicCommand(query);
+
+            command.Parameters.AddWithValue("@id", t.Id);
+
+            try
+            {
+                return ExecuteBasicCommand(command);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public int UpdateN(Nurse t)
         {
 
             query = @"UPDATE Person SET names = @names,lastName = @lastName,secondLastName = @secondLastName,photo = @photo,birthdate = @birthdate , phone = @phone,ci = @ci
                     ,email = @email,addres = @addres,latitude = @latitude,longitude = @longitude,municipio = @municipio, lastUpdate = CURRENT_TIMESTAMP
-		             WHERE id = @idP";    
+		             WHERE id = @idP";
 
             string query2 = @"UPDATE Nurse Set especialidad = @especialidad,añoTitulacion = @añoTitulacion,lugarTitulacion = @lugarTitulacion,datos = @datos, lastUpdate = CURRENT_TIMESTAMP
 			                WHERE id = @idN";
@@ -193,7 +203,7 @@ namespace NurseProjecDAO.Implementacion
 
             List<SqlCommand> commands = Create2BasicCommand(query, query2);
 
-            commands[0].Parameters.AddWithValue("@idP",t.Id);
+            commands[0].Parameters.AddWithValue("@idP", t.Id);
             commands[0].Parameters.AddWithValue("@names", t.Name);
             commands[0].Parameters.AddWithValue("@lastName", t.LastName);
             commands[0].Parameters.AddWithValue("@secondLastName", t.SecondLastName);
@@ -206,16 +216,16 @@ namespace NurseProjecDAO.Implementacion
             commands[0].Parameters.AddWithValue("@latitude", t.Latitude);
             commands[0].Parameters.AddWithValue("@longitude", t.Longitude);
             commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
-                       
+
 
             commands[1].Parameters.AddWithValue("@idN", t.Id);
-            commands[1].Parameters.AddWithValue("@especialidad",t.Especialidad);
+            commands[1].Parameters.AddWithValue("@especialidad", t.Especialidad);
             commands[1].Parameters.AddWithValue("@añoTitulacion", t.AñoTitulacion);
             commands[1].Parameters.Add("@lugarTitulacion", SqlDbType.VarBinary).Value = t.LugarTitulacion;
             //commands[2].Parameters.AddWithValue("@lugarTitulacion", t2.LugarTitulacion);
             commands[1].Parameters.Add("@datos", SqlDbType.VarBinary).Value = t.Cvc;
             //commands[2].Parameters.AddWithValue("@datos", t2.Cvc);
-                       
+
 
             try
             {
@@ -227,5 +237,6 @@ namespace NurseProjecDAO.Implementacion
                 throw;
             }
         }
+        
     }
 }
