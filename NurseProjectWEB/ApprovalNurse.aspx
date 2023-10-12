@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="button">                    
-                    <asp:Button ID="btnRegistrar" runat="server" Text="Aceptar" OnClick="btnRegistrar_Click"/>                    
+                    <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />                    
                 </div>
                 <div class="row">
                     <div class="col-12">

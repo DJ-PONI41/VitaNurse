@@ -216,9 +216,9 @@ namespace NurseProjectWEB
                 ScriptManager.RegisterStartupScript(this, GetType(), "ErrorCorreo", $"alert('Error al enviar el correo: {ex.Message}');", true);
             }
         }
+               
 
-
-        protected void btnRegistrar_Click(object sender, EventArgs e)
+        protected void btnAceptar_Click(object sender, EventArgs e)
         {
             id = short.Parse(Request.QueryString["id"]);
             if (id > 0)
@@ -232,7 +232,7 @@ namespace NurseProjectWEB
                         int n = implNurse.Update(N);
 
                         if (n > 0)
-                        {                            
+                        {
                             EnviarCorreo(N.Email, "Cuenta activada", "Su cuenta ha sido activada correctamente.");
                         }
                     }
@@ -243,9 +243,5 @@ namespace NurseProjectWEB
                 }
             }
         }
-
-
-        
-
     }
 }

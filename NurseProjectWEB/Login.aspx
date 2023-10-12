@@ -25,6 +25,8 @@
             
                             <%--<input type="submit" value="Ingresar" class="main__input main__input--send">--%>
                             <asp:Button ID="btnSignIn" runat="server" Text="Ingresar" class="main__input main__input--send" OnClick="btnSignIn_Click" />
+
+                            <asp:Label ID="lblMessage" runat="server" CssClass="error-message" Visible="false"></asp:Label>
                         </form>
             
                         

@@ -85,6 +85,7 @@
     <Content Include="Images\nurses_svg_v2.svg" />
     <Content Include="Images\undraw_medical_care_movn.svg" />
     <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
     <Content Include="Nurse_home.aspx" />
     <Content Include="RegisterNurse.aspx" />
     <Content Include="RegisterPaciente.aspx" />
@@ -157,6 +158,13 @@
     </Compile>
     <Compile Include="Login.Master.designer.cs">
       <DependentUpon>Login.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Nurse_home.aspx.cs">
       <DependentUpon>Nurse_home.aspx</DependentUpon>
