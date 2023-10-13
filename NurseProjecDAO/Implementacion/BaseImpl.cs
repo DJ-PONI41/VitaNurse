@@ -12,7 +12,7 @@ namespace NurseProjecDAO.Implementacion
     {
 
         // esta la conexion del host de la base de datos         
-        string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
+        string connectionString = @"Server=LAPTOP-70PJN8G4\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {
