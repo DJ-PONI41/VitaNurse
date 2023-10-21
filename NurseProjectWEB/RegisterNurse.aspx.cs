@@ -1,18 +1,12 @@
 ﻿using NurseProjecDAO;
 using NurseProjecDAO.Implementacion;
 using NurseProjecDAO.Model;
+using NurseProjecDAO.Tools;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
 using System.Net.Mail;
 using System.Net;
-using System.Reflection.Emit;
-using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Threading.Tasks;
 
 namespace NurseProjectWEB
@@ -37,20 +31,110 @@ namespace NurseProjectWEB
         {        
             try
             {
-                string nombre = txtNombre.Text;
-                string apellidoPaterno = txtApellidoPaterno.Text;
-                string apellidoMaterno = txtApellidoMaterno.Text;
+                string nombre = Tools.EliminarEspacios(txtNombre.Text);
+                string apellidoPaterno = Tools.EliminarEspacios(txtApellidoPaterno.Text);
+                string apellidoMaterno = Tools.EliminarEspacios(txtApellidoMaterno.Text);
                 DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                string celular = txtCelular.Text;
-                string ci = txtCi.Text;
-                string correo = txtCorreo.Text;
-                string direccion = txtDireccion.Text;
+                string celular = Tools.EliminarEspacios(txtCelular.Text);
+                string ci = Tools.EliminarEspacios(txtCi.Text);
+                string correo = Tools.EliminarEspacios(txtCorreo.Text);
+                string direccion = Tools.EliminarEspacios(txtDireccion.Text);
                 string latitud = txtLat.Text;
                 string longitud = txtLong.Text;
-                string municipio = txtMunicipio.Text;
-                string especialidad = txtEspecialidad.Text;
+                string municipio = Tools.EliminarEspacios(txtMunicipio.Text);
+                string especialidad = Tools.EliminarEspacios(txtEspecialidad.Text);
                 DateTime añoTitulacion = DateTime.Parse(txtTitulacion.Text);
                 string rol = "Enfermera";
+
+                if (string.IsNullOrEmpty(nombre))
+                {
+                    label1.Text = "El nombre está vacío";
+                    return;
+                }
+
+                if (!Tools.ValidarTextoConÑ(nombre))
+                {
+                    label1.Text = "El nombre contiene caracteres inválidos";
+                    return;
+                }
+
+
+                if (string.IsNullOrEmpty(apellidoPaterno))
+                {
+                    label1.Text = "El nombre está vacío";
+                    return;
+                }
+
+                if (!Tools.ValidarTextoConÑ(apellidoPaterno))
+                {
+                    label1.Text = "El nombre contiene caracteres inválidos";
+                    return;
+                }
+
+
+                if (!Tools.ValidarTextoConÑ(apellidoMaterno))
+                {
+                    label1.Text = "El nombre contiene caracteres inválidos";
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(celular))
+                {
+                    label1.Text = "El nombre está vacío";
+                }
+
+                if (!Tools.ValidatePhoneNumber(celular))
+                {
+                    label1.Text = "El nombre contiene caracteres inválidos";
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(correo))
+                {
+                    label1.Text = "El nombre está vacío";
+                }
+
+                if (!Tools.validarCorreo(correo))
+                {
+                    label1.Text = "El correo electrónico no es válido.";
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(direccion))
+                {
+                    label1.Text = "El nombre está vacío";
+                }
+
+                if (!Tools.VlAdress(direccion))
+                {
+                    label1.Text = "El correo electrónico no es válido.";
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(municipio))
+                {
+                    label1.Text = "El nombre está vacío";
+                    return;
+                }
+
+                if (!Tools.ValidarTextoConÑ(municipio))
+                {
+                    label1.Text = "El nombre contiene caracteres inválidos";
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(especialidad))
+                {
+                    label1.Text = "El nombre está vacío";
+                    return;
+                }
+
+                if (!Tools.ValidarTextoConÑ(especialidad))
+                {
+                    label1.Text = "El nombre contiene caracteres inválidos";
+                    return;
+                }
+
 
                 // Datos img
                 byte[] imgData = ReadFileData(fileUpload.PostedFile);
@@ -62,7 +146,7 @@ namespace NurseProjectWEB
                 byte[] cvcPdfData = ReadFileData(fileCvc.PostedFile);
 
                 string user = GenerateUser(nombre, apellidoPaterno, apellidoMaterno, rol);
-                string password = ContraseñaRandom();
+                string password = ContraseñaRandom(apellidoMaterno);
 
                 Nurse N = new Nurse(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añoTitulacion, tituloPdfData, cvcPdfData);
                 User U = new User(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, rol);
@@ -113,19 +197,31 @@ namespace NurseProjectWEB
             return userChars;
         }
 
-        private string ContraseñaRandom()
+        private string ContraseñaRandom(string apellidoMaterno)
         {
             var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var passwordChars = new char[8];
+            var passwordChars = new List<char>(8); 
+
             var random = new Random();
 
-            for (int i = 0; i < passwordChars.Length; i++)
+            for (int i = 0; i < 8; i++)
             {
-                passwordChars[i] = characters[random.Next(characters.Length)];
+                
+                passwordChars.Add(characters[random.Next(characters.Length)]);
             }
 
-            return new string(passwordChars);
+           
+            if (string.IsNullOrEmpty(apellidoMaterno))
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    passwordChars.Add(characters[random.Next(characters.Length)]);
+                }
+            }
+
+            return new string(passwordChars.ToArray());
         }
+
 
         private void EnviarCorreo(string user, string password, string email)
         {
