@@ -120,8 +120,10 @@
                         <asp:TextBox ID="txtLong" Text="-66.22559118521447" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
-                <div class="button">                    
-                    <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />                    
+                <div class="button">
+                    <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" Visible="false" OnClick="btnAceptar_Click"/>
+                    <asp:Button ID="btnVolver" runat="server" Text="Cancelar" Visible="false" OnClick="btnVolver_Click"/>
+
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -143,34 +145,34 @@
                 $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
                     var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
                         center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
-                    zoom: 18
-                });
+                        zoom: 18
+                    });
 
-                var marker = new google.maps.Marker({
-                    position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
+                    var marker = new google.maps.Marker({
+                        position: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
                     map: map,
                     draggable: true
                 });
 
-                google.maps.event.addListener(marker, 'dragend', function (event) {
-                    var lat = event.latLng.lat();
-                    var lng = event.latLng.lng();
+                    google.maps.event.addListener(marker, 'dragend', function (event) {
+                        var lat = event.latLng.lat();
+                        var lng = event.latLng.lng();
 
-                    $('#<%=txtLat.ClientID%>').val(lat);
+                        $('#<%=txtLat.ClientID%>').val(lat);
                     $('#<%=txtLong.ClientID%>').val(lng);
                 });
 
-                google.maps.event.addListener(map, 'click', function (event) {
-                    var lat = event.latLng.lat();
-                    var lng = event.latLng.lng();
+                    google.maps.event.addListener(map, 'click', function (event) {
+                        var lat = event.latLng.lat();
+                        var lng = event.latLng.lng();
 
-                    marker.setPosition({ lat: lat, lng: lng });
+                        marker.setPosition({ lat: lat, lng: lng });
 
-                    $('#<%=txtLat.ClientID%>').val(lat);
+                        $('#<%=txtLat.ClientID%>').val(lat);
                     $('#<%=txtLong.ClientID%>').val(lng);
+                });
                 });
             });
-        });
         </script>
 
     </body>

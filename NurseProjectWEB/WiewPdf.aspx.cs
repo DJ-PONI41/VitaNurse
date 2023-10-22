@@ -57,7 +57,7 @@ namespace NurseProjectWEB
                     {
                         Response.Clear();
                         Response.ContentType = contentType;
-                        Response.AddHeader("content-disposition", $"attachment; filename={fileName}");
+                        Response.AddHeader("content-disposition", $"inline; filename={fileName}");
                         Response.BinaryWrite(pdfData);
                         Response.End();
                     }
