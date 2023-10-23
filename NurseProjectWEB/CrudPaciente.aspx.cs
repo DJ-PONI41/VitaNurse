@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Globalization;
 using System.Drawing;
+using NurseProjecDAO.Tools;
 
 namespace NurseProjectWEB
 {
@@ -49,31 +50,114 @@ namespace NurseProjectWEB
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
-            
-            int img = fileUpload.PostedFile.ContentLength;
-            byte[] ImgOriginal = new byte[img];
-            fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
-
-            string nombre = txtNombre.Text;
-            string apellidoPaterno = txtApellidoPaterno.Text;
-            string apellidoMaterno = txtApellidoMaterno.Text;
-            string ci = txtCi.Text;
-            DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-            string direccion = txtDireccion.Text;
-            string latitud = txtLat.Text;
-            string longitud = txtLong.Text;
-            string celular = txtCelular.Text;
-            string municipio = txtMunicipio.Text;
-            string correo = txtCorreo.Text;
-            string usuario = txtUsuario.Text;
-            string contraseña = txtContrasena.Text;            
-            string historial = txtHistorial.Text;
-            string rol = "Paciente";            
             try
             {
+                string nombre = Tools.EliminarEspacios(txtNombre.Text);
+                string apellidoPaterno = Tools.EliminarEspacios(txtApellidoPaterno.Text);
+                string apellidoMaterno = Tools.EliminarEspacios(txtApellidoMaterno.Text);
+                string ci = Tools.EliminarEspacios(txtCi.Text);
+                string fechaNacimientoStr = txtFechaNacimiento.Text;
+                string direccion = Tools.EliminarEspacios(txtDireccion.Text);
+                string latitud = txtLat.Text;
+                string longitud = txtLong.Text;
+                string celular = Tools.EliminarEspacios(txtCelular.Text);
+                string municipio = Tools.EliminarEspacios(txtMunicipio.Text);
+                string correo = Tools.EliminarEspacios(txtCorreo.Text);
+                string usuario = Tools.EliminarEspacios(txtUsuario.Text);
+                string contraseña = Tools.EliminarEspacios(txtContrasena.Text);
+                string historial = Tools.EliminarEspacios(txtHistorial.Text);
+                string rol = "Paciente";
+
+                byte[] ImgOriginal = null;
+
+                if (fileUpload.HasFile)
+                {
+                    string ext = System.IO.Path.GetExtension(fileUpload.FileName).ToLower();
+                    if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
+                    {
+                        label1.CssClass = "alert alert-danger";
+                        label1.Text = "La imagen debe ser en formato JPG, JPEG o PNG.";
+                        label1.Style["display"] = "block";
+                        return;
+                    }
+
+                    int img = fileUpload.PostedFile.ContentLength;
+                    ImgOriginal = new byte[img];
+                    fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
+                }
+                else
+                {
+                    ImgOriginal = null;
+                }
+
+                if (string.IsNullOrEmpty(nombre) || !Tools.ValidarTextoConÑ(nombre))
+                {
+                    label1.Text = "El nombre es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(apellidoPaterno) || !Tools.ValidarTextoConÑ(apellidoPaterno))
+                {
+                    label1.Text = "El apellido paterno es inválido o está vacío";
+                }
+                else if (!Tools.ValidarTextoConÑ(apellidoMaterno))
+                {
+                    label1.Text = "El apellido materno es inválido";
+                }
+                else if (string.IsNullOrEmpty(ci) || !Tools.ValidarCi(ci))
+                {
+                    label1.Text = "El CI es inválido o está vacío";
+                }
+
+                DateTime fechaNacimiento;
+
+                if (!DateTime.TryParse(fechaNacimientoStr, out fechaNacimiento))
+                {
+                    label1.CssClass = "alert alert-danger";
+                    label1.Text = "Fecha de nacimiento no válida. Por favor, ingrese una fecha válida.";
+                    label1.Style["display"] = "block";
+                    return;
+                }
+
+                if (fechaNacimiento > DateTime.Now)
+                {
+                    label1.CssClass = "alert alert-danger";
+                    label1.Text = "La fecha de nacimiento no puede ser en el futuro. Por favor, ingrese una fecha válida.";
+                    label1.Style["display"] = "block";
+                    return;
+                }
+                else if (string.IsNullOrEmpty(celular) || !Tools.ValidatePhoneNumber(celular))
+                {
+                    label1.Text = "El número de celular es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(usuario) || !Tools.ValidarTextoConÑ(usuario))
+                {
+                    label1.Text = "El usuario es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(contraseña) || !Tools.ValidarContraseña(contraseña))
+                {
+                    label1.Text = "La contraseña es inválida o está vacía";
+                }
+
+                else if (string.IsNullOrEmpty(direccion) || !Tools.VlAdress(direccion))
+                {
+                    label1.Text = "La dirección es inválida o está vacía";
+                }
+                else if (string.IsNullOrEmpty(municipio) || !Tools.ValidarTextoConÑ(municipio))
+                {
+                    label1.Text = "El municipio es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(correo) || !Tools.validarCorreo(correo))
+                {
+                    label1.Text = "El correo electrónico es inválido o está vacío";
+                }
+
+                else if (string.IsNullOrEmpty(historial) || !Tools.ValidarTextoConÑ(historial))
+                {
+                    label1.Text = "El historial es inválido o está vacío";
+                }                
+
                 P = new Paciente(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
                 implPaciente = new PacienteImpl();
-                U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);                
+                U = new User(nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, usuario, contraseña, rol);
                 int n = implPaciente.InsertP2(U, P);
                 if (n > 0)
                 {
@@ -94,11 +178,8 @@ namespace NurseProjectWEB
             {
                 throw ex;
             }
-            
+
         }
-
-
-
 
         void Select()
         {
@@ -121,7 +202,7 @@ namespace NurseProjectWEB
                 table.Columns.Add("Borrar", typeof(string));
 
                 foreach (DataRow dr in dt.Rows)
-                {                   
+                {
                     DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
                     string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
                     table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
@@ -178,11 +259,11 @@ namespace NurseProjectWEB
             {
                 try
                 {
-                    implPaciente = new PacienteImpl();                    
+                    implPaciente = new PacienteImpl();
                     P = implPaciente.Get(id);
                     if (P != null)
                     {
-                        int n = implPaciente.Delete(P);                       
+                        int n = implPaciente.Delete(P);
                     }
                     else
                     {

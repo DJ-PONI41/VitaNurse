@@ -119,11 +119,10 @@
                         <asp:TextBox ID="txtLong" Text="-66.22559118521447" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>   
                 </div>
-                <div class="button">
-                    <asp:Button ID="btnAtras" runat="server" Text="Registrar" OnClick="btnRegistrar_Click" />
-
-                    <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" OnClick="btnRegistrar_Click"/>
-                     <asp:Button ID="btnUpdate" runat="server" Text="Modificar" style="color:white; background-color:#dec521;" CssClass="btn btn-warning" OnClick="btnUpdate_Click"/>
+                <div class="button, btn-group" >
+                    <asp:Button ID="btnAtras" Visible="false" runat="server" Text="Volver" OnClick="btnAtras_Click"/>
+                    <asp:Button ID="btnRegistrar" runat="server" Visible="true" Text="Registrarse" OnClick="btnRegistrar_Click"/>
+                     <asp:Button ID="btnUpdate" runat="server" Text="Modificar" Visible="false" style="color:white; background-color:#dec521;" CssClass="btn btn-warning" OnClick="btnUpdate_Click"/>
                 </div>
                 <div class="row">
                         <div class="col-12">
