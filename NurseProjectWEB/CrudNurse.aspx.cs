@@ -13,8 +13,8 @@ namespace NurseProjectWEB
 {
     public partial class CrudNurse : System.Web.UI.Page
     {
-        private NurseImpl implNurse;       
-        private Nurse N;       
+        private NurseImpl implNurse;
+        private Nurse N;
         private short id;
         private string type;
 
@@ -49,6 +49,7 @@ namespace NurseProjectWEB
 
         private void InsertUserNurse()
         {
+
             try
             {
 
@@ -154,6 +155,7 @@ namespace NurseProjectWEB
                         {
                             ShowMessage("El registro se ha realizado con éxito.", "success");
                             Task.Run(() => EnviarCorreo(user, password, correo));
+                            Clear();
                             Select();
                         }
                         else
@@ -168,6 +170,7 @@ namespace NurseProjectWEB
                 ShowMessage("¡Error! " + ex.Message, "danger");
             }
         }
+
 
         private byte[] ReadFileData(HttpPostedFile file)
         {
@@ -261,7 +264,7 @@ namespace NurseProjectWEB
             }
             catch (Exception ex)
             {
-                ShowMessage("Ocurrió un error inesperado: " + ex.Message, "danger");
+                ShowMessage("Ocurrió un error: " + ex.Message, "danger");
             }
         }
 
@@ -462,7 +465,7 @@ namespace NurseProjectWEB
                 else if (!DateTime.TryParse(txtTitulacion.Text, out añoTitulacion) || añoTitulacion > DateTime.Now)
                     ShowMessage("El año de titulación no es válido.", "danger");
                 else
-                {                    
+                {
                     if (fileUpload.HasFile)
                     {
                         string ext = System.IO.Path.GetExtension(fileUpload.FileName).ToLower();
@@ -536,7 +539,6 @@ namespace NurseProjectWEB
                     }
                     else
                     {
-                        
                         Nurse ImgExistente = implNurse.Get(id);
                         if (ImgExistente != null)
                         {
@@ -564,6 +566,26 @@ namespace NurseProjectWEB
         {
             Response.Redirect("CrudNurse.aspx");
         }
+
+
+        private void Clear()
+        {
+            txtNombre.Text = string.Empty;
+            txtApellidoPaterno.Text = string.Empty;
+            txtApellidoMaterno.Text = string.Empty;
+            txtFechaNacimiento.Text = string.Empty;
+            txtCelular.Text = string.Empty;
+            txtCi.Text = string.Empty;
+            txtCorreo.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtLat.Text = "-17.33059869950836";
+            txtLong.Text = "-66.22559118521447";
+            txtMunicipio.Text = string.Empty;
+            txtEspecialidad.Text = string.Empty;
+            txtTitulacion.Text = string.Empty;
+            imgPreview.ImageUrl = string.Empty;
+        }
+
     }
 
 }

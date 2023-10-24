@@ -74,15 +74,19 @@ namespace NurseProjecDAO.Tools
             return Regex.Replace(cadena.Trim(), @"\s+", " ");
         }
 
-        public static bool VlAdress(string texto)
-        {
-            // Expresión regular para validar el texto
-            string patron = @"^[a-zA-Z0-9,#'°ñäëïöüáéíóú¿¡""\s]+$";
-
-            // Verificar si el texto coincide con el patrón
+        public static bool VlAdress(string texto)        {
+            
+            string patron = @"^[a-zA-Z0-9,#'°ñäëïöüáéíóú¿¡""\s]+$";            
             bool esValido = Regex.IsMatch(texto, patron);
-
             return esValido;
         }
+
+        public static bool ValidateUsername(string username)
+        {            
+            string pattern = @"^[a-zA-Z0-9_]{4,8}$";
+            bool isValid = Regex.IsMatch(username, pattern);
+            return isValid;
+        }
+
     }
 }

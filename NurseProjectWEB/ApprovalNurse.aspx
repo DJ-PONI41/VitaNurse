@@ -139,6 +139,12 @@
 
         </div>
 
+         <script>
+             function ConfirmDelete() {
+                 return confirm('¿Estás seguro de rechazar?');
+             }
+         </script>
+
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script>
             $(document).ready(function () {

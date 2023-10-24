@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 namespace NurseProjectWEB
 {
     public partial class RegisterNurse : System.Web.UI.Page
-    {       
+    {
         private UserImpl implUser;
-    
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,6 +28,7 @@ namespace NurseProjectWEB
 
         void InsertUserNurse()
         {
+
             try
             {
                 string nombre = Tools.EliminarEspacios(txtNombre.Text);
@@ -122,7 +123,7 @@ namespace NurseProjectWEB
                         byte[] cvcPdfData = ReadFileData(fileCvc.PostedFile);
 
                         Nurse N = new Nurse(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añoTitulacion, tituloPdfData, cvcPdfData);
-                        User U =  new User(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, "Enfermera");
+                        User U = new User(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, "Enfermera");
 
                         implUser = new UserImpl();
                         int u = implUser.Insert2(U, N);
@@ -144,6 +145,7 @@ namespace NurseProjectWEB
             {
                 ShowMessage("¡Error! " + ex.Message, "danger");
             }
+
         }
 
         private byte[] ReadFileData(HttpPostedFile file)
@@ -166,7 +168,7 @@ namespace NurseProjectWEB
             {
                 var random = new Random();
                 userChars += (char)('A' + random.Next(26));
-                userChars += (char)('A' + random.Next(26)); 
+                userChars += (char)('A' + random.Next(26));
             }
 
             string nombres = nombre.Replace(" ", "");
@@ -186,21 +188,21 @@ namespace NurseProjectWEB
             var specialChars = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
 
             var allChars = upperChars + lowerChars + digitChars + specialChars;
-            var passwordChars = new char[8]; 
+            var passwordChars = new char[8];
 
             var random = new Random();
-            
+
             passwordChars[0] = upperChars[random.Next(upperChars.Length)];
             passwordChars[1] = lowerChars[random.Next(lowerChars.Length)];
             passwordChars[2] = digitChars[random.Next(digitChars.Length)];
             passwordChars[3] = specialChars[random.Next(specialChars.Length)];
 
-            
+
             for (int i = 4; i < 12; i++)
             {
                 passwordChars[i] = allChars[random.Next(allChars.Length)];
             }
-            
+
             for (int i = 0; i < passwordChars.Length - 1; i++)
             {
                 int j = random.Next(i, passwordChars.Length);

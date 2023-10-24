@@ -97,7 +97,7 @@
                         <asp:TextBox ID="txtHistorial" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">
-                        <label for="fileUpload">Subir Archivo</label>
+                        <label for="fileUpload">Sube tu fotografia</label>
                         <asp:FileUpload ID="fileUpload" CssClass="form-control" runat="server" />
                     </div>
                     <div class="form-group">

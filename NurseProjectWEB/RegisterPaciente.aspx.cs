@@ -104,7 +104,7 @@ namespace NurseProjectWEB
                 {
                     label1.Text = "El número de celular es inválido o está vacío";
                 }
-                else if (string.IsNullOrEmpty(usuario) || !Tools.ValidarTextoConÑ(usuario))
+                else if (string.IsNullOrEmpty(usuario) || !Tools.ValidateUsername(usuario))
                 {
                     label1.Text = "El usuario es inválido o está vacío";
                 }

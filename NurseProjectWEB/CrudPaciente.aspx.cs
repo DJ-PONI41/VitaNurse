@@ -362,6 +362,9 @@ namespace NurseProjectWEB
             txtLong.Text = "-66.22559118521447";
         }
 
-
+        protected void btnAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
     }
 }
