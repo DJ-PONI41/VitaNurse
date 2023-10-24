@@ -168,5 +168,30 @@ namespace NurseProjecDAO.Implementacion
         }
 
 
+        public int UpdatePassword(string UserName, string password, string nuevaPasword, short UserID)
+        {
+            query = @"UPDATE [User]
+                    SET password = HASHBYTES('MD5', @nuevaPasword),
+                        lastUpdate = CURRENT_TIMESTAMP,
+                        id = @userID
+                    WHERE nameUser = @userName AND password = HASHBYTES('MD5', @password);";
+
+            SqlCommand command = CreateBasicCommand(query);
+
+            command.Parameters.AddWithValue("@userName", UserName);
+            command.Parameters.AddWithValue("@password", password).SqlDbType = SqlDbType.VarChar;
+            command.Parameters.AddWithValue("@nuevaPasword", nuevaPasword).SqlDbType = SqlDbType.VarChar;
+            command.Parameters.AddWithValue("@userID", UserID);
+            try
+            {
+                return ExecuteBasicCommand(command);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

@@ -90,6 +90,7 @@
     <Content Include="RegisterNurse.aspx" />
     <Content Include="RegisterPaciente.aspx" />
     <Content Include="SolictudPaciente.aspx" />
+    <Content Include="UpdatePassword.aspx" />
     <Content Include="Web.config" />
     <Content Include="WiewPdf.aspx" />
   </ItemGroup>
@@ -202,6 +203,13 @@
     </Compile>
     <Compile Include="SolictudPaciente.aspx.designer.cs">
       <DependentUpon>SolictudPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePassword.aspx.cs">
+      <DependentUpon>UpdatePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdatePassword.aspx.designer.cs">
+      <DependentUpon>UpdatePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="WiewPdf.aspx.cs">
       <DependentUpon>WiewPdf.aspx</DependentUpon>
