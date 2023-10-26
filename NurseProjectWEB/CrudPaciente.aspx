@@ -125,8 +125,9 @@
             </div>              
                 </div>
                 <div class="button">
-                    <asp:Button ID="btnAtras" runat="server" Text="Registrar" OnClick="btnRegistrar_Click" />
-                    <asp:Button ID="Button1" runat="server" Text="Registrar" OnClick="btnRegistrar_Click" />                                 
+                    <asp:Button ID="btnRegistrar" runat="server" Text="Registrar" OnClick="btnRegistrar_Click" />
+                    <asp:Button ID="btnUpdate" runat="server" Text="Actualziar" OnClick="btnUpdate_Click"/>
+                    <asp:Button ID="btnAtras" runat="server" Text="Volver" OnClick="btnAtras_Click"/>                                 
                 </div>
             </form>
         </div>

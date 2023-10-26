@@ -277,7 +277,6 @@ namespace NurseProjectWEB
             }
         }
 
-
         void LoadType()
         {
             try
@@ -362,6 +361,140 @@ namespace NurseProjectWEB
             txtLong.Text = "-66.22559118521447";
         }
 
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            short id = short.Parse(Request.QueryString["id"]);
+            implPaciente = new PacienteImpl();
 
+            string nombre = Tools.EliminarEspacios(txtNombre.Text);
+            string apellidoPaterno = Tools.EliminarEspacios(txtApellidoPaterno.Text);
+            string apellidoMaterno = Tools.EliminarEspacios(txtApellidoMaterno.Text);
+            string ci = Tools.EliminarEspacios(txtCi.Text);
+            string fechaNacimientoStr = txtFechaNacimiento.Text;
+            string direccion = Tools.EliminarEspacios(txtDireccion.Text);
+            string latitud = txtLat.Text;
+            string longitud = txtLong.Text;
+            string celular = Tools.EliminarEspacios(txtCelular.Text);
+            string municipio = Tools.EliminarEspacios(txtMunicipio.Text);
+            string correo = Tools.EliminarEspacios(txtCorreo.Text);
+            string historial = Tools.EliminarEspacios(txtHistorial.Text);
+
+            byte[] ImgOriginal = null;
+
+            if (fileUpload.HasFile)
+            {
+                string ext = System.IO.Path.GetExtension(fileUpload.FileName).ToLower();
+                if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
+                {
+                    label1.CssClass = "alert alert-danger";
+                    label1.Text = "La imagen debe ser en formato JPG, JPEG o PNG.";
+                    label1.Style["display"] = "block";
+                    return;
+                }
+
+                int img = fileUpload.PostedFile.ContentLength;
+                ImgOriginal = new byte[img];
+                fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
+            }
+            else
+            {
+                Paciente ImgExistente = implPaciente.Get(id);
+                if (ImgExistente != null)
+                {
+                    ImgOriginal = ImgExistente.PhotoData;
+                }
+            }
+
+
+
+            if (string.IsNullOrEmpty(nombre) || !Tools.ValidarTextoConÑ(nombre))
+            {
+                label1.Text = "El nombre es inválido o está vacío";
+            }
+            else if (string.IsNullOrEmpty(apellidoPaterno) || !Tools.ValidarTextoConÑ(apellidoPaterno))
+            {
+                label1.Text = "El apellido paterno es inválido o está vacío";
+            }
+            else if (!Tools.ValidarTextoConÑ(apellidoMaterno))
+            {
+                label1.Text = "El apellido materno es inválido";
+            }
+            else if (string.IsNullOrEmpty(ci) || !Tools.ValidarCi(ci))
+            {
+                label1.Text = "El CI es inválido o está vacío";
+            }
+            else
+            {
+
+                DateTime fechaNacimiento;
+
+                if (!DateTime.TryParse(fechaNacimientoStr, out fechaNacimiento))
+                {
+                    label1.CssClass = "alert alert-danger";
+                    label1.Text = "Fecha de nacimiento no válida. Por favor, ingrese una fecha válida.";
+                    label1.Style["display"] = "block";
+                    return;
+                }
+
+                if (fechaNacimiento > DateTime.Now)
+                {
+                    label1.CssClass = "alert alert-danger";
+                    label1.Text = "La fecha de nacimiento no puede ser en el futuro. Por favor, ingrese una fecha válida.";
+                    label1.Style["display"] = "block";
+                    return;
+                }
+                else if (string.IsNullOrEmpty(celular) || !Tools.ValidatePhoneNumber(celular))
+                {
+                    label1.Text = "El número de celular es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(direccion) || !Tools.VlAdress(direccion))
+                {
+                    label1.Text = "La dirección es inválida o está vacía";
+                }
+                else if (string.IsNullOrEmpty(municipio) || !Tools.ValidarTextoConÑ(municipio))
+                {
+                    label1.Text = "El municipio es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(correo) || !Tools.validarCorreo(correo))
+                {
+                    label1.Text = "El correo electrónico es inválido o está vacío";
+                }
+                else if (string.IsNullOrEmpty(historial) || !Tools.ValidarTextoConÑ(historial))
+                {
+                    label1.Text = "El historial es inválido o está vacío";
+                }
+                try
+                {
+
+                    Paciente paciente = new Paciente(id, nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, historial);
+                    int n = implPaciente.Update(paciente);
+
+                    if (n > 0)
+                    {
+                        Select();
+                        Response.Redirect("CrudPaciente.aspx");
+                    }
+                    else
+                    {
+                        label1.CssClass = "alert alert-danger";
+                        label1.Text = "¡Error! No se pudo Actualizar.";
+                        label1.Style["display"] = "block";
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
+
+
+        }
+
+        protected void btnAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
     }
 }

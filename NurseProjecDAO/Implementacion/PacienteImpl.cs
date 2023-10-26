@@ -120,7 +120,7 @@ namespace NurseProjecDAO.Implementacion
 
 
         public Paciente Get(short Id)
-        {           
+        {          
 
             try
             {
@@ -179,8 +179,6 @@ namespace NurseProjecDAO.Implementacion
 
         }
 
-
-
         public DataTable Select()
         {
             query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',P.phone AS Celular,P.ci AS CI, 
@@ -204,7 +202,43 @@ namespace NurseProjecDAO.Implementacion
 
         public int Update(Paciente t)
         {
-            throw new NotImplementedException();
+            query = @"UPDATE Person SET names = @names,lastName = @lastName,secondLastName = @secondLastName,photo = @photo,birthdate = @birthdate , phone = @phone,ci = @ci
+                    ,email = @email,addres = @addres,latitude = @latitude,longitude = @longitude,municipio = @municipio, lastUpdate = CURRENT_TIMESTAMP
+		             WHERE id = @idP";
+
+            string query2 = @"UPDATE Paciente Set historial = @historial, lastUpdate = CURRENT_TIMESTAMP
+			                WHERE id = @idPa";
+
+
+            List<SqlCommand> commands = Create2BasicCommand(query, query2);
+
+            commands[0].Parameters.AddWithValue("@idP", t.Id);
+            commands[0].Parameters.AddWithValue("@names", t.Name);
+            commands[0].Parameters.AddWithValue("@lastName", t.LastName);
+            commands[0].Parameters.AddWithValue("@secondLastName", t.SecondLastName);
+            commands[0].Parameters.AddWithValue("@photo", t.PhotoData);
+            commands[0].Parameters.AddWithValue("@birthdate", t.Birthdate);
+            commands[0].Parameters.AddWithValue("@phone", t.Phone);
+            commands[0].Parameters.AddWithValue("@ci", t.Ci);
+            commands[0].Parameters.AddWithValue("@email", t.Email);
+            commands[0].Parameters.AddWithValue("@addres", t.Addres);
+            commands[0].Parameters.AddWithValue("@latitude", t.Latitude);
+            commands[0].Parameters.AddWithValue("@longitude", t.Longitude);
+            commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
+
+            commands[1].Parameters.AddWithValue("@idPa", t.Id);
+            commands[1].Parameters.AddWithValue("@especialidad", t.Historial);         
+
+
+            try
+            {
+                return ExecuteNBasicCommand(commands);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
