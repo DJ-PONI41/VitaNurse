@@ -21,7 +21,8 @@
             <div id="title">
                 <div id="profile">
                     <div id="photo">
-                        <img src="Images/Logo_svg.svg" alt=""></div>
+                        <img src="Images/Logo_svg.svg" alt="">
+                    </div>
 
                     <div id="name"><span>Jorge Varela</span></div>
                 </div>
@@ -35,10 +36,12 @@
             <div class="item">
                 <div id="submenu-btn" class="submenu-styl-none">
                     <div class="icon">
-                        <img src="Images/icons/Icon personal injury.png" alt=""></div>
+                        <img src="Images/icons/Icon personal injury.png" alt="">
+                    </div>
                     <div class="title"><span>Pacientes</span></div>
                     <div class="submenu">
-                        <img src="Images/icons/Icon submenu.png" alt=""></div>
+                        <img src="Images/icons/Icon submenu.png" alt="">
+                    </div>
                 </div>
 
                 <div id="side-submenu" class="submenu-collapsed">
@@ -59,10 +62,12 @@
             <div class="item">
                 <div id="submenu-btn-2" class="submenu-styl-none">
                     <div class="icon">
-                        <img src="Images/icons/Icon health and safety.png" alt=""></div>
+                        <img src="Images/icons/Icon health and safety.png" alt="">
+                    </div>
                     <div class="title"><span>Enfermeras</span></div>
                     <div class="submenu">
-                        <img src="Images/icons/Icon submenu.png" alt=""></div>
+                        <img src="Images/icons/Icon submenu.png" alt="">
+                    </div>
                 </div>
 
                 <div id="side-submenu-2" class="submenu-collapsed">
@@ -83,7 +88,8 @@
             <div class="item">
                 <a href="#">
                     <div class="icon">
-                        <img src="Images/icons/Icon notifications.png" alt=""></div>
+                        <img src="Images/icons/Icon notifications.png" alt="">
+                    </div>
                     <div class="title"><span>Solicitudes</span></div>
                 </a>
             </div>
@@ -91,15 +97,17 @@
             <div class="item">
                 <a href="#">
                     <div class="icon">
-                        <img src="Images/icons/Icon address card.png" alt=""></div>
+                        <img src="Images/icons/Icon address card.png" alt="">
+                    </div>
                     <div class="title"><span>Servicios</span></div>
                 </a>
             </div>
             <div class="item">
                 <a href="Logout.aspx" class="btn btn-danger">Cerrar Sesión</a>
-
             </div>
-
+            <div class="item">
+                <a href="UpdatePassword.aspx" class="btn btn-danger">Cambiar Contraseña</a>
+            </div>
         </div>
 
 
