@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using NurseProjecDAO.Implementacion;
+
 namespace NurseProjectWEB
 {
     public partial class Login1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void btnSignIn_Click(object sender, EventArgs e)
@@ -20,15 +16,16 @@ namespace NurseProjectWEB
             try
             {
                 UserImpl implUser = new UserImpl();
-                DataTable table = implUser.Login(txtUsuario.Text, txtPassword.Text);
-                DataTable table2 = implUser.LoginNurse(txtUsuario.Text, txtPassword.Text);
+                string username = txtUsuario.Text;
+                string password = txtPassword.Text;
 
-                // Comprobar si se ha encontrado un usuario en la tabla de usuarios
+                DataTable table = implUser.Login(username, password);
+                DataTable table2 = implUser.LoginNurse(username, password);
+
                 if (table.Rows.Count > 0)
                 {
                     ProcessUserLogin(table);
                 }
-                // Comprobar si se ha encontrado un usuario en la tabla de enfermeras
                 else if (table2.Rows.Count > 0)
                 {
                     ProcessUserLogin(table2);
@@ -40,7 +37,7 @@ namespace NurseProjectWEB
             }
             catch (Exception ex)
             {
-                throw ex;
+                lblMessage.Text = ex.Message;
             }
         }
 
@@ -51,31 +48,26 @@ namespace NurseProjectWEB
             Session["UserRole"] = userData.Rows[0][2].ToString();
 
             string userRole = userData.Rows[0][2].ToString();
+            string redirectPage = "Home.aspx";
 
             switch (userRole)
             {
                 case "Administrador":
-                    Response.Redirect("AdmHome.aspx");
+                    redirectPage = "AdmHome.aspx";
                     break;
-
                 case "Enfermera":
-                    Response.Redirect("Nurse_home.aspx");
-                    break;
                 case "Paciente":
-                    Response.Redirect("Nurse_home.aspx");
-                    break;
-
-                default:
-                    Response.Redirect("Home.aspx");
+                    redirectPage = "Nurse_home.aspx";
                     break;
             }
+
+            Response.Redirect(redirectPage);
         }
 
         private void ShowErrorMessage(string message)
         {
-            // Muestra un mensaje de error en la página
-            // lblMessage.Text = message;
-            // lblMessage.CssClass = "error-message";
+            lblMessage.Text = message;
+            lblMessage.CssClass = "error-message";
         }
     }
 }

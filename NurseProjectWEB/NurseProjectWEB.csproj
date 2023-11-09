@@ -43,6 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
@@ -85,9 +91,13 @@
     <Content Include="Images\nurses_svg_v2.svg" />
     <Content Include="Images\undraw_medical_care_movn.svg" />
     <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
     <Content Include="Nurse_home.aspx" />
+    <Content Include="PatienteReport.aspx" />
     <Content Include="RegisterNurse.aspx" />
     <Content Include="RegisterPaciente.aspx" />
+    <Content Include="SolictudPaciente.aspx" />
+    <Content Include="UpdatePassword.aspx" />
     <Content Include="Web.config" />
     <Content Include="WiewPdf.aspx" />
   </ItemGroup>
@@ -158,12 +168,26 @@
     <Compile Include="Login.Master.designer.cs">
       <DependentUpon>Login.Master</DependentUpon>
     </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Nurse_home.aspx.cs">
       <DependentUpon>Nurse_home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nurse_home.aspx.designer.cs">
       <DependentUpon>Nurse_home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PatienteReport.aspx.cs">
+      <DependentUpon>PatienteReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PatienteReport.aspx.designer.cs">
+      <DependentUpon>PatienteReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Nurse_home.Master.cs">
@@ -186,6 +210,20 @@
     </Compile>
     <Compile Include="RegisterPaciente.aspx.designer.cs">
       <DependentUpon>RegisterPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SolictudPaciente.aspx.cs">
+      <DependentUpon>SolictudPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SolictudPaciente.aspx.designer.cs">
+      <DependentUpon>SolictudPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePassword.aspx.cs">
+      <DependentUpon>UpdatePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdatePassword.aspx.designer.cs">
+      <DependentUpon>UpdatePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="WiewPdf.aspx.cs">
       <DependentUpon>WiewPdf.aspx</DependentUpon>

@@ -65,7 +65,7 @@ namespace NurseProjectWEB
             try
             {
                 implNurse = new NurseImpl();
-                DataTable dt = implNurse.Select();
+                DataTable dt = implNurse.SelectApproval();
                 DataTable table = new DataTable("Nurse");
                 table.Columns.Add("Nombre", typeof(string));
                 table.Columns.Add("Apellido Paterno", typeof(string));
@@ -80,7 +80,7 @@ namespace NurseProjectWEB
                 table.Columns.Add("Rol", typeof(string));
                 table.Columns.Add("Especialidad", typeof(string));
                 table.Columns.Add("Año de Titulacion", typeof(string));
-                table.Columns.Add("Seleccionar", typeof(string));
+                table.Columns.Add("Aceptar", typeof(string));
                 table.Columns.Add("Borrar", typeof(string));
 
                 foreach (DataRow dr in dt.Rows)
@@ -105,7 +105,7 @@ namespace NurseProjectWEB
                 {
                     string id = dt.Rows[i]["Id"].ToString();
                     string up = $"<a class='btn btn-sm btn-warning' href='ApprovalNurse.aspx?id={id}&type=U'> Seleccionar</a>";
-                    string del = $"<a class='btn btn-sm btn-danger' href='ApprovalNurse.aspx?id={id}&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Eliminar</i></a>";
+                    string del = $"<a class='btn btn-sm btn-danger' href='ApprovalNurse.aspx?id={id}&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Rechazar</i></a>";
                     string PdfTitulo = $"<a href='WiewPdf.aspx?id={id}&type=Titulo' target='_blank'>Ver Titulo</a>";
                     string PdfCv = $"<a href='WiewPdf.aspx?id={id}&type=CV' target='_blank'>Ver CV</a>";
                     GridDat.Rows[i].Cells[4].Text = PdfTitulo;
@@ -147,6 +147,9 @@ namespace NurseProjectWEB
             type = Request.QueryString["type"];
             if (type == "U")
             {
+                btnVolver.Visible = true;
+                btnAceptar.Visible = true;
+                
                 Get();
             }
         }
@@ -189,7 +192,6 @@ namespace NurseProjectWEB
         }
 
 
-
         private void EnviarCorreo(string email, string subject, string body)
         {
             try
@@ -206,8 +208,7 @@ namespace NurseProjectWEB
                 clienteSmtp.Credentials = new NetworkCredential(remitente, contraseñaRemitente);
 
                 clienteSmtp.Send(mensaje);
-
-                // Muestra un mensaje de éxito en la página web
+                
                 ScriptManager.RegisterStartupScript(this, GetType(), "CorreoEnviado", "alert('Se ha enviado un correo con éxito.');", true);
             }
             catch (Exception ex)
@@ -216,9 +217,9 @@ namespace NurseProjectWEB
                 ScriptManager.RegisterStartupScript(this, GetType(), "ErrorCorreo", $"alert('Error al enviar el correo: {ex.Message}');", true);
             }
         }
+               
 
-
-        protected void btnRegistrar_Click(object sender, EventArgs e)
+        protected void btnAceptar_Click(object sender, EventArgs e)
         {
             id = short.Parse(Request.QueryString["id"]);
             if (id > 0)
@@ -232,7 +233,7 @@ namespace NurseProjectWEB
                         int n = implNurse.Update(N);
 
                         if (n > 0)
-                        {                            
+                        {
                             EnviarCorreo(N.Email, "Cuenta activada", "Su cuenta ha sido activada correctamente.");
                         }
                     }
@@ -244,8 +245,9 @@ namespace NurseProjectWEB
             }
         }
 
-
-        
-
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ApprovalNurse.aspx");
+        }
     }
 }

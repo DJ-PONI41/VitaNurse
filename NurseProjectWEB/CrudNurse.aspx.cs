@@ -7,15 +7,14 @@ using System.Net.Mail;
 using System.Net;
 using System.Threading.Tasks;
 using System.Data;
+using NurseProjecDAO.Tools;
 
 namespace NurseProjectWEB
 {
     public partial class CrudNurse : System.Web.UI.Page
     {
-        private NurseImpl implNurse;
-       
-        private Nurse N;
-       
+        private NurseImpl implNurse;       
+        private Nurse N;       
         private short id;
         private string type;
 
@@ -52,50 +51,116 @@ namespace NurseProjectWEB
         {
             try
             {
-                
-                string nombre = txtNombre.Text;
-                string apellidoPaterno = txtApellidoPaterno.Text;
-                string apellidoMaterno = txtApellidoMaterno.Text;
-                DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                string celular = txtCelular.Text;
-                string ci = txtCi.Text;
-                string correo = txtCorreo.Text;
-                string direccion = txtDireccion.Text;
+
+                string nombre = Tools.EliminarEspacios(txtNombre.Text);
+                string apellidoPaterno = Tools.EliminarEspacios(txtApellidoPaterno.Text);
+                string apellidoMaterno = Tools.EliminarEspacios(txtApellidoMaterno.Text);
+                string celular = Tools.EliminarEspacios(txtCelular.Text);
+                string ci = Tools.EliminarEspacios(txtCi.Text);
+                string correo = Tools.EliminarEspacios(txtCorreo.Text);
+                string direccion = Tools.EliminarEspacios(txtDireccion.Text);
                 string latitud = txtLat.Text;
                 string longitud = txtLong.Text;
-                string municipio = txtMunicipio.Text;
-                string especialidad = txtEspecialidad.Text;
-                DateTime añoTitulacion = DateTime.Parse(txtTitulacion.Text);
-                string rol = "Enfermera";
+                string municipio = Tools.EliminarEspacios(txtMunicipio.Text);
+                string especialidad = Tools.EliminarEspacios(txtEspecialidad.Text);
 
-                // Datos img
-                byte[] imgData = ReadFileData(fileUpload.PostedFile);
-
-                // Datos PDF - Título
-                byte[] tituloPdfData = ReadFileData(fileTitulo.PostedFile);
-
-                // Datos PDF - CVC
-                byte[] cvcPdfData = ReadFileData(fileCvc.PostedFile);
-
-                
-                string user = GenerateUser(nombre, apellidoPaterno, apellidoMaterno, rol);
-                string password = ContraseñaRandom();
-                
-                Nurse N = new Nurse(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añoTitulacion, tituloPdfData, cvcPdfData);
-                User U = new User(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, rol);
-                                
-                implNurse = new NurseImpl();
-                int n = implNurse.InsertN2(U, N);
-
-                if (n > 0)
-                {
-                    ShowMessage("El registro se ha realizado con éxito.", "success");
-                    Task.Run(() => EnviarCorreo(user, password, correo));
-                    Select();
-                }
+                if (string.IsNullOrEmpty(nombre) || !Tools.ValidarTextoConÑ(nombre))
+                    ShowMessage("El nombre no es válido.", "danger");
+                else if (string.IsNullOrEmpty(apellidoPaterno) || !Tools.ValidarTextoConÑ(apellidoPaterno))
+                    ShowMessage("El apellido paterno no es válido.", "danger");
+                else if (!Tools.ValidarTextoConÑ(apellidoMaterno))
+                    ShowMessage("El apellido materno no es válido.", "danger");
+                else if (string.IsNullOrEmpty(celular) || !Tools.ValidatePhoneNumber(celular))
+                    ShowMessage("El número de celular no es válido.", "danger");
+                else if (string.IsNullOrEmpty(correo) || !Tools.validarCorreo(correo))
+                    ShowMessage("El correo electrónico no es válido.", "danger");
+                else if (string.IsNullOrEmpty(direccion) || !Tools.VlAdress(direccion))
+                    ShowMessage("La dirección no es válida.", "danger");
+                else if (string.IsNullOrEmpty(municipio) || !Tools.ValidarTextoConÑ(municipio))
+                    ShowMessage("El municipio no es válido.", "danger");
+                else if (string.IsNullOrEmpty(especialidad) || !Tools.ValidarTextoConÑ(especialidad))
+                    ShowMessage("La especialidad no es válida.", "danger");
                 else
                 {
-                    ShowMessage("¡Error! No se pudo realizar el registro.", "danger");
+                    DateTime fechaNacimiento, añoTitulacion;
+
+                    if (!DateTime.TryParse(txtFechaNacimiento.Text, out fechaNacimiento) || fechaNacimiento > DateTime.Now)
+                        ShowMessage("La fecha de nacimiento no es válida.", "danger");
+                    else if (!DateTime.TryParse(txtTitulacion.Text, out añoTitulacion) || añoTitulacion > DateTime.Now)
+                        ShowMessage("El año de titulación no es válido.", "danger");
+                    else
+                    {
+                        // Validación de archivos
+                        if (fileUpload.HasFile)
+                        {
+                            string ext = System.IO.Path.GetExtension(fileUpload.FileName).ToLower();
+                            if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
+                            {
+                                ShowMessage("La foto debe ser una imagen en formato JPG, JPEG o PNG.", "danger");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage("Debes seleccionar una foto.", "danger");
+                            return;
+                        }
+
+                        if (fileTitulo.HasFile)
+                        {
+                            string ext = System.IO.Path.GetExtension(fileTitulo.FileName).ToLower();
+                            if (ext != ".pdf")
+                            {
+                                ShowMessage("El archivo de título debe ser un PDF.", "danger");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage("Debes adjuntar el archivo de título.", "danger");
+                            return;
+                        }
+
+                        if (fileCvc.HasFile)
+                        {
+                            string ext = System.IO.Path.GetExtension(fileCvc.FileName).ToLower();
+                            if (ext != ".pdf")
+                            {
+                                ShowMessage("El archivo de CV debe ser un PDF.", "danger");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage("Debes adjuntar el archivo de CV.", "danger");
+                            return;
+                        }
+
+                        string user = GenerateUser(nombre, apellidoPaterno, apellidoMaterno, "Enfermera");
+                        string password = ContraseñaRandom();
+
+                        byte[] imgData = ReadFileData(fileUpload.PostedFile);
+                        byte[] tituloPdfData = ReadFileData(fileTitulo.PostedFile);
+                        byte[] cvcPdfData = ReadFileData(fileCvc.PostedFile);
+
+
+                        Nurse N = new Nurse(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añoTitulacion, tituloPdfData, cvcPdfData);
+                        User U = new User(nombre, apellidoPaterno, apellidoMaterno, imgData, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, user, password, "Enfermera");
+
+                        implNurse = new NurseImpl();
+                        int n = implNurse.InsertN2(U, N);
+
+                        if (n > 0)
+                        {
+                            ShowMessage("El registro se ha realizado con éxito.", "success");
+                            Task.Run(() => EnviarCorreo(user, password, correo));
+                            Select();
+                        }
+                        else
+                        {
+                            ShowMessage("¡Error! No se pudo realizar el registro.", "danger");
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -114,14 +179,20 @@ namespace NurseProjectWEB
 
         private string GenerateUser(string nombre, string apellidoPaterno, string apellidoMaterno, string rol)
         {
-            string nombres = nombre.Replace(" ", "").ToLower();
             string userChars = $"{apellidoPaterno[0]}";
 
             if (!string.IsNullOrEmpty(apellidoMaterno))
             {
-                userChars += $"{apellidoMaterno[0]}";
+                userChars += apellidoMaterno[0];
+            }
+            else
+            {
+                var random = new Random();
+                userChars += (char)('A' + random.Next(26));
+                userChars += (char)('A' + random.Next(26));
             }
 
+            string nombres = nombre.Replace(" ", "");
             userChars += nombres.Substring(0, Math.Min(6, nombres.Length));
             userChars += rol[0];
 
@@ -130,13 +201,31 @@ namespace NurseProjectWEB
 
         private string ContraseñaRandom()
         {
-            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+            var digitChars = "0123456789";
+            var specialChars = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
+
+            var allChars = upperChars + lowerChars + digitChars + specialChars;
             var passwordChars = new char[8];
+
             var random = new Random();
 
-            for (int i = 0; i < passwordChars.Length; i++)
+            passwordChars[0] = upperChars[random.Next(upperChars.Length)];
+            passwordChars[1] = lowerChars[random.Next(lowerChars.Length)];
+            passwordChars[2] = digitChars[random.Next(digitChars.Length)];
+            passwordChars[3] = specialChars[random.Next(specialChars.Length)];
+
+
+            for (int i = 4; i < 12; i++)
             {
-                passwordChars[i] = characters[random.Next(characters.Length)];
+                passwordChars[i] = allChars[random.Next(allChars.Length)];
+            }
+
+            for (int i = 0; i < passwordChars.Length - 1; i++)
+            {
+                int j = random.Next(i, passwordChars.Length);
+                (passwordChars[i], passwordChars[j]) = (passwordChars[j], passwordChars[i]);
             }
 
             return new string(passwordChars);
@@ -146,23 +235,33 @@ namespace NurseProjectWEB
         {
             try
             {
-                string remitente = "pruebasprubea@gmail.com";
+                string remitente = "pruebasprueba@gmail.com";
                 string contraseñaRemitente = "gnwnnxeytwqgafwc";
+                string servidorSmtp = "smtp.gmail.com";
+                int puertoSmtp = 587;
 
-                MailMessage mensaje = new MailMessage(remitente, email);
-                mensaje.Subject = "Credenciales de acceso";
-                mensaje.Body = $"Usuario: {user}\nContraseña: {password}";
+                using (MailMessage mensaje = new MailMessage(remitente, email))
+                {
+                    mensaje.Subject = "Credenciales de acceso";
+                    mensaje.Body = $"Usuario: {user}\nContraseña: {password}";
 
-                SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587);
-                clienteSmtp.EnableSsl = true;
-                clienteSmtp.Credentials = new NetworkCredential(remitente, contraseñaRemitente);
+                    using (SmtpClient clienteSmtp = new SmtpClient(servidorSmtp, puertoSmtp))
+                    {
+                        clienteSmtp.EnableSsl = true;
+                        clienteSmtp.Credentials = new NetworkCredential(remitente, contraseñaRemitente);
 
-                clienteSmtp.Send(mensaje);
-                ShowMessage("Se ha enviado un correo con su Usuario y Contraseña.", "success");
+                        clienteSmtp.Send(mensaje);
+                        ShowMessage("Se ha enviado un correo con su Usuario y Contraseña.", "success");
+                    }
+                }
+            }
+            catch (SmtpException ex)
+            {
+                ShowMessage("Error al enviar el correo: " + ex.Message, "danger");
             }
             catch (Exception ex)
             {
-                ShowMessage(ex.Message, "danger");
+                ShowMessage("Ocurrió un error inesperado: " + ex.Message, "danger");
             }
         }
 
@@ -270,6 +369,9 @@ namespace NurseProjectWEB
             type = Request.QueryString["type"];
             if (type == "U")
             {
+                btnAtras.Visible = true;
+                btnUpdate.Visible = true;
+                btnRegistrar.Visible = false;
                 Get();
             }
         }
@@ -323,61 +425,145 @@ namespace NurseProjectWEB
             short id = short.Parse(Request.QueryString["id"]);
             implNurse = new NurseImpl();
 
-            string nombre = txtNombre.Text;
-            string apellidoPaterno = txtApellidoPaterno.Text;
-            string apellidoMaterno = txtApellidoMaterno.Text;
-            DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-            string celular = txtCelular.Text;
-            string ci = txtCi.Text;
-            string correo = txtCorreo.Text;
-            string direccion = txtDireccion.Text;
+            string nombre = Tools.EliminarEspacios(txtNombre.Text);
+            string apellidoPaterno = Tools.EliminarEspacios(txtApellidoPaterno.Text);
+            string apellidoMaterno = Tools.EliminarEspacios(txtApellidoMaterno.Text);
+            string celular = Tools.EliminarEspacios(txtCelular.Text);
+            string ci = Tools.EliminarEspacios(txtCi.Text);
+            string correo = Tools.EliminarEspacios(txtCorreo.Text);
+            string direccion = Tools.EliminarEspacios(txtDireccion.Text);
             string latitud = txtLat.Text;
             string longitud = txtLong.Text;
-            string municipio = txtMunicipio.Text;
-            string especialidad = txtEspecialidad.Text;
-            DateTime añoTitulacion = DateTime.Parse(txtTitulacion.Text);
+            string municipio = Tools.EliminarEspacios(txtMunicipio.Text);
+            string especialidad = Tools.EliminarEspacios(txtEspecialidad.Text);
 
-            // Verificar si se cargó una nueva imagen
-            byte[] ImgOriginal = null;
-            if (fileUpload.HasFile)
-            {
-                int img = fileUpload.PostedFile.ContentLength;
-                ImgOriginal = new byte[img];
-                fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
-            }
+            if (string.IsNullOrEmpty(nombre) || !Tools.ValidarTextoConÑ(nombre))
+                ShowMessage("El nombre no es válido.", "danger");
+            else if (string.IsNullOrEmpty(apellidoPaterno) || !Tools.ValidarTextoConÑ(apellidoPaterno))
+                ShowMessage("El apellido paterno no es válido.", "danger");
+            else if (!Tools.ValidarTextoConÑ(apellidoMaterno))
+                ShowMessage("El apellido materno no es válido.", "danger");
+            else if (string.IsNullOrEmpty(celular) || !Tools.ValidatePhoneNumber(celular))
+                ShowMessage("El número de celular no es válido.", "danger");
+            else if (string.IsNullOrEmpty(correo) || !Tools.validarCorreo(correo))
+                ShowMessage("El correo electrónico no es válido.", "danger");
+            else if (string.IsNullOrEmpty(direccion) || !Tools.VlAdress(direccion))
+                ShowMessage("La dirección no es válida.", "danger");
+            else if (string.IsNullOrEmpty(municipio) || !Tools.ValidarTextoConÑ(municipio))
+                ShowMessage("El municipio no es válido.", "danger");
+            else if (string.IsNullOrEmpty(especialidad) || !Tools.ValidarTextoConÑ(especialidad))
+                ShowMessage("La especialidad no es válida.", "danger");
             else
             {
-                //obtener la imagen existente de la base de datos
-                Nurse ImgExistente = implNurse.Get(id);
-                if (ImgExistente != null)
-                {
-                    ImgOriginal = ImgExistente.PhotoData;
+                DateTime fechaNacimiento, añoTitulacion;
+
+                if (!DateTime.TryParse(txtFechaNacimiento.Text, out fechaNacimiento) || fechaNacimiento > DateTime.Now)
+                    ShowMessage("La fecha de nacimiento no es válida.", "danger");
+                else if (!DateTime.TryParse(txtTitulacion.Text, out añoTitulacion) || añoTitulacion > DateTime.Now)
+                    ShowMessage("El año de titulación no es válido.", "danger");
+                else
+                {                    
+                    if (fileUpload.HasFile)
+                    {
+                        string ext = System.IO.Path.GetExtension(fileUpload.FileName).ToLower();
+                        if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
+                        {
+                            ShowMessage("La foto debe ser una imagen en formato JPG, JPEG o PNG.", "danger");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        ShowMessage("Debes seleccionar una foto.", "danger");
+                        return;
+                    }
+
+                    // Verificar si se cargó un nuevo archivo de titulo (PDF)
+                    byte[] PdfOriginal = null;
+                    if (fileTitulo.HasFile)
+                    {
+                        string ext = System.IO.Path.GetExtension(fileTitulo.FileName).ToLower();
+                        if (ext != ".pdf")
+                        {
+                            ShowMessage("El archivo de título debe ser un PDF.", "danger");
+                            return;
+                        }
+
+                        int titulo = fileTitulo.PostedFile.ContentLength;
+                        PdfOriginal = new byte[titulo];
+                        fileTitulo.PostedFile.InputStream.Read(PdfOriginal, 0, titulo);
+                    }
+                    else
+                    {
+                        Nurse TituloExistente = implNurse.Get(id);
+                        if (TituloExistente != null)
+                        {
+                            PdfOriginal = TituloExistente.LugarTitulacion;
+                        }
+                    }
+
+                    // Verificar si se cargó un nuevo archivo de CV 
+                    byte[] CvOriginal = null;
+                    if (fileCvc.HasFile)
+                    {
+                        string ext = System.IO.Path.GetExtension(fileCvc.FileName).ToLower();
+                        if (ext != ".pdf")
+                        {
+                            ShowMessage("El archivo de CV debe ser un PDF.", "danger");
+                            return;
+                        }
+
+                        int Cvc = fileCvc.PostedFile.ContentLength;
+                        CvOriginal = new byte[Cvc];
+                        fileCvc.PostedFile.InputStream.Read(CvOriginal, 0, Cvc);
+                    }
+                    else
+                    {
+                        Nurse CVExistente = implNurse.Get(id);
+                        if (CVExistente != null)
+                        {
+                            CvOriginal = CVExistente.Cvc;
+                        }
+                    }
+
+                    // Verificar si se cargó una nueva imagen
+                    byte[] ImgOriginal = null;
+                    if (fileUpload.HasFile)
+                    {
+                        int img = fileUpload.PostedFile.ContentLength;
+                        ImgOriginal = new byte[img];
+                        fileUpload.PostedFile.InputStream.Read(ImgOriginal, 0, img);
+                    }
+                    else
+                    {
+                        
+                        Nurse ImgExistente = implNurse.Get(id);
+                        if (ImgExistente != null)
+                        {
+                            ImgOriginal = ImgExistente.PhotoData;
+                        }
+                    }
+
+                    Nurse nurse = new Nurse(id, nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añoTitulacion, PdfOriginal, CvOriginal);
+                    int n = implNurse.UpdateN(nurse);
+
+                    if (n > 0)
+                    {
+                        Select();
+                        Response.Redirect("CrudNurse.aspx");
+                    }
+                    else
+                    {
+                        ShowMessage("Error al actualizar.", "error");
+                    }
                 }
-            }
-
-            // Datos pdf
-            int titulo = fileTitulo.PostedFile.ContentLength;
-            byte[] PdfOriginal = new byte[titulo];
-            fileTitulo.PostedFile.InputStream.Read(PdfOriginal, 0, titulo);
-
-            int Cvc = fileCvc.PostedFile.ContentLength;
-            byte[] CvcOriginal = new byte[Cvc];
-            fileCvc.PostedFile.InputStream.Read(CvcOriginal, 0, Cvc);
-
-            Nurse nurse = new Nurse(id, nombre, apellidoPaterno, apellidoMaterno, ImgOriginal, fechaNacimiento, celular, ci, correo, direccion, latitud, longitud, municipio, especialidad, añoTitulacion, PdfOriginal, CvcOriginal);
-            int n = implNurse.UpdateN(nurse);
-
-            if (n > 0)
-            {
-                Select();
-                Response.Redirect("CrudNurse.aspx");
-            }
-            else
-            {
-                ShowMessage("Error al actualizar.", "error");
             }
         }
 
+        protected void btnAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CrudNurse.aspx");
+        }
     }
 
 }

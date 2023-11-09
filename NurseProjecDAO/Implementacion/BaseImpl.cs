@@ -11,8 +11,8 @@ namespace NurseProjecDAO.Implementacion
     public class BaseImpl
     {
 
-        // esta la conexion del host de la base de datos         
-        string connectionString = @"Server=DESKTOP-MHACHFQ\SQLEXPRESS;Database=NurseProjectDB;User Id=sa;Password=Univalle";
+                
+        string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {
@@ -153,6 +153,41 @@ namespace NurseProjecDAO.Implementacion
             }
             return n;
         }
+
+
+
+        public int ExecuteCrudCommand(SqlCommand command)
+        {
+            SqlTransaction transaction = null;
+            int rowsAffected = 0;
+
+            try
+            {
+                command.Connection.Open();
+                transaction = command.Connection.BeginTransaction();
+
+                command.Transaction = transaction;
+                rowsAffected = command.ExecuteNonQuery();
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
+                throw ex;
+            }
+            finally
+            {
+                command.Connection.Close();
+            }
+
+            return rowsAffected;
+        }
+
+
 
         public DataTable ExecuteDataTableCommand(SqlCommand command)
         {

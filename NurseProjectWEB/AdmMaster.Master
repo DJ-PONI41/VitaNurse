@@ -12,129 +12,151 @@
 </head>
 <body>
     <div id="sidemenu" class="menu-collapsed">
-            <div id="header">
-                <div id="menu-btn">
-                    <div class="btn-hamburger"></div>
-                    <div class="btn-hamburger"></div>
-                    <div class="btn-hamburger"></div>
-                </div>
-                <div id="title">
-                    <div id="profile">
-                        <div id="photo"><img src="Images/Logo_svg.svg" alt=""></div>
-        
-                        <div id="name"><span>Jorge Varela</span></div>
+        <div id="header">
+            <div id="menu-btn">
+                <div class="btn-hamburger"></div>
+                <div class="btn-hamburger"></div>
+                <div class="btn-hamburger"></div>
+            </div>
+            <div id="title">
+                <div id="profile">
+                    <div id="photo">
+                        <img src="Images/Logo_svg.svg" alt="">
                     </div>
+
+                    <div id="name"><span>Jorge Varela</span></div>
                 </div>
-                
             </div>
 
-            
+        </div>
 
-            <div id="menu-items">
-                <div class="item">
-                    <div id="submenu-btn" class="submenu-styl-none">
-                        <div class="icon"><img src="Images/icons/Icon personal injury.png" alt=""></div>
-                        <div class="title"><span>Pacientes</span></div>                        
-                        <div class="submenu"><img src="Images/icons/Icon submenu.png" alt=""></div>
-                    </div>
 
-                    <div id="side-submenu" class="submenu-collapsed">
-                        <div class="item">
-                            <a href="CrudPaciente.aspx">
-                                <div id="title-sunmenu" class="title"><span>Registrar Paciente</span></div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div id="title-sunmenu" class="title"><span>Lista Pacientes</span></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                <div class="item">
-                    <div id="submenu-btn-2" class="submenu-styl-none">
-                        <div class="icon"><img src="Images/icons/Icon health and safety.png" alt=""></div>
-                        <div class="title"><span>Enfermeras</span></div>
-                        <div class="submenu"><img src="Images/icons/Icon submenu.png" alt=""></div>
-                    </div>
 
-                    <div id="side-submenu-2" class="submenu-collapsed">
-                        <div class="item">
-                            <a href="CrudNurse.aspx">
-                                <div id="title-sunmenu" class="title"><span>Registrar Enfemera</span></div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="ApprovalNurse.aspx">
-                                <div id="title-sunmenu" class="title"><span>Solictud Enfermera</span></div>
-                            </a>
-                        </div>
+        <div id="menu-items">
+            <div class="item">
+                <div id="submenu-btn" class="submenu-styl-none">
+                    <div class="icon">
+                        <img src="Images/icons/Icon personal injury.png" alt="">
+                    </div>
+                    <div class="title"><span>Pacientes</span></div>
+                    <div class="submenu">
+                        <img src="Images/icons/Icon submenu.png" alt="">
                     </div>
                 </div>
 
+                <div id="side-submenu" class="submenu-collapsed">
+                    <div class="item">
+                        <a href="CrudPaciente.aspx">
+                            <div id="title-sunmenu" class="title"><span>Registrar Paciente</span></div>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="PatienteReport.aspx">
+                            <div id="title-sunmenu" class="title"><span>Lista Pacientes</span></div>
+                        </a>
+                    </div>
 
-                <div class="item">
-                    <a href="#">
-                        <div class="icon"><img src="Images/icons/Icon notifications.png" alt=""></div>
-                        <div class="title"><span>Solicitudes</span></div>
-                    </a>
-                </div>
-
-                <div class="item">
-                    <a href="#">
-                        <div class="icon"><img src="Images/icons/Icon address card.png" alt=""></div>
-                        <div class="title"><span>Servicios</span></div>
-                    </a>
                 </div>
             </div>
 
 
+            <div class="item">
+                <div id="submenu-btn-2" class="submenu-styl-none">
+                    <div class="icon">
+                        <img src="Images/icons/Icon health and safety.png" alt="">
+                    </div>
+                    <div class="title"><span>Enfermeras</span></div>
+                    <div class="submenu">
+                        <img src="Images/icons/Icon submenu.png" alt="">
+                    </div>
+                </div>
+
+                <div id="side-submenu-2" class="submenu-collapsed">
+                    <div class="item">
+                        <a href="CrudNurse.aspx">
+                            <div id="title-sunmenu" class="title"><span>Registrar Enfemera</span></div>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="ApprovalNurse.aspx">
+                            <div id="title-sunmenu" class="title"><span>Solictud Enfermera</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="item">
+                <a href="#">
+                    <div class="icon">
+                        <img src="Images/icons/Icon notifications.png" alt="">
+                    </div>
+                    <div class="title"><span>Solicitudes</span></div>
+                </a>
+            </div>
+
+            <div class="item">
+                <a href="#">
+                    <div class="icon">
+                        <img src="Images/icons/Icon address card.png" alt="">
+                    </div>
+                    <div class="title"><span>Servicios</span></div>
+                </a>
+            </div>
+
+            <div class="item">
+                <a href="Logout.aspx" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
+            <div class="item">
+                <a href="UpdatePassword.aspx" class="btn btn-danger">Cambiar Contraseña</a>
+            </div>
         </div>
-         
-        <div id="main-container">
-            hola todos
-        </div>
+
+
+    </div>
+
+    <div id="main-container">
+        hola todos
+    </div>
     <div class="container-fluid">
         <div class="row">
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                
+
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
             </main>
         </div>
     </div>
-    
-     <script>
-            const btn = document.querySelector('#menu-btn');
-            const menu = document.querySelector('#sidemenu');
 
-            btn.addEventListener('click', e => {
-                menu.classList.toggle("menu-expanded");
-                menu.classList.toggle("menu-collapsed");
+    <script>
+        const btn = document.querySelector('#menu-btn');
+        const menu = document.querySelector('#sidemenu');
 
-                document.querySelector('body').classList.toggle('body-expanded');
-            });
+        btn.addEventListener('click', e => {
+            menu.classList.toggle("menu-expanded");
+            menu.classList.toggle("menu-collapsed");
 
-            const btn_sub = document.querySelector('#submenu-btn');
-            const menu_sub = document.querySelector('#side-submenu');
+            document.querySelector('body').classList.toggle('body-expanded');
+        });
 
-            btn_sub.addEventListener('click', e => {
-                menu_sub.classList.toggle("submenu-expanded");
-                btn_sub.classList.toggle("submenu-styl");
-                menu_sub.classList.toggle("submenu-collapsed");
-                
-            });
+        const btn_sub = document.querySelector('#submenu-btn');
+        const menu_sub = document.querySelector('#side-submenu');
 
-            const btn_sub_2 = document.querySelector('#submenu-btn-2');
-            const menu_sub_2 = document.querySelector('#side-submenu-2');
+        btn_sub.addEventListener('click', e => {
+            menu_sub.classList.toggle("submenu-expanded");
+            btn_sub.classList.toggle("submenu-styl");
+            menu_sub.classList.toggle("submenu-collapsed");
 
-            btn_sub_2.addEventListener('click', e => {
-                menu_sub_2.classList.toggle("submenu-expanded");
-                btn_sub_2.classList.toggle("submenu-styl");
-                menu_sub_2.classList.toggle("submenu-collapsed");
-                
-            });
-     </script>
+        });
+
+        const btn_sub_2 = document.querySelector('#submenu-btn-2');
+        const menu_sub_2 = document.querySelector('#side-submenu-2');
+
+        btn_sub_2.addEventListener('click', e => {
+            menu_sub_2.classList.toggle("submenu-expanded");
+            btn_sub_2.classList.toggle("submenu-styl");
+            menu_sub_2.classList.toggle("submenu-collapsed");
+
+        });
+    </script>
 </body>
 </html>
