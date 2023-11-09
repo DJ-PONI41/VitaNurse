@@ -483,7 +483,6 @@ namespace NurseProjectWEB
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
 

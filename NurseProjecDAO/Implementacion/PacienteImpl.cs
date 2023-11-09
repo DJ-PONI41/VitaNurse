@@ -21,9 +21,6 @@ namespace NurseProjecDAO.Implementacion
                UPDATE [User] SET status = 0, lastUpdate = CURRENT_TIMESTAMP
               WHERE id = @idUser";
 
-
-
-
             SqlCommand command = CreateBasicCommand(query);
             command.Parameters.AddWithValue("@idPerson", t.Id);
             command.Parameters.AddWithValue("@idPaciente", t.Id);
@@ -41,7 +38,7 @@ namespace NurseProjecDAO.Implementacion
         }
         //este no se 
         public int Insert(Paciente t)
-        {        
+        {
 
 
             query = @"INSERT INTO Person(names,lastName,secondLastName,birthdate,phone,ci,email,addres,latitude,longitude,municipio)
@@ -64,7 +61,6 @@ namespace NurseProjecDAO.Implementacion
             commands[0].Parameters.AddWithValue("@latitude", t.Latitude);
             commands[0].Parameters.AddWithValue("@longitude", t.Longitude);
             commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
-
 
             short id = short.Parse(GetGenerateIDTable("Person"));
 
@@ -120,7 +116,7 @@ namespace NurseProjecDAO.Implementacion
 
 
         public Paciente Get(short Id)
-        {          
+        {
 
             try
             {
@@ -175,7 +171,7 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
 
-            
+
 
         }
 
@@ -199,6 +195,124 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
+
+        public DataTable SelectReport()
+        {
+            query = @"SELECT 
+                        P.id,
+                        P.names AS Nombre,
+                        P.lastName AS 'Apellido Paterno',
+                        P.secondLastName AS 'Apellido Materno',
+                        ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',
+                        P.phone AS Celular,
+                        P.ci AS CI, 
+                        P.email AS Correo,
+                        P.addres AS Direccion,
+                        U.role AS Rol,
+                        E.historial AS 'Historial Medico'
+                    FROM 
+                        Person P 
+                    INNER JOIN 
+                        Paciente E ON P.id = E.id
+                    INNER JOIN 
+                        [User] U ON E.id = U.id
+                    WHERE 
+                        P.status = 1 
+                    ORDER BY 
+                        P.lastName; ";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public DataTable SelectReport2()
+        {
+            query = @"SELECT 
+                        P.names AS Nombre,
+                        P.lastName AS 'Apellido Paterno',
+                        P.secondLastName AS 'Apellido Materno',
+                        ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',
+                        P.phone AS Celular,
+                        P.ci AS CI, 
+                        P.email AS Correo,
+                        P.addres AS Direccion,
+                        U.role AS Rol,
+                        E.historial AS 'Historial Medico'
+                    FROM 
+                        Person P 
+                    INNER JOIN 
+                        Paciente E ON P.id = E.id
+                    INNER JOIN 
+                        [User] U ON E.id = U.id
+                    WHERE 
+                        P.status = 1 
+                    ORDER BY 
+                        P.lastName;
+                     ";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
+
+        public DataTable SelectReportPaciente(string name)
+        {
+            query = @"SELECT 
+                        P.id,
+                        P.names AS Nombre,
+                        P.lastName AS 'Apellido Paterno',
+                        P.secondLastName AS 'Apellido Materno',
+                        ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento',
+                        P.phone AS Celular,
+                        P.ci AS CI, 
+                        P.email AS Correo,
+                        P.addres AS Direccion,
+                        U.role AS Rol,
+                        E.historial AS 'Historial Medico'
+                    FROM 
+                        Person P 
+                    INNER JOIN 
+                        Paciente E ON P.id = E.id
+                    INNER JOIN 
+                        [User] U ON E.id = U.id
+                    WHERE 
+                        P.status = 1 AND P.names = @names
+                    ORDER BY 
+                        P.lastName; ";
+
+            SqlCommand command = CreateBasicCommand(query);
+            command.Parameters.AddWithValue("@names", name);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
 
         public int Update(Paciente t)
         {
@@ -227,7 +341,7 @@ namespace NurseProjecDAO.Implementacion
             commands[0].Parameters.AddWithValue("@municipio", t.Municipio);
 
             commands[1].Parameters.AddWithValue("@idPa", t.Id);
-            commands[1].Parameters.AddWithValue("@especialidad", t.Historial);         
+            commands[1].Parameters.AddWithValue("@especialidad", t.Historial);
 
 
             try
@@ -240,5 +354,8 @@ namespace NurseProjecDAO.Implementacion
                 throw;
             }
         }
+
+
+
     }
 }

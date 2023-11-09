@@ -51,10 +51,11 @@
                         </a>
                     </div>
                     <div class="item">
-                        <a href="#">
+                        <a href="PatienteReport.aspx">
                             <div id="title-sunmenu" class="title"><span>Lista Pacientes</span></div>
                         </a>
                     </div>
+
                 </div>
             </div>
 
@@ -102,6 +103,7 @@
                     <div class="title"><span>Servicios</span></div>
                 </a>
             </div>
+
             <div class="item">
                 <a href="Logout.aspx" class="btn btn-danger">Cerrar Sesión</a>
             </div>

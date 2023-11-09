@@ -4,8 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Actualizar Contraseña</title>
-    <!-- Agregar referencias a Bootstrap CSS -->
+    <title>Actualizar Contraseña</title>   
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
 
     <script type="text/javascript">
