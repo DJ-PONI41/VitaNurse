@@ -46,6 +46,7 @@ namespace NurseProjectWEB
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
             InsertSolicitud();
+            Response.Redirect("Agendar_visita.aspx");
         }
         private void load()
         {

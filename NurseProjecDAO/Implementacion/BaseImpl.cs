@@ -83,7 +83,27 @@ namespace NurseProjecDAO.Implementacion
                 throw;
             }
             finally { command.Connection.Close(); }
-        }      
+        }
+
+
+        private string GetLastInsertedId(string table)
+        {
+            string query = $"SELECT IDENT_CURRENT('{table}')";
+            SqlCommand command = CreateBasicCommand(query);
+
+            try
+            {
+                command.Connection.Open();                
+                return command.ExecuteScalar().ToString();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { command.Connection.Close(); }
+            
+        }
 
 
 

@@ -112,49 +112,6 @@ namespace NurseProjecDAO.Implementacion
         {
             query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
 						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
-						,N.LugarTitulacion AS 'Titulo Profesional',N.datos CV
-                        FROM Person P 
-                        INNER JOIN Nurse N ON P.id = N.id
-						INNER JOIN [User] U ON N.id = U.id
-                        WHERE P.status = 1 ORDER BY P.lastName";
-
-            SqlCommand command = CreateBasicCommand(query);
-            try
-            {
-                return ExecuteDataTableCommand(command);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public DataTable SelectReport2()
-        {
-            query = @"SELECT P.names AS Nombres, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
-						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'						
-                        FROM Person P 
-                        INNER JOIN Nurse N ON P.id = N.id
-						INNER JOIN [User] U ON N.id = U.id
-                        WHERE P.status = 1 ORDER BY P.lastName";
-
-            SqlCommand command = CreateBasicCommand(query);
-            try
-            {
-                return ExecuteDataTableCommand(command);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public DataTable SelectReportNurse(string name)
-        {
-            query = @"SELECT  P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
-						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
 						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV
                         FROM Person P 
                         INNER JOIN Nurse N ON P.id = N.id
@@ -209,21 +166,6 @@ namespace NurseProjecDAO.Implementacion
             }
         }
 
-
-
-
-        //Fin
-
-
-        public DataTable SelectApproval()
-        {
-            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
-						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
-						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV
-                        FROM Person P 
-                        INNER JOIN Nurse N ON P.id = N.id
-						INNER JOIN [User] U ON N.id = U.id
-                        WHERE P.status = 1 AND N.approval = 0 ";
 
             SqlCommand command = CreateBasicCommand(query);
             try

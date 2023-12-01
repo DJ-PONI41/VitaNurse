@@ -37,14 +37,12 @@ namespace NurseProjectWEB
             {
                 load();
                 LoadType();
-                Select();
             }
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
             InsertUserNurse();
-            Select();
         }
 
         private void InsertUserNurse()
@@ -153,8 +151,8 @@ namespace NurseProjectWEB
                         if (n > 0)
                         {
                             ShowMessage("El registro se ha realizado con éxito.", "success");
-                            Task.Run(() => EnviarCorreo(user, password, correo));
-                            Select();
+                            EnviarCorreo(user, password, correo);
+                            Response.Redirect("Crud_Listado_nueva_enfermera.aspx");
                         }
                         else
                         {
@@ -201,34 +199,43 @@ namespace NurseProjectWEB
 
         private string ContraseñaRandom()
         {
-            var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-            var digitChars = "0123456789";
-            var specialChars = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
+            const string caracteresMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string caracteresMinusculas = "abcdefghijklmnopqrstuvwxyz";
+            const string caracteresDigitos = "0123456789";
+            const string caracteresEspeciales = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
 
-            var allChars = upperChars + lowerChars + digitChars + specialChars;
-            var passwordChars = new char[8];
+            const string todosLosCaracteres = caracteresMayusculas + caracteresMinusculas + caracteresDigitos + caracteresEspeciales;
 
-            var random = new Random();
-
-            passwordChars[0] = upperChars[random.Next(upperChars.Length)];
-            passwordChars[1] = lowerChars[random.Next(lowerChars.Length)];
-            passwordChars[2] = digitChars[random.Next(digitChars.Length)];
-            passwordChars[3] = specialChars[random.Next(specialChars.Length)];
-
-
-            for (int i = 4; i < 12; i++)
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
             {
-                passwordChars[i] = allChars[random.Next(allChars.Length)];
-            }
+                var data = new byte[4];
+                rng.GetBytes(data);
+                var seed = BitConverter.ToInt32(data, 0);
+                var random = new Random(seed);
 
-            for (int i = 0; i < passwordChars.Length - 1; i++)
-            {
-                int j = random.Next(i, passwordChars.Length);
-                (passwordChars[i], passwordChars[j]) = (passwordChars[j], passwordChars[i]);
-            }
+                var passwordChars = new char[16];
 
-            return new string(passwordChars);
+
+                passwordChars[0] = caracteresMayusculas[random.Next(caracteresMayusculas.Length)];
+                passwordChars[1] = caracteresMinusculas[random.Next(caracteresMinusculas.Length)];
+                passwordChars[2] = caracteresDigitos[random.Next(caracteresDigitos.Length)];
+                passwordChars[3] = caracteresEspeciales[random.Next(caracteresEspeciales.Length)];
+
+
+                for (int i = 4; i < passwordChars.Length; i++)
+                {
+                    passwordChars[i] = todosLosCaracteres[random.Next(todosLosCaracteres.Length)];
+                }
+
+
+                for (int i = 0; i < passwordChars.Length - 1; i++)
+                {
+                    int j = random.Next(i, passwordChars.Length);
+                    (passwordChars[i], passwordChars[j]) = (passwordChars[j], passwordChars[i]);
+                }
+
+                return new string(passwordChars);
+            }
         }
 
         private void EnviarCorreo(string user, string password, string email)
@@ -273,75 +280,13 @@ namespace NurseProjectWEB
                 if (type == "D")
                 {
                     Delete();
-                    Select();
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-
-        private void Select()
-        {
-            try
-            {
-                implNurse = new NurseImpl();
-                DataTable dt = implNurse.Select();
-                DataTable table = new DataTable("Nurse");
-                table.Columns.Add("Nombre", typeof(string));
-                table.Columns.Add("Apellido Paterno", typeof(string));
-                table.Columns.Add("Apellido Materno", typeof(string));
-                table.Columns.Add("Fecha de nacimiento", typeof(string));
-                table.Columns.Add("Titulo Profesional", typeof(string));
-                table.Columns.Add("CV", typeof(string));
-                table.Columns.Add("Celular", typeof(string));
-                table.Columns.Add("CI", typeof(string));
-                table.Columns.Add("Correo", typeof(string));
-                table.Columns.Add("Direccion", typeof(string));
-                table.Columns.Add("Rol", typeof(string));
-                table.Columns.Add("Especialidad", typeof(string));
-                table.Columns.Add("Año de Titulacion", typeof(string));
-                table.Columns.Add("Seleccionar", typeof(string));
-                table.Columns.Add("Borrar", typeof(string));
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
-                    string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
-
-                    DateTime fechaTitulacion = (DateTime)dr["Año de Titulacion"];
-                    string fechaFormateadaTitulacion = fechaTitulacion.ToString("yyyy-MM-dd");
-
-                    table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
-                                   dr["Apellido Materno"].ToString(), fechaFormateada, "", "",
-                                   dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
-                                   dr["Direccion"].ToString(), dr["Rol"].ToString(),
-                                   dr["Especialidad"].ToString(), fechaFormateadaTitulacion, "", "");
-                }
-
-                GridDat.DataSource = table;
-                GridDat.DataBind();
-
-                for (int i = 0; i < GridDat.Rows.Count; i++)
-                {
-                    string id = dt.Rows[i]["Id"].ToString();
-                    string up = $"<a class='btn btn-sm btn-warning' href='CrudNurse.aspx?id={id}&type=U'> Seleccionar</a>";
-                    string del = $"<a class='btn btn-sm btn-danger' href='CrudNurse.aspx?id={id}&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Eliminar</i></a>";
-                    string PdfTitulo = $"<a href='WiewPdf.aspx?id={id}&type=Titulo' target='_blank'>Ver Titulo</a>";
-                    string PdfCv = $"<a href='WiewPdf.aspx?id={id}&type=CV' target='_blank'>Ver CV</a>";
-                    GridDat.Rows[i].Cells[4].Text = PdfTitulo;
-                    GridDat.Rows[i].Cells[5].Text = PdfCv;
-                    GridDat.Rows[i].Cells[13].Text = up;
-                    GridDat.Rows[i].Cells[14].Text = del;
-                    GridDat.Rows[i].Attributes["data-id"] = id;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        }        
 
         private void Delete()
         {
@@ -370,6 +315,7 @@ namespace NurseProjectWEB
             if (type == "U")
             {
                 btnAtras.Visible = true;
+                imgPreview.Visible = true;
                 btnUpdate.Visible = true;
                 btnRegistrar.Visible = false;
                 Get();
@@ -422,6 +368,7 @@ namespace NurseProjectWEB
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+
             short id = short.Parse(Request.QueryString["id"]);
             implNurse = new NurseImpl();
 
@@ -549,8 +496,7 @@ namespace NurseProjectWEB
 
                     if (n > 0)
                     {
-                        Select();
-                        Response.Redirect("CrudNurse.aspx");
+                        Response.Redirect("Listado_Crud_Nurse.aspx");
                     }
                     else
                     {
@@ -562,7 +508,7 @@ namespace NurseProjectWEB
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {
-            Response.Redirect("CrudNurse.aspx");
+            Response.Redirect("Crud_Listado_nueva_enfermera.aspx");
         }
     }
 

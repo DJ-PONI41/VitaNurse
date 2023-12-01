@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Panel de Administración</title>
     <link rel="stylesheet" href="Css/Side_Menu_styles.css">
+    <link rel="stylesheet" href="Css/style.css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -46,7 +47,7 @@
 
                 <div id="side-submenu" class="submenu-collapsed">
                     <div class="item">
-                        <a href="CrudPaciente.aspx">
+                        <a href="Crud_Listado_nuevo_Paciente.aspx">
                             <div id="title-sunmenu" class="title"><span>Registrar Paciente</span></div>
                         </a>
                     </div>
@@ -72,12 +73,12 @@
 
                 <div id="side-submenu-2" class="submenu-collapsed">
                     <div class="item">
-                        <a href="CrudNurse.aspx">
+                        <a href="Crud_Listado_nueva_enfermera.aspx">
                             <div id="title-sunmenu" class="title"><span>Registrar Enfemera</span></div>
                         </a>
                     </div>
                     <div class="item">
-                        <a href="ApprovalNurse.aspx">
+                        <a href="Listado_Crud_Nurse.aspx">
                             <div id="title-sunmenu" class="title"><span>Solictud Enfermera</span></div>
                         </a>
                     </div>
@@ -95,18 +96,18 @@
                     <div class="icon">
                         <img src="Images/icons/Icon notifications.png" alt="">
                     </div>
-                    <div class="title"><span>Solicitudes</span></div>
+                    <div class="title"><span>Reporte Solicitudes</span></div>
                 </a>
             </div>
 
             <div class="item">
-                <a href="Services.aspx">
+                <a href="#">
                     <div class="icon">
                         <img src="Images/icons/Icon address card.png" alt="">
                     </div>
                     <div class="title"><span>Servicios</span></div>
                 </a>
-            </div>
+            </div>--%>
             <div class="item">
                 <a href="UpdatePassword.aspx">
                     <div class="icon">
@@ -116,12 +117,10 @@
                 </a>
             </div>
             <div class="item">
-                <a href="Logout.aspx">
-                    <div class="icon">
-                        <img src="Images/icons/Icon logout.png" alt="">
-                    </div>
-                    <div class="title"><span>Cerrar Sesión</span></div>
-                </a>
+                <a href="Logout.aspx" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
+            <div class="item">
+                <a href="UpdatePassword.aspx" class="btn btn-danger">Cambiar Contraseña</a>
             </div>
         </div>
 
@@ -129,9 +128,7 @@
     </div>
 
     <div id="main-container">
-        hola todos
-    </div>
-    <div class="container-fluid">
+        <div class="container-fluid">
         <div class="row">
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
@@ -140,6 +137,8 @@
         </div>
     </div>
 
+    </div>
+    
     <script>
         const btn = document.querySelector('#menu-btn');
         const menu = document.querySelector('#sidemenu');

@@ -45,7 +45,6 @@
                     </div>
                     <div class="title"><span>Consultas</span></div>
                 </a>
-            </div>
             <div class="item">
                 <a href="UpdatePassword.aspx">
                     <div class="icon">

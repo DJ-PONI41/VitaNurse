@@ -39,7 +39,6 @@
                     </p>
                     <p>
                         <label>Especialidad</label>
-                        <asp:TextBox ID="txtEspecialidad" runat="server"></asp:TextBox>
                     </p>
                     <p class="block">
                         <label>Detalles de la visita</label>
@@ -70,7 +69,6 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script>
         $(document).ready(function () {
-            $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
                 var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
                     center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
                     zoom: 18
