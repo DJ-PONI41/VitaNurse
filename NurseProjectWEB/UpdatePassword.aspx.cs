@@ -75,7 +75,26 @@ namespace NurseProjectWEB
         }
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdmHome.aspx");
+            string rol = Session["UserRole"].ToString();
+
+            switch (rol)
+            {
+                case "Administrador":
+                    Response.Redirect("AdmHome.aspx");
+                    break;
+
+                case "Enfermera":
+                    Response.Redirect("Nurse_home.aspx");
+                    break;
+
+                case "Paciente":
+                    Response.Redirect("Pasciente_home.aspx");
+                    break;
+
+                default:
+                    Response.Redirect("Home.aspx");
+                    break;
+            }
         }
     }
 }

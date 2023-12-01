@@ -37,108 +37,7 @@ namespace NurseProjectWEB
 
             if (!IsPostBack)
             {
-                load();
                 LoadType();
-                Select();
-            }
-        }
-
-        private void load()
-        {
-            try
-            {
-                type = Request.QueryString["type"];
-                if (type == "D")
-                {
-                    Delete();
-                    Select();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        private void Select()
-        {
-            try
-            {
-                implNurse = new NurseImpl();
-                DataTable dt = implNurse.SelectApproval();
-                DataTable table = new DataTable("Nurse");
-                table.Columns.Add("Nombre", typeof(string));
-                table.Columns.Add("Apellido Paterno", typeof(string));
-                table.Columns.Add("Apellido Materno", typeof(string));
-                table.Columns.Add("Fecha de nacimiento", typeof(string));
-                table.Columns.Add("Titulo Profesional", typeof(string));
-                table.Columns.Add("CV", typeof(string));
-                table.Columns.Add("Celular", typeof(string));
-                table.Columns.Add("CI", typeof(string));
-                table.Columns.Add("Correo", typeof(string));
-                table.Columns.Add("Direccion", typeof(string));
-                table.Columns.Add("Rol", typeof(string));
-                table.Columns.Add("Especialidad", typeof(string));
-                table.Columns.Add("Año de Titulacion", typeof(string));
-                table.Columns.Add("Aceptar", typeof(string));
-                table.Columns.Add("Borrar", typeof(string));
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
-                    string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
-
-                    DateTime fechaTitulacion = (DateTime)dr["Año de Titulacion"];
-                    string fechaFormateadaTitulacion = fechaTitulacion.ToString("yyyy-MM-dd");
-
-                    table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
-                                   dr["Apellido Materno"].ToString(), fechaFormateada, "", "",
-                                   dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
-                                   dr["Direccion"].ToString(), dr["Rol"].ToString(),
-                                   dr["Especialidad"].ToString(), fechaFormateadaTitulacion, "", "");
-                }
-
-                GridDat.DataSource = table;
-                GridDat.DataBind();
-
-                for (int i = 0; i < GridDat.Rows.Count; i++)
-                {
-                    string id = dt.Rows[i]["Id"].ToString();
-                    string up = $"<a class='btn btn-sm btn-warning' href='ApprovalNurse.aspx?id={id}&type=U'> Seleccionar</a>";
-                    string del = $"<a class='btn btn-sm btn-danger' href='ApprovalNurse.aspx?id={id}&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Rechazar</i></a>";
-                    string PdfTitulo = $"<a href='WiewPdf.aspx?id={id}&type=Titulo' target='_blank'>Ver Titulo</a>";
-                    string PdfCv = $"<a href='WiewPdf.aspx?id={id}&type=CV' target='_blank'>Ver CV</a>";
-                    GridDat.Rows[i].Cells[4].Text = PdfTitulo;
-                    GridDat.Rows[i].Cells[5].Text = PdfCv;
-                    GridDat.Rows[i].Cells[13].Text = up;
-                    GridDat.Rows[i].Cells[14].Text = del;
-                    GridDat.Rows[i].Attributes["data-id"] = id;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        private void Delete()
-        {
-            id = short.Parse(Request.QueryString["id"]);
-            if (id > 0)
-            {
-                try
-                {
-                    implNurse = new NurseImpl();
-                    N = implNurse.Get(id);
-                    if (N != null)
-                    {
-                        int n = implNurse.Delete(N);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
             }
         }
 
@@ -147,9 +46,9 @@ namespace NurseProjectWEB
             type = Request.QueryString["type"];
             if (type == "U")
             {
-                btnVolver.Visible = true;
+                //btnVolver.Visible = true;
                 btnAceptar.Visible = true;
-                
+                btnUpdate.Visible = true;
                 Get();
             }
         }
@@ -235,6 +134,7 @@ namespace NurseProjectWEB
                         if (n > 0)
                         {
                             EnviarCorreo(N.Email, "Cuenta activada", "Su cuenta ha sido activada correctamente.");
+                            Response.Redirect("Listado_Crud_Nurse.aspx");
                         }
                     }
                 }
@@ -245,9 +145,9 @@ namespace NurseProjectWEB
             }
         }
 
-        protected void btnVolver_Click(object sender, EventArgs e)
+        protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ApprovalNurse.aspx");
+            Response.Redirect("Listado_Crud_Nurse.aspx");
         }
     }
 }

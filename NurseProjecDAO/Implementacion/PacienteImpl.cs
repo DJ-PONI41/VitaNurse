@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NurseProjecDAO.Implementacion
 {
@@ -196,6 +193,7 @@ namespace NurseProjecDAO.Implementacion
             }
         }
 
+        //Inicio de Reporte
         public DataTable SelectReport()
         {
             query = @"SELECT 
@@ -256,8 +254,7 @@ namespace NurseProjecDAO.Implementacion
                     WHERE 
                         P.status = 1 
                     ORDER BY 
-                        P.lastName;
-                     ";
+                        P.lastName;";
 
             SqlCommand command = CreateBasicCommand(query);
             try
@@ -270,8 +267,6 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
-
-
 
 
         public DataTable SelectReportPaciente(string name)
@@ -311,6 +306,7 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
+
 
 
 

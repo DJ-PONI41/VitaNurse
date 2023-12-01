@@ -4,10 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace NurseProjecDAO.Implementacion
 {
@@ -110,15 +107,15 @@ namespace NurseProjecDAO.Implementacion
             }
         }
 
-        public DataTable SelectApproval()
+        public DataTable Select2()
         {
             query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
 						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
-						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV
+						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV,ISNULL(P.photo, NULL) AS Fotografia
                         FROM Person P 
                         INNER JOIN Nurse N ON P.id = N.id
 						INNER JOIN [User] U ON N.id = U.id
-                        WHERE P.status = 1 AND N.approval = 0 ";
+                        WHERE P.status = 1 ";
 
             SqlCommand command = CreateBasicCommand(query);
             try
@@ -132,8 +129,135 @@ namespace NurseProjecDAO.Implementacion
             }
         }
 
+        //Inicio de Reportes
+        public DataTable SelectReport()
+        {
+            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
+						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+						,N.LugarTitulacion AS 'Titulo Profesional',N.datos CV
+                        FROM Person P 
+                        INNER JOIN Nurse N ON P.id = N.id
+						INNER JOIN [User] U ON N.id = U.id
+                        WHERE P.status = 1 ORDER BY P.lastName";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public DataTable SelectReport2()
+        {
+            query = @"SELECT P.names AS Nombres, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
+						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'						
+                        FROM Person P 
+                        INNER JOIN Nurse N ON P.id = N.id
+						INNER JOIN [User] U ON N.id = U.id
+                        WHERE P.status = 1 ORDER BY P.lastName";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public DataTable SelectReportNurse(string name)
+        {
+            query = @"SELECT  P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
+						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV
+                        FROM Person P 
+                        INNER JOIN Nurse N ON P.id = N.id
+						INNER JOIN [User] U ON N.id = U.id
+                        WHERE P.status = 1 AND P.names = @names";
+
+            SqlCommand command = CreateBasicCommand(query);
+            command.Parameters.AddWithValue("@names", name);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
 
+
+        public DataTable SelectReportNurseDate(DateTime Inicio, DateTime Final)
+        {
+            query = @"SELECT
+                        P.names AS 'Nombre',
+                        P.lastName AS 'Apellido Paterno',
+                        P.secondLastName AS 'Apellido Materno',
+                        P.email AS 'Correo',
+                        COUNT(S.id) AS 'Cantidad Pacientes Atendidos'
+                    FROM
+                        Nurse N
+                        INNER JOIN Person P ON N.id = P.id
+                        LEFT JOIN solicitud S ON N.id = S.idNurse
+                    WHERE
+                        S.fechaHora BETWEEN @FechaInicio AND @FechaFin
+                    GROUP BY
+                        P.names, P.lastName, P.secondLastName, P.email
+                    ORDER BY
+                        'Cantidad Pacientes Atendidos' DESC;";
+
+            SqlCommand command = CreateBasicCommand(query);
+            command.Parameters.AddWithValue("@FechaInicio", Inicio);
+            command.Parameters.AddWithValue("@FechaFin", Final);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
+
+        //Fin
+
+
+        public DataTable SelectApproval()
+        {
+            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
+						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV,N.approval AS Estado
+                        FROM Person P 
+                        INNER JOIN Nurse N ON P.id = N.id
+						INNER JOIN [User] U ON N.id = U.id
+                        WHERE P.status = 1 AND N.approval = 2 ";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         public Nurse Get(int id)
         {
@@ -216,8 +340,7 @@ namespace NurseProjecDAO.Implementacion
                 throw ex;
             }
         }
-        public int UpdateN(Nurse t)
-        {
+        public int UpdateN(Nurse t)        {
 
             query = @"UPDATE Person SET names = @names,lastName = @lastName,secondLastName = @secondLastName,photo = @photo,birthdate = @birthdate , phone = @phone,ci = @ci
                     ,email = @email,addres = @addres,latitude = @latitude,longitude = @longitude,municipio = @municipio, lastUpdate = CURRENT_TIMESTAMP
@@ -263,6 +386,9 @@ namespace NurseProjecDAO.Implementacion
                 throw;
             }
         }
+
+
+
         
     }
 }

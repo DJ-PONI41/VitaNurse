@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using NurseProjecDAO.Model;
 namespace NurseProjecDAO.Model
 {
-    public class Solicitud:BaseModel
+    public class Solicitud : BaseModel
     {
-    
+
 
         public int Id { get; set; }
         public string LatitudePaciente { get; set; }
@@ -17,10 +17,14 @@ namespace NurseProjecDAO.Model
         public string LongitudeNurse { get; set; }
         public string Distancia { get; set; }
         public DateTime FechaHora { get; set; }
-       
+
+        public byte EstadoSolicitud { get; set; }
         public string Detalles { get; set; }
         public int IdPaciente { get; set; }
-        public int IdNurse { get; set;}
+        public int IdNurse { get; set; }
+
+
+
 
 
         /// <summary>
@@ -28,24 +32,17 @@ namespace NurseProjecDAO.Model
         /// </summary>
         /// <param name="latitudePaciente"></param>
         /// <param name="longitudePaciente"></param>
-        /// <param name="latitudeNurse"></param>
-        /// <param name="longitudeNurse"></param>
-        /// <param name="distancia"></param>
         /// <param name="fechaHora"></param>
-        /// <param name="estadoSolicitud"></param>
         /// <param name="detalles"></param>
         /// <param name="idPaciente"></param>
         /// <param name="idNurse"></param>
-        public Solicitud( string latitudePaciente, string longitudePaciente, string latitudeNurse, string longitudeNurse, string distancia, DateTime fechaHora,  string detalles, int idPaciente, int idNurse)
+        public Solicitud(string latitudePaciente, string longitudePaciente, DateTime fechaHora, string detalles, int idPaciente, int idNurse)
         {
-            
+
             LatitudePaciente = latitudePaciente;
             LongitudePaciente = longitudePaciente;
-            LatitudeNurse = latitudeNurse;
-            LongitudeNurse = longitudeNurse;
-            Distancia = distancia;
             FechaHora = fechaHora;
-            
+
             Detalles = detalles;
             IdPaciente = idPaciente;
             IdNurse = idNurse;
@@ -54,6 +51,8 @@ namespace NurseProjecDAO.Model
         /// Get
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="municipio"></param>
         /// <param name="latitudePaciente"></param>
         /// <param name="longitudePaciente"></param>
         /// <param name="latitudeNurse"></param>
@@ -68,8 +67,8 @@ namespace NurseProjecDAO.Model
         /// <param name="registerDate"></param>
         /// <param name="lastUpdate"></param>
 
-        public Solicitud(int id, string latitudePaciente, string longitudePaciente, string latitudeNurse, string longitudeNurse, string distancia, DateTime fechaHora,  string detalles, int idPaciente, int idNurse, byte status, DateTime registerDate, DateTime lastUpdate)
-        : base(status,registerDate,lastUpdate)
+        public Solicitud(int id, string latitudePaciente, string longitudePaciente, string latitudeNurse, string longitudeNurse, string distancia, DateTime fechaHora, byte estadoSolicitud, string detalles, int idPaciente, int idNurse, byte status, DateTime registerDate, DateTime lastUpdate)
+        : base(status, registerDate, lastUpdate)
         {
             Id = id;
             LatitudePaciente = latitudePaciente;
@@ -78,30 +77,23 @@ namespace NurseProjecDAO.Model
             LongitudeNurse = longitudeNurse;
             Distancia = distancia;
             FechaHora = fechaHora;
-            
+            EstadoSolicitud = estadoSolicitud;
             Detalles = detalles;
             IdPaciente = idPaciente;
             IdNurse = idNurse;
         }
 
-        public Solicitud(int id, string latitudePaciente, string longitudePaciente, string latitudeNurse, string longitudeNurse, string distancia, DateTime fechaHora, string detalles, int idPaciente, int idNurse)
+        public Solicitud(int id, string latitudeNurse, string longitudeNurse, string distancia)
         {
             Id = id;
-            LatitudePaciente = latitudePaciente;
-            LongitudePaciente = longitudePaciente;
             LatitudeNurse = latitudeNurse;
             LongitudeNurse = longitudeNurse;
             Distancia = distancia;
-            FechaHora = fechaHora;
-            
-            Detalles = detalles;
-            IdPaciente = idPaciente;
-            IdNurse = idNurse;
         }
 
         public Solicitud()
         {
-            
+
         }
     }
 }
