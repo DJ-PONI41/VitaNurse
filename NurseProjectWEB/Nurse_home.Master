@@ -43,14 +43,14 @@
                 </a>
             </div>
 
-            <div class="item">
+            <%--<div class="item">
                 <a href="#">
                     <div class="icon">
                         <img src="Images/icons/Icon medical services.png" alt="">
                     </div>
                     <div class="title"><span>Reportes</span></div>
                 </a>
-            </div>
+            </div>--%>
 
             <div class="item">
                 <a href="UpdatePassword.aspx">

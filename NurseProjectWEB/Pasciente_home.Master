@@ -38,13 +38,14 @@
                     <div class="title"><span>Agendar Visita</span></div>
                 </a>
             </div>
-            <div class="item">
+            <%--<div class="item">
                 <a href="#">
                     <div class="icon">
                         <img src="Images/icons/Icon book medical.png" alt="">
                     </div>
                     <div class="title"><span>Consultas</span></div>
                 </a>
+            </div>--%>
             <div class="item">
                 <a href="UpdatePassword.aspx">
                     <div class="icon">

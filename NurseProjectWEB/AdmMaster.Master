@@ -92,7 +92,7 @@
 
 
             <div class="item">
-                <a href="NurseApplication.aspx">
+                <a href="SolicitudReport.aspx">
                     <div class="icon">
                         <img src="Images/icons/Icon notifications.png" alt="">
                     </div>
@@ -100,8 +100,8 @@
                 </a>
             </div>
 
-            <div class="item">
-                <a href="#">
+            <%--<div class="item">
+                <a href="Services.aspx">
                     <div class="icon">
                         <img src="Images/icons/Icon address card.png" alt="">
                     </div>
@@ -117,10 +117,12 @@
                 </a>
             </div>
             <div class="item">
-                <a href="Logout.aspx" class="btn btn-danger">Cerrar Sesión</a>
-            </div>
-            <div class="item">
-                <a href="UpdatePassword.aspx" class="btn btn-danger">Cambiar Contraseña</a>
+                <a href="Logout.aspx">
+                    <div class="icon">
+                        <img src="Images/icons/Icon logout.png" alt="">
+                    </div>
+                    <div class="title"><span>Cerrar Sesión</span></div>
+                </a>
             </div>
         </div>
 

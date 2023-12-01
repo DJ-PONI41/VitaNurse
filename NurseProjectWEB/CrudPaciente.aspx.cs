@@ -401,7 +401,7 @@ namespace NurseProjectWEB
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdmHome.aspx");
+            Response.Redirect("Crud_Listado_nuevo_Paciente.aspx");
         }
     }
 }

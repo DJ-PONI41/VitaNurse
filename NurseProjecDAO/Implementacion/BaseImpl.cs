@@ -12,8 +12,8 @@ namespace NurseProjecDAO.Implementacion
     {
 
 
-        string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";
-        
+        string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";       
+
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {
@@ -83,27 +83,7 @@ namespace NurseProjecDAO.Implementacion
                 throw;
             }
             finally { command.Connection.Close(); }
-        }
-
-
-        private string GetLastInsertedId(string table)
-        {
-            string query = $"SELECT IDENT_CURRENT('{table}')";
-            SqlCommand command = CreateBasicCommand(query);
-
-            try
-            {
-                command.Connection.Open();                
-                return command.ExecuteScalar().ToString();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally { command.Connection.Close(); }
-            
-        }
+        }      
 
 
 

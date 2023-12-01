@@ -35,10 +35,11 @@
                     </p>
                     <p>
                         <label>Nombre de la enfermera</label>
-                        <asp:TextBox ID="txtNameNurse" runat="server"></asp:TextBox>
+                        <asp:TextBox ReadOnly="true" ID="txtNameNurse" runat="server"></asp:TextBox>
                     </p>
                     <p>
                         <label>Especialidad</label>
+                        <asp:TextBox ReadOnly="true" ID="txtEspecialidad" runat="server"></asp:TextBox>
                     </p>
                     <p class="block">
                         <label>Detalles de la visita</label>
@@ -69,6 +70,7 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script>
         $(document).ready(function () {
+            $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDu4hP-gLcmJIsRfg9Lm8yrU58UC_IWKuw&libraries=places", function () {
                 var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
                     center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
                     zoom: 18
