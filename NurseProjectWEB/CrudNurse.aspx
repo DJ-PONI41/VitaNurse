@@ -7,141 +7,229 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Registro de Enfermera</title>
     
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="Css/Style_Registrar_Enfermera.css"/>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+	<link href="assets/css/gsdk-bootstrap-wizard.css" type="text/css" rel="stylesheet"/>
+	<link href="assets/css/home.css" type="text/css" rel="stylesheet"/>
+    <link href="assets/css/cargando.css" rel="stylesheet" type="text/css"/>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'/>
 </head>
 <body>
+
+    <div class="image-container set-full-height">               
     <div class="container">
-            <div class="title">Registro de Enfermera</div>
-            <form id="form1" runat="server">
-                <div class="user-details">
+        <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
 
-                    <div id="input-box-nombre" class="input-box">
-                        <label class="details" for="txtNombre">Nombre</label>
-                        <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
-                    </div>
-
-                    <div id="input-box-direccion" class="input-box">
-                        <label class="details" for="txtDireccion">Dirección</label>
-                        <asp:TextBox ID="txtDireccion" CssClass="form-control" runat="server" />
-                    </div>
+            <div class="wizard-container">
+                <div class="card wizard-card" data-color="orange" id="wizardProfile">
+                    <form id="form1" runat="server">
+                    	<div class="wizard-header">
+                        	<h3> Registrar Nueva Enfermera </h3>
+                    	</div>
                     
-                    <div id="input-box-correo" class="input-box">
-                        <label class="details" for="txtCorreo">Correo Electrónico</label>
-                        <asp:TextBox ID="txtCorreo" CssClass="form-control" runat="server" />
-                    </div>
 
-                    <div id="input-box-apellido-p" class="input-box">
-                        <label class="details" for="txtApellidoPaterno">Apellido Paterno</label>
-                        <asp:TextBox ID="txtApellidoPaterno" CssClass="form-control" runat="server" />
-                    </div>
+      					<div class="wizard-navigation">
+          	             <ul>
+                            <li><a href="#about" data-toggle="tab">Paso 1</a></li>
+                            <li><a href="#account" data-toggle="tab">Paso 2</a></li>
+                            <li><a href="#new-step" data-toggle="tab">Paso 3</a></li>
+                            <li><a href="#new-step2" data-toggle="tab">Paso 4</a></li>
+                            <li><a href="#address" data-toggle="tab">Fin</a></li>
+                         </ul>
+      					</div>
 
-                    <div id="input-box-municipio" class="input-box">
-                        <label class="details" for="txtMunicipio">Municipio</label>
-                        <asp:TextBox ID="txtMunicipio" CssClass="form-control" runat="server" />
-                    </div>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="about">
+                              <div class="row">
+                                  <div class="form-group">
+                                        <asp:Label ID="label1" CssClass="alert alert-success" runat="server" Style="display: none;"></asp:Label>
 
-                    <div id="input-box-especialidad" class="input-box">
-                        <label class="details" for="txtEspecialidad">Especialidad</label>
-                        <asp:TextBox ID="txtEspecialidad" CssClass="form-control" runat="server" />
-                    </div>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>Nombre</label>
+                                          <asp:TextBox ID="txtNombre" CssClass="form-control" placeholder="Nombre" runat="server" />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>APELLIDO PATERNO</label>
+                                        <asp:TextBox name="txtApellidoPaterno" ID="txtApellidoPaterno" class="form-control" placeholder="Apellido paterno" runat="server" />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                       <div class="form-group">
+                                        <label>APELLIDO MATERNO</label>
+                                        <asp:TextBox name="txtApellidoMaterno" id="txtApellidoMaterno" class="form-control" placeholder="Apellido materno" runat="server" />
+                                      </div>
+                                    </div>
 
-                    <div id="input-box-apellido-m" class="input-box">
-                        <label class="details" for="txtApellidoMaterno">Apellido Materno</label>
-                        <asp:TextBox ID="txtApellidoMaterno" CssClass="form-control" runat="server" />
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="label1" CssClass="alert alert-success" runat="server" Style="display: none;"></asp:Label>
-
-                    </div>
-                    <div id="input-box-mapa" class="input-box">
-                        <label class="details" for="txtMapa">Mapa</label>
-                        <div id="ModalMapPreview" class="box-mapa">
-                        </div>                    
-                    </div>
-
-                    <div id="input-box-fecha-titulacion" class="input-box">
-                        <label class="details" for="txtTitulacion">Fecha de Titulacion</label>
-                        <asp:TextBox ID="txtTitulacion" CssClass="form-control" TextMode="Date" runat="server" />
-                    </div>
-
-                    <div id="input-box-ci" class="input-box">
-                        <label class="details" for="txtCi">Ci</label>
-                        <asp:TextBox ID="txtCi" CssClass="form-control" runat="server" />
-                    </div>
-
-                    <div id="input-box-profecional" class="input-box">
-                        <span class="details">Titulo profecional</span>
-                        <div id="input-box-file-2" class="input-box-file-type">
-                            <label class="texto" for="fileUpload">Sube tu titulo profesional</label>
-                            <asp:FileUpload ID="fileTitulo" runat="server" />
-                        </div>   
-                    </div>  
-
-                    <div id="input-box-fecha" class="input-box">
-                        <label class="details" for="txtFechaNacimiento">Fecha de Nacimiento</label>
-                        <asp:TextBox ID="txtFechaNacimiento" CssClass="form-control" TextMode="Date" runat="server" />
-                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>CELULAR </label>
+                                        <asp:TextBox type="number" name="txtCelular" id="txtCelular" class="form-control" placeholder="Celular" runat="server" />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>CI</label>
+                                        <asp:TextBox type="number" name="txtCi" id="txtCi" class="form-control" placeholder="CI" runat="server" />
+                                      </div>
+                                    </div>
+                              </div>
+                            </div>
+                            <!--fin tab 1 -->
 
 
-                    <div id="input-box-archivo" class="input-box">
-                        <label class="details" for="fileUpload">Subir Tu fotografia</label>
-                        <div class="box-archivo">
-                            <asp:Image ID="imgPreview" runat="server" />
+                            <div class="tab-pane" id="account">
+                                <div class="row">
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                          <label>CORREO ELECTRONICO</label>
+                                          <asp:TextBox type="email" name="txtCorreo" id="txtCorreo" class="form-control" placeholder="Correo Electronico" runat="server" />
+                                      </div>
+                                  </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>DIRECCIÓN</label>
+                                        <asp:TextBox type="text" name="txtDireccion" id="txtDireccion" class="form-control" placeholder="Dirección" runat="server" />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>MUNICIPIO</label>
+                                        <asp:TextBox type="text" name="txtMunicipio" id="txtMunicipio" class="form-control" placeholder="Municipio" runat="server" />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>FECHA DE NACIMIENTO</label>
+                                        <asp:TextBox TextMode="Date" name="txtFechaNacimiento" id="txtFechaNacimiento" class="form-control" runat="server" />
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--fin tab 2 -->
+
+                            <div class="tab-pane" id="new-step">
+                              <div class="row">
+                                  
+                                  <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="form-group">
+                                        <label>ESPECIALIDAD</label>
+                                         <asp:TextBox type="text" name="txtEspecialidad" id="txtEspecialidad" class="form-control" placeholder="Especialidad" runat="server" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="form-group">
+                                      <label>FECHA DE TITULACION</label>
+                                       <asp:TextBox TextMode="Date" name="txtTitulacion" id="txtTitulacion" class="form-control" runat="server" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="form-group">
+                                        <label>TITULO PROFESIONAL</label>
+                                        <asp:FileUpload name="fileTitulo" type="file" id="fileTitulo" class="real-file" runat="server"/>
+                                        <button type="button" class="custom-butto" id="custom-button">Selecciona un Archivo</button>
+                                        <span id="custom-text">Ningun archivo selecionado.</span>
+                                        
+                                    </div>
+                                </div>    
+                                <div class="col-sm-10 col-sm-offset-1">
+                                  <div class="form-group">
+                                      <label>SUBE TU CVC</label>
+                                      <asp:FileUpload name="fileCvc" type="file" id="fileCvc" class="real-file" runat="server"/>
+                                      <button type="button" class="custom-butto" id="custom-button2">Selecciona un Archivo</button>
+                                      <span id="custom-text2">Ningun archivo selecionado.</span>
+                                      
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                          <!--fin tab 3 -->
+
+                          <div class="tab-pane" id="new-step2">
+                            <div class="row">
+
+                                <div class="col-sm-10 col-sm-offset-1">
+                                <div class="form-group">
+
+                                  <div class="container_subImg">
+                                    <asp:FileUpload name="fileUpload"  type="file" id="fileUpload" accept="image/*" class="real-file" runat="server"/>
+                                    <div class="img-area" data-img="">
+                                        <asp:Image Visible="false" ID="imgPreview" runat="server" />
+                                      <i class='bx bxs-cloud-upload icon'></i>
+                                      <h3>Sube tu fotografia</h3>
+                                      <p>El tamaño maximo aceptado es <span>2MB</span></p>
+                                    </div>
+                                    <button type="button" class="select-image">Seleciona una imagen</button>
+                                  </div>
+                                    
+                                </div>
+                              </div>  
+
+
+                                
+                                                          
+                            </div>
                         </div>
-                    </div>
 
-                    <div id="input-box-celular" class="input-box">
-                        <label class="details" for="txtCelular">Número de Celular</label>
-                        <asp:TextBox ID="txtCelular" CssClass="form-control" runat="server" />
-                    </div>
-
-                    <div id="input-box-file" class="input-box-file-type">
-                        <p class="texto">Selecionar archivo</p>
-                        <asp:FileUpload ID="fileUpload" runat="server" />
-                    </div>
-
-                    <div id="input-box-profecional-2" class="input-box">
-                        <label class="details" for="fileUpload">Subir CV</label>
-                        <div id="input-box-file-2" class="input-box-file-type">
-                            <p class="texto">Selecionar archivo</p>
-                            <asp:FileUpload ID="fileCvc" runat="server" />
-                        </div>   
-                    </div>    
+                        <!--fin tab 4 -->
 
 
-                    <div class="form-group" style="display: none;">
+                            <div class="tab-pane" id="address">
+                                <div class="row">
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                      <div class="form-group">
+                                        <label>MARCA TU UBICACIÓN</label>
+                                        <div class="box-map" id="ModalMapPreview"></div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                            <div class="wizard-footer height-wizard">
+                                <div class="pull-right">
+                                    <input type='button' class='btn btn-next btn-fill btn-warning btn-wd btn-sm siguiente' name='next' value='Siguiente'/>
+                                     <asp:Button name='finish' ID="btnRegistrar" runat="server" Text="Registrarse" class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' OnClick="btnRegistrar_Click" />
+                                    <asp:Button name='finish'  Visible="false" ID="btnUpdate" runat="server" Text="Actualizar" class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' OnClick="btnUpdate_Click" />
+                                    <asp:Button name='finish'  Visible="false" ID="btnAtras" runat="server" Text="Cancelar" class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' OnClick="btnAtras_Click" />
+                                </div>
+
+                                <div class="pull-left">
+                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm' name='previous' value='Atrás' />
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <br>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="display: none;">
                         <label for="txtLat">Latitud</label>
                         <asp:TextBox ID="txtLat" Text="-17.33059869950836" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="form-group" style="display: none;">
                         <label for="txtLong">Longitud</label>
                         <asp:TextBox ID="txtLong" Text="-66.22559118521447" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>   
+                    </div>
+                        </form>
                 </div>
-                <div class="button, btn-group" >
-                    <asp:Button ID="btnAtras" Visible="false" runat="server" Text="Volver" OnClick="btnAtras_Click"/>
-                    <asp:Button ID="btnRegistrar" runat="server" Visible="true" Text="Registrarse" OnClick="btnRegistrar_Click"/>
-                     <asp:Button ID="btnUpdate" runat="server" Text="Modificar" Visible="false" style="color:white; background-color:#dec521;" CssClass="btn btn-warning" OnClick="btnUpdate_Click"/>
-                </div>
-                <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive" style="max-height: 300px; overflow-y: auto; max-width: auto;">
-                                <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
-                                    <Columns>
-                                    </Columns>
-                                </asp:GridView>
-                            </div>
-                        </div>
-                 </div>
-            </form>
-
+            </div> 
         </div>
+    </div>       
+</div> 
+</div>
                     
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script>
         $(document).ready(function () {
-            $.getScript("https://maps.googleapis.com/maps/api/js?key=&libraries=places", function () {
+            $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDu4hP-gLcmJIsRfg9Lm8yrU58UC_IWKuw&libraries=places", function () {
                 var map = new google.maps.Map(document.getElementById('ModalMapPreview'), {
                     center: { lat: parseFloat($('#<%=txtLat.ClientID%>').val()), lng: parseFloat($('#<%=txtLong.ClientID%>').val()) },
                     zoom: 18
@@ -173,6 +261,22 @@
             });
         });
     </script>
+    	<!--   Core JS Files   -->
+	<script src="assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
+	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="assets/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
 
+	<!--  Plugin for the Wizard -->
+	<script src="assets/js/gsdk-bootstrap-wizard3.js"></script>
+	<script src="assets/js/jquery.validate.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(window).load(function () {
+                $(".cargando").fadeOut(1000);
+            });
+        });
+    </script>
 </body>
 </html>

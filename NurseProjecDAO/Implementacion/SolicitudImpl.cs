@@ -68,7 +68,7 @@ namespace NurseProjecDAO.Implementacion
             query = @"SELECT S.id AS ID, (Pe.names + ' ' + Pe.lastName + ' ' + Pe.secondLastName) AS Nombre, Pe.municipio AS Municipio, S.fechaHora AS Fecha, S.estadoSolicitud AS Estado FROM Solicitud S
                       INNER JOIN Paciente P ON P.id = S.idPaciente
                       INNER JOIN Person Pe ON Pe.id = P.id
-                      WHERE S.status = 1 AND S.idNurse = idNurse";
+                      WHERE S.status = 1 AND S.idNurse = @idNurse";
             SqlCommand command = CreateBasicCommand(query);
             command.Parameters.AddWithValue("@idNurse", idNurse);
             try
@@ -129,7 +129,7 @@ namespace NurseProjecDAO.Implementacion
                             //    //Status = (byte)row["Status"],
                             //    //RegisterDate = (DateTime)row["RegisterDate"],
                             //    //LastUpdate = (DateTime)row["LastUpdate"]
-                                
+
                             //};
                         }
                     }
@@ -168,6 +168,203 @@ namespace NurseProjecDAO.Implementacion
             catch (Exception ex)
             {
                 // Manejar la excepción o registrarla adecuadamente
+                throw ex;
+            }
+        }
+
+
+
+        //Reportes
+
+        public DataTable SelectReport()
+        {
+            query = @"SELECT     
+                        PP.names + ' ' + PP.lastName AS 'Nombre del Paciente',
+                        NP.names + ' ' + NP.lastName AS 'Nombre de la Enfermera',
+                        S.detalles AS 'Detalles de Solicitud',
+	                    CASE 
+                        WHEN S.estadoSolicitud = 1 THEN 'Aceptado'
+                        WHEN S.estadoSolicitud = 2 THEN 'Pendiente'
+                        WHEN S.estadoSolicitud = 0 THEN 'Rechazado'        
+                    END AS Estado
+                    FROM 
+                        solicitud S
+                    INNER JOIN 
+                        Paciente P ON S.idPaciente = P.id
+                    INNER JOIN 
+                        Nurse N ON S.idNurse = N.id
+                    INNER JOIN 
+                        Person PP ON P.id = PP.id
+                    INNER JOIN 
+                        Person NP ON N.id = NP.id
+                    WHERE 
+                        S.status = 1
+                    ORDER BY 
+                        S.fechaHora DESC;";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public DataTable SelectReportAceptados()
+        {
+            query = @"SELECT 
+                        PP.names + ' ' + PP.lastName AS 'Nombre del Paciente',
+                        NP.names + ' ' + NP.lastName AS 'Nombre de la Enfermera',
+                        S.detalles AS 'Detalles de Solicitud',
+	                    CASE 
+                        WHEN S.estadoSolicitud = 1 THEN 'Aceptado'
+                        WHEN S.estadoSolicitud = 2 THEN 'Pendiente'
+                        WHEN S.estadoSolicitud = 0 THEN 'Rechazado'        
+                    END AS Estado
+                    FROM 
+                        solicitud S
+                    INNER JOIN 
+                        Paciente P ON S.idPaciente = P.id
+                    INNER JOIN 
+                        Nurse N ON S.idNurse = N.id
+                    INNER JOIN 
+                        Person PP ON P.id = PP.id
+                    INNER JOIN 
+                        Person NP ON N.id = NP.id
+                    WHERE 
+                        S.status = 1 AND S.estadoSolicitud = 1
+                    ORDER BY 
+                        S.fechaHora DESC;";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public DataTable SelectReportRechazados()
+        {
+            query = @"SELECT  
+                        PP.names + ' ' + PP.lastName AS 'Nombre del Paciente',
+                        NP.names + ' ' + NP.lastName AS 'Nombre de la Enfermera',
+                        S.detalles AS 'Detalles de Solicitud',
+	                    CASE 
+                        WHEN S.estadoSolicitud = 1 THEN 'Aceptado'
+                        WHEN S.estadoSolicitud = 2 THEN 'Pendiente'
+                        WHEN S.estadoSolicitud = 0 THEN 'Rechazado'        
+                    END AS Estado
+                    FROM 
+                        solicitud S
+                    INNER JOIN 
+                        Paciente P ON S.idPaciente = P.id
+                    INNER JOIN 
+                        Nurse N ON S.idNurse = N.id
+                    INNER JOIN 
+                        Person PP ON P.id = PP.id
+                    INNER JOIN 
+                        Person NP ON N.id = NP.id
+                    WHERE 
+                        S.status = 1 AND S.estadoSolicitud = 0
+                    ORDER BY 
+                        S.fechaHora DESC;";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public DataTable SelectReportPendientes()
+        {
+            query = @"SELECT   
+                        PP.names + ' ' + PP.lastName AS 'Nombre del Paciente',
+                        NP.names + ' ' + NP.lastName AS 'Nombre de la Enfermera',
+                        S.detalles AS 'Detalles de Solicitud',
+	                    CASE 
+                        WHEN S.estadoSolicitud = 1 THEN 'Aceptado'
+                        WHEN S.estadoSolicitud = 2 THEN 'Pendiente'
+                        WHEN S.estadoSolicitud = 0 THEN 'Rechazado'        
+                    END AS Estado
+                    FROM 
+                        solicitud S
+                    INNER JOIN 
+                        Paciente P ON S.idPaciente = P.id
+                    INNER JOIN 
+                        Nurse N ON S.idNurse = N.id
+                    INNER JOIN 
+                        Person PP ON P.id = PP.id
+                    INNER JOIN 
+                        Person NP ON N.id = NP.id
+                    WHERE 
+                        S.status = 1 AND S.estadoSolicitud = 2
+                    ORDER BY 
+                        S.fechaHora DESC;";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
+        public DataTable SelectReport2()
+        {
+            query = @"SELECT     
+                    PP.names + ' ' + PP.lastName AS 'Nombre del Paciente',
+                    NP.names + ' ' + NP.lastName AS 'Nombre de la Enfermera',
+                    S.detalles AS 'Detalles de Solicitud',
+                    CASE 
+                        WHEN S.estadoSolicitud = 1 THEN 'Aceptado'
+                        WHEN S.estadoSolicitud = 2 THEN 'Pendiente'
+                        WHEN S.estadoSolicitud = 0 THEN 'Rechazado'        
+                    END AS Estado
+                FROM 
+                    solicitud S
+                INNER JOIN 
+                    Paciente P ON S.idPaciente = P.id
+                INNER JOIN 
+                    Nurse N ON S.idNurse = N.id
+                INNER JOIN 
+                    Person PP ON P.id = PP.id
+                INNER JOIN 
+                    Person NP ON N.id = NP.id
+                WHERE 
+                    S.status = 1 AND S.estadoSolicitud IN (0, 1, 2)
+                ORDER BY 
+                    S.fechaHora DESC;";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
         }

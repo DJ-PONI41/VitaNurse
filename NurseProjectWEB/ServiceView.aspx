@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive" style="max-height: 300px; overflow-y: auto; max-width: auto;">
-                            <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
+                            <asp:GridView ID="GridDat" runat="server" CssClass="table table-borderless table-striped table-transparent table-hover">
                                 <Columns>
                                 </Columns>
                             </asp:GridView>

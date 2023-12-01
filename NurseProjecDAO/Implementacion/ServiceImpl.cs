@@ -100,6 +100,24 @@ namespace NurseProjecDAO.Implementacion
             }
         }
 
+        public DataTable Select2()
+        {
+            query = @"SELECT name AS Nombre , description AS Descripción , price AS 'Precio BS.'
+                        FROM [Service]
+                        where state = 1";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public int Update(Service t)
         {
             string query = "UPDATE Service SET name = @Name, description = @Description, price = @Price, state = @State WHERE id = @Id";

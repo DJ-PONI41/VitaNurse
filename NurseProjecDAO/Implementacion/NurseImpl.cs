@@ -107,6 +107,28 @@ namespace NurseProjecDAO.Implementacion
             }
         }
 
+        public DataTable Select2()
+        {
+            query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
+						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
+						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV,ISNULL(P.photo, NULL) AS Fotografia
+                        FROM Person P 
+                        INNER JOIN Nurse N ON P.id = N.id
+						INNER JOIN [User] U ON N.id = U.id
+                        WHERE P.status = 1 ";
+
+            SqlCommand command = CreateBasicCommand(query);
+            try
+            {
+                return ExecuteDataTableCommand(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         //Inicio de Reportes
         public DataTable SelectReport()
         {
@@ -219,11 +241,11 @@ namespace NurseProjecDAO.Implementacion
         {
             query = @"SELECT P.id, P.names AS Nombre, P.lastName AS 'Apellido Paterno', P.secondLastName AS 'Apellido Materno', ISNULL(P.birthdate, CURRENT_TIMESTAMP) AS 'Fecha de nacimiento'
 						,P.phone AS Celular,P.ci AS CI,P.email AS Correo,P.addres Direccion,U.role AS Rol,N.especialidad AS Especialidad,N.añoTitulacion AS 'Año de Titulacion'
-						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV
+						,N.lugarTitulacion AS 'Titulo Profesional',N.datos CV,N.approval AS Estado
                         FROM Person P 
                         INNER JOIN Nurse N ON P.id = N.id
 						INNER JOIN [User] U ON N.id = U.id
-                        WHERE P.status = 1 AND N.approval = 0 ";
+                        WHERE P.status = 1 AND N.approval = 2 ";
 
             SqlCommand command = CreateBasicCommand(query);
             try

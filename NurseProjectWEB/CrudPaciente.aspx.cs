@@ -42,9 +42,7 @@ namespace NurseProjectWEB
 
             if (!IsPostBack)
             {
-                load();
                 LoadType();
-                Select();
             }
         }
 
@@ -164,8 +162,7 @@ namespace NurseProjectWEB
                     label1.CssClass = "alert alert-success";
                     label1.Text = "El registro se ha realizado con éxito.";
                     label1.Style["display"] = "block";
-                    Select();
-                    Clear();
+                    Response.Redirect("Crud_Listado_nuevo_Paciente.aspx");
                 }
                 else
                 {
@@ -181,101 +178,7 @@ namespace NurseProjectWEB
 
         }
 
-        void Select()
-        {
-            try
-            {
-                implPaciente = new PacienteImpl();
-                DataTable dt = implPaciente.Select();
-                DataTable table = new DataTable("Paciente");
-                table.Columns.Add("Nombre", typeof(string));
-                table.Columns.Add("Apellido Paterno", typeof(string));
-                table.Columns.Add("Apellido Materno", typeof(string));
-                table.Columns.Add("Fecha de nacimiento", typeof(string));
-                table.Columns.Add("Celular", typeof(string));
-                table.Columns.Add("CI", typeof(string));
-                table.Columns.Add("Correo", typeof(string));
-                table.Columns.Add("Direccion", typeof(string));
-                table.Columns.Add("Rol", typeof(string));
-                table.Columns.Add("Historial Medico", typeof(string));
-                table.Columns.Add("Seleccionar", typeof(string));
-                table.Columns.Add("Borrar", typeof(string));
 
-                foreach (DataRow dr in dt.Rows)
-                {
-                    DateTime fechaNacimiento = (DateTime)dr["Fecha de nacimiento"];
-                    string fechaFormateada = fechaNacimiento.ToString("yyyy-MM-dd");
-                    table.Rows.Add(dr["Nombre"].ToString(), dr["Apellido Paterno"].ToString(),
-                                    dr["Apellido Materno"].ToString(), fechaFormateada,
-                                    dr["Celular"].ToString(), dr["CI"].ToString(), dr["Correo"].ToString(),
-                                    dr["Direccion"].ToString(), dr["Rol"].ToString(),
-                                    dr["Historial Medico"].ToString(), "", "");
-                }
-
-                GridDat.DataSource = table;
-                GridDat.DataBind();
-
-                for (int i = 0; i < GridDat.Rows.Count; i++)
-                {
-                    string id = dt.Rows[i]["Id"].ToString();
-                    string up = "<a class='btn btn-sm btn-warning' href='CrudPaciente.aspx?id=" + id + "&type=U'> Seleccionar</a>";
-
-                    string del = "<a class='btn btn-sm btn-danger' href='CrudPaciente.aspx?id=" + id + "&type=D' onclick='return ConfirmDelete();'> <i class='fas fa-trash' style='background:#FF0000;'>Eliminar</i></a>";
-                    GridDat.Rows[i].Cells[10].Text = up;
-                    GridDat.Rows[i].Cells[11].Text = del;
-                    GridDat.Rows[i].Attributes["data-id"] = id;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        void load()
-        {
-            try
-            {
-                type = Request.QueryString["type"];
-                if (type == "D")
-                {
-                    Delete();
-                    Select();
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        void Delete()
-        {
-            id = short.Parse(Request.QueryString["id"]);
-            if (id > 0)
-            {
-                try
-                {
-                    implPaciente = new PacienteImpl();
-                    P = implPaciente.Get(id);
-                    if (P != null)
-                    {
-                        int n = implPaciente.Delete(P);
-                    }
-                    else
-                    {
-                        //error
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
 
         void LoadType()
         {
@@ -287,6 +190,12 @@ namespace NurseProjectWEB
                 {
                     txtUsuario.Visible = false;
                     txtContrasena.Visible = false;
+                    lbl_Contrasenia.Visible = false;
+                    lbl_Usuario.Visible = false;
+                    imgPreview.Visible = true;
+                    btnAtras.Visible = true;
+                    btnRegistrar.Visible = false;
+                    btnUpdate.Visible = true;
                     Get();
                 }
             }
@@ -471,8 +380,7 @@ namespace NurseProjectWEB
 
                     if (n > 0)
                     {
-                        Select();
-                        Response.Redirect("CrudPaciente.aspx");
+                        Response.Redirect("Crud_Listado_nuevo_Paciente.aspx");
                     }
                     else
                     {
@@ -493,7 +401,7 @@ namespace NurseProjectWEB
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdmHome.aspx");
+            Response.Redirect("Crud_Listado_nuevo_Paciente.aspx");
         }
     }
 }

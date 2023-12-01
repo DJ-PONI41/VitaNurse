@@ -46,9 +46,9 @@ namespace NurseProjectWEB
         {
             try
             {
-                // Suponiendo que implService es una instancia de ServiceImpl (reemplázalo con tu lógica específica)
+               
                 implService = new ServiceImpl();
-                DataTable dt = implService.Select(); // Asegúrate de tener un método Select en tu lógica de Service
+                DataTable dt = implService.Select(); 
 
                 DataTable table = new DataTable("Service");
                 table.Columns.Add("Nombre", typeof(string));

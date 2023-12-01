@@ -12,8 +12,8 @@ namespace NurseProjecDAO.Implementacion
     {
 
 
-        string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";
-        
+        string connectionString = @"workstation id=NurseProjectDB.mssql.somee.com;packet size=4096;user id=Burgos333_SQLLogin_1;pwd=baw1gdbwcg;data source=NurseProjectDB.mssql.somee.com;persist security info=False;initial catalog=NurseProjectDB";       
+
         internal string query = "";
         public SqlCommand CreateBasicCommand()
         {

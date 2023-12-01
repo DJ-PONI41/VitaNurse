@@ -13,7 +13,7 @@
     <form id="form1" runat="server">
         <main class="table">
             <section class="table__header">
-                <h1>Reporte Paciente</h1>
+                <h1>Reporte Enfermera</h1>
                 <div class="input-group">
                     <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" Style="display: none" />
                     <input runat="server" id="Cuadro_busqueda" type="search" placeholder="Buscar nombre" onkeydown="buscarConEnter(event)" />

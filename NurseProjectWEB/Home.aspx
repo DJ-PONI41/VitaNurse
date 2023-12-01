@@ -12,7 +12,7 @@
                     <a href="Login.aspx" class="hero__cta" id="btn_ingres">Ingresar</a>
                     <%--<a href="#" class="hero__cta" id="btn_register" >Registrarse</a>--%>
                     <asp:Button ID="btn_register" runat="server" Text="Registrarse" class="hero__cta" OnClick="btn_register_Click"/>
-                     <a href="Imf_service.html" class="hero__cta" id="btn_info" onclick="btn_info_Click" >Información del servicio</a>
+                     <a href="ServiceView" class="hero__cta" id="btn_info" onclick="btn_info_Click" >Información del servicio</a>
                 </div>
                 <figure class="hero__picture">
                     <img src="Images/Nuerses_svg_derecha.svg" class="hero__img">
