@@ -18,5 +18,9 @@ namespace NurseProjectWEB
         {
             Response.Redirect("RegisterPaciente.aspx");
         }
+        protected void btn_info_click(object sender, EventArgs e)
+        {
+            Response.Redirect("Service.aspx");
+        }
     }
 }

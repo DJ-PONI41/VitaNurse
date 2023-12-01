@@ -127,10 +127,21 @@ namespace NurseProjecDAO.Implementacion
         }
         public DataTable Login(string nameUser, string password)
         {
-            query = @"SELECT id, nameUser,role
-                    FROM [User]
-                    WHERE status= 1 AND nameUser=@nameUser 
-                    AND password=HASHBYTES('MD5',@password)";
+            query = @"SELECT U.id, U.nameUser, U.role
+                    FROM [User] U
+                    WHERE U.status = 1 
+                      AND U.nameUser = @nameUser 
+                      AND U.password = HASHBYTES('MD5', @password)
+                      AND (
+                        U.role <> 'Enfermera' OR 
+                        (U.role = 'Enfermera' AND EXISTS (
+                          SELECT 1 
+                          FROM Person P 
+                          INNER JOIN nurse N ON P.id = N.id 
+                          WHERE P.id = U.id AND N.approval = 1
+                        ))
+                      );
+                    ";
             SqlCommand command = CreateBasicCommand(query);
             command.Parameters.AddWithValue("nameUser", nameUser);
             command.Parameters.AddWithValue("password", password).SqlDbType = SqlDbType.VarChar;

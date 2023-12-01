@@ -23,10 +23,6 @@ body{
     margin-left: var(--width);
 }
 
-#main-container{
-    color: #fff
-    ;
-} 
 
 #sidemenu{
     background-color: var(--bgcolor);

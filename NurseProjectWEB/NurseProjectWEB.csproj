@@ -77,25 +77,45 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdmHome.aspx" />
+    <Content Include="Agendar_visita.aspx" />
     <Content Include="ApprovalNurse.aspx" />
+    <Content Include="assets\css\styles.css" />
+    <Content Include="assets\img\landscape-1.png" />
+    <Content Include="assets\img\landscape-2.png" />
+    <Content Include="assets\img\landscape-3.png" />
     <Content Include="CrudNurse.aspx" />
     <Content Include="CrudPaciente.aspx" />
+    <Content Include="Css\main.css" />
+    <Content Include="Css\style.css" />
     <Content Include="Css\Styles.css" />
     <Content Include="Css\Styles_login.css" />
+    <Content Include="DetallesSolicitud.aspx" />
+    <Content Include="Formulario_visita.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
+    <Content Include="Images\export.png" />
+    <Content Include="Images\icons\Icon book medical.png" />
+    <Content Include="Images\icons\Icon file medical.png" />
     <Content Include="Images\menu.svg" />
     <Content Include="Images\Nuerses_svg_derecha.svg" />
     <Content Include="Images\Nuerses_svg_izquierda.svg" />
     <Content Include="Images\Nurses_svg.svg" />
     <Content Include="Images\nurses_svg_v2.svg" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\search.png" />
     <Content Include="Images\undraw_medical_care_movn.svg" />
+    <Content Include="Listado_Solicitudes_nurse.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="NurseReport.aspx" />
     <Content Include="Nurse_home.aspx" />
+    <Content Include="Pasciente_home.aspx" />
     <Content Include="PatienteReport.aspx" />
     <Content Include="RegisterNurse.aspx" />
     <Content Include="RegisterPaciente.aspx" />
+    <Content Include="Services.aspx" />
+    <Content Include="ServiceView.aspx" />
+    <Content Include="Solicitud_detalles.aspx" />
     <Content Include="SolictudPaciente.aspx" />
     <Content Include="UpdatePassword.aspx" />
     <Content Include="Web.config" />
@@ -115,6 +135,13 @@
     </Compile>
     <Compile Include="AdmMaster.Master.designer.cs">
       <DependentUpon>AdmMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Agendar_visita.aspx.cs">
+      <DependentUpon>Agendar_visita.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agendar_visita.aspx.designer.cs">
+      <DependentUpon>Agendar_visita.aspx</DependentUpon>
     </Compile>
     <Compile Include="ApprovalNurse.aspx.cs">
       <DependentUpon>ApprovalNurse.aspx</DependentUpon>
@@ -144,6 +171,20 @@
     <Compile Include="Default.Master.designer.cs">
       <DependentUpon>Default.Master</DependentUpon>
     </Compile>
+    <Compile Include="DetallesSolicitud.aspx.cs">
+      <DependentUpon>DetallesSolicitud.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetallesSolicitud.aspx.designer.cs">
+      <DependentUpon>DetallesSolicitud.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formulario_visita.aspx.cs">
+      <DependentUpon>Formulario_visita.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formulario_visita.aspx.designer.cs">
+      <DependentUpon>Formulario_visita.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -153,6 +194,13 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Listado_Solicitudes_nurse.aspx.cs">
+      <DependentUpon>Listado_Solicitudes_nurse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Listado_Solicitudes_nurse.aspx.designer.cs">
+      <DependentUpon>Listado_Solicitudes_nurse.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -175,12 +223,33 @@
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NurseReport.aspx.cs">
+      <DependentUpon>NurseReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NurseReport.aspx.designer.cs">
+      <DependentUpon>NurseReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Nurse_home.aspx.cs">
       <DependentUpon>Nurse_home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nurse_home.aspx.designer.cs">
       <DependentUpon>Nurse_home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pasciente_home.aspx.cs">
+      <DependentUpon>Pasciente_home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pasciente_home.aspx.designer.cs">
+      <DependentUpon>Pasciente_home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pasciente_home.Master.cs">
+      <DependentUpon>Pasciente_home.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pasciente_home.Master.designer.cs">
+      <DependentUpon>Pasciente_home.Master</DependentUpon>
     </Compile>
     <Compile Include="PatienteReport.aspx.cs">
       <DependentUpon>PatienteReport.aspx</DependentUpon>
@@ -211,6 +280,27 @@
     <Compile Include="RegisterPaciente.aspx.designer.cs">
       <DependentUpon>RegisterPaciente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services.aspx.cs">
+      <DependentUpon>Services.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services.aspx.designer.cs">
+      <DependentUpon>Services.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceView.aspx.cs">
+      <DependentUpon>ServiceView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServiceView.aspx.designer.cs">
+      <DependentUpon>ServiceView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Solicitud_detalles.aspx.cs">
+      <DependentUpon>Solicitud_detalles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Solicitud_detalles.aspx.designer.cs">
+      <DependentUpon>Solicitud_detalles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SolictudPaciente.aspx.cs">
       <DependentUpon>SolictudPaciente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -237,8 +327,14 @@
     <Content Include="Default.Master" />
     <Content Include="Login.Master" />
     <Content Include="AdmMaster.Master" />
+    <Content Include="assets\scss\base\_base.scss" />
+    <Content Include="assets\scss\components\_breakpoints.scss" />
+    <Content Include="assets\scss\components\_card.scss" />
+    <Content Include="assets\scss\config\_variables.scss" />
+    <Content Include="assets\scss\styles.scss" />
     <None Include="packages.config" />
     <Content Include="Nurse_home.Master" />
+    <Content Include="Pasciente_home.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

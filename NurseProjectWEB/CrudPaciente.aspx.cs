@@ -493,7 +493,7 @@ namespace NurseProjectWEB
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Home.aspx");
+            Response.Redirect("AdmHome.aspx");
         }
     }
 }

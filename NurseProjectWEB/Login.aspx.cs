@@ -56,8 +56,10 @@ namespace NurseProjectWEB
                     redirectPage = "AdmHome.aspx";
                     break;
                 case "Enfermera":
-                case "Paciente":
                     redirectPage = "Nurse_home.aspx";
+                    break;
+                case "Paciente":
+                    redirectPage = "Pasciente_home.aspx";
                     break;
             }
 

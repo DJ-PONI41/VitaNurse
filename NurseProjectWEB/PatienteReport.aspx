@@ -6,40 +6,59 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="Css/style.css"/>
     <link rel="stylesheet" href="Css/Style_Registrar_Paciente.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="container">
-
-            <div class="container">
-                <h1 class="text-center">Reporte de Paciente</h1>
-
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="txtNombre">Nombre</label>
-                        <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
-                    </div>
-                    <div class="form-group">
-                        <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click"/>
-                    </div>
-                    <div class="form-group">
-                        <asp:Button ID="btnDescargar" runat="server" Text="Descargar Reporte" CssClass="btn btn-primary" OnClick="btnDescargar_Click"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-                            <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
-                                <Columns>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
-                    </div>
+        <main class="table">
+        <section class="table__header">
+            <h1>Reporte Paciente</h1>
+            <div class="input-group">
+                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" style="display:none" />
+                <input runat="server" id="Cuadro_busqueda" type="search" placeholder="Buscar nombre" onkeydown="buscarConEnter(event)" />
+                <img src="Images/search.png" alt=""/>
+            </div>
+            <div class="export__file">
+                <label for="export-file" class="export__file-btn" title="Export File"></label>
+                <input type="checkbox" id="export-file"/>
+                <div class="export__file-options">
+                    <label>Exportar a &nbsp; &#10140;</label>
+                    <asp:Button ID="btnExportPDF" runat="server" Text="PDF" OnClick="btnExportPDF_Click" style="display:none" />
+                    <label for="btnExportPDF" id="toPDF">Exportar a PDF <img src="Images/pdf.png" alt=""/></label>
                 </div>
             </div>
-        </div>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> id </th>
+                        <th> Nombre </th>
+                        <th> Apellido Paterno </th>
+                        <th> Apellido Materno </th>
+                        <th> Fecha de nacimiento </th>
+                        <th> Celular </th>
+                        <th> CI </th>
+                        <th> Correo </th>
+                        <th> Direccion </th>
+                        <th> Rol </th>
+                        <th> Historial Medico </th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" runat="server">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
     </form>
+    <script type="text/javascript">
+    function buscarConEnter(event) {
+        if (event.key === "Enter") {
+            <%= Page.ClientScript.GetPostBackEventReference(btnBuscar, "") %>;
+        }
+    }
+    </script>
 </body>
 </html>
