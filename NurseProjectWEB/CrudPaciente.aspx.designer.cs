@@ -177,15 +177,6 @@ namespace NurseProjectWEB
         protected global::System.Web.UI.WebControls.TextBox txtLong;
 
         /// <summary>
-        /// Control GridDat.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridDat;
-
-        /// <summary>
         /// Control btnRegistrar.
         /// </summary>
         /// <remarks>
@@ -211,5 +202,14 @@ namespace NurseProjectWEB
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAtras;
+
+        /// <summary>
+        /// Control GridDat.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridDat;
     }
 }

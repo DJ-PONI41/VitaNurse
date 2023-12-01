@@ -1,0 +1,111 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Pasciente_home.master.cs" Inherits="NurseProjectWEB.Pasciente_home" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="Css/Side_Menu_styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="sidemenu" class="menu-collapsed">
+        <div id="header">
+            <div id="menu-btn">
+                <div class="btn-hamburger"></div>
+                <div class="btn-hamburger"></div>
+                <div class="btn-hamburger"></div>
+            </div>
+            <div id="title">
+                <div id="profile">
+                    <div id="photo">
+                        <img src="Images/Logo_svg.svg" alt="">
+                    </div>
+
+                    <div id="name"><span>Jorge Varela</span></div>
+                </div>
+            </div>
+        </div>
+        <div id="menu-items">
+            <div class="item">
+                <a href="Agendar_visita.aspx">
+                    <div class="icon">
+                        <img src="Images/icons/Icon file medical.png" alt="">
+                    </div>
+                    <div class="title"><span>Agendar Visita</span></div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="icon">
+                        <img src="Images/icons/Icon book medical.png" alt="">
+                    </div>
+                    <div class="title"><span>Consultas</span></div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="UpdatePassword.aspx">
+                    <div class="icon">
+                        <img src="Images/icons/Icon settings.png" alt="">
+                    </div>
+                    <div class="title"><span>Cambiar Contraseña</span></div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Logout.aspx">
+                    <div class="icon">
+                        <img src="Images/icons/Icon logout.png" alt="">
+                    </div>
+                    <div class="title"><span>Cerrar Sesión</span></div>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="main-container">
+        <form id="form1" runat="server">
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </form>
+    </div>
+    
+     <script>
+         const btn = document.querySelector('#menu-btn');
+         const menu = document.querySelector('#sidemenu');
+
+         btn.addEventListener('click', e => {
+             menu.classList.toggle("menu-expanded");
+             menu.classList.toggle("menu-collapsed");
+
+             document.querySelector('body').classList.toggle('body-expanded');
+         });
+
+         const btn_sub = document.querySelector('#submenu-btn');
+         const menu_sub = document.querySelector('#side-submenu');
+
+         btn_sub.addEventListener('click', e => {
+             menu_sub.classList.toggle("submenu-expanded");
+             btn_sub.classList.toggle("submenu-styl");
+             menu_sub.classList.toggle("submenu-collapsed");
+
+         });
+
+         const btn_sub_2 = document.querySelector('#submenu-btn-2');
+         const menu_sub_2 = document.querySelector('#side-submenu-2');
+
+         btn_sub_2.addEventListener('click', e => {
+             menu_sub_2.classList.toggle("submenu-expanded");
+             btn_sub_2.classList.toggle("submenu-styl");
+             menu_sub_2.classList.toggle("submenu-collapsed");
+
+         });
+     </script> 
+</body>
+</html>

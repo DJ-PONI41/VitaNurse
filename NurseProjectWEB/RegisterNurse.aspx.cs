@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Web;
 using System.Threading.Tasks;
+using System.Web.UI;
 
 namespace NurseProjectWEB
 {
@@ -28,8 +29,7 @@ namespace NurseProjectWEB
 
         void InsertUserNurse()
         {
-            try
-            {
+            
                 string nombre = Tools.EliminarEspacios(txtNombre.Text);
                 string apellidoPaterno = Tools.EliminarEspacios(txtApellidoPaterno.Text);
                 string apellidoMaterno = Tools.EliminarEspacios(txtApellidoMaterno.Text);
@@ -130,7 +130,7 @@ namespace NurseProjectWEB
                         if (u > 0)
                         {
                             ShowMessage("El registro se ha realizado con éxito.", "success");
-                            Task.Run(() => EnviarCorreo(user, password, correo));
+                             EnviarCorreo(user, password, correo);
                             Response.Redirect("Home.aspx");
                         }
                         else
@@ -139,11 +139,8 @@ namespace NurseProjectWEB
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                ShowMessage("¡Error! " + ex.Message, "danger");
-            }
+            
+            
         }
 
         private byte[] ReadFileData(HttpPostedFile file)
@@ -180,35 +177,46 @@ namespace NurseProjectWEB
 
         private string ContraseñaRandom()
         {
-            var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-            var digitChars = "0123456789";
-            var specialChars = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
+            const string caracteresMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string caracteresMinusculas = "abcdefghijklmnopqrstuvwxyz";
+            const string caracteresDigitos = "0123456789";
+            const string caracteresEspeciales = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
 
-            var allChars = upperChars + lowerChars + digitChars + specialChars;
-            var passwordChars = new char[8]; 
+            const string todosLosCaracteres = caracteresMayusculas + caracteresMinusculas + caracteresDigitos + caracteresEspeciales;
 
-            var random = new Random();
-            
-            passwordChars[0] = upperChars[random.Next(upperChars.Length)];
-            passwordChars[1] = lowerChars[random.Next(lowerChars.Length)];
-            passwordChars[2] = digitChars[random.Next(digitChars.Length)];
-            passwordChars[3] = specialChars[random.Next(specialChars.Length)];
-
-            
-            for (int i = 4; i < 12; i++)
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
             {
-                passwordChars[i] = allChars[random.Next(allChars.Length)];
-            }
-            
-            for (int i = 0; i < passwordChars.Length - 1; i++)
-            {
-                int j = random.Next(i, passwordChars.Length);
-                (passwordChars[i], passwordChars[j]) = (passwordChars[j], passwordChars[i]);
-            }
+                var data = new byte[4];
+                rng.GetBytes(data);
+                var seed = BitConverter.ToInt32(data, 0);
+                var random = new Random(seed);
 
-            return new string(passwordChars);
+                var passwordChars = new char[16]; 
+
+                
+                passwordChars[0] = caracteresMayusculas[random.Next(caracteresMayusculas.Length)];
+                passwordChars[1] = caracteresMinusculas[random.Next(caracteresMinusculas.Length)];
+                passwordChars[2] = caracteresDigitos[random.Next(caracteresDigitos.Length)];
+                passwordChars[3] = caracteresEspeciales[random.Next(caracteresEspeciales.Length)];
+
+                
+                for (int i = 4; i < passwordChars.Length; i++)
+                {
+                    passwordChars[i] = todosLosCaracteres[random.Next(todosLosCaracteres.Length)];
+                }
+
+                
+                for (int i = 0; i < passwordChars.Length - 1; i++)
+                {
+                    int j = random.Next(i, passwordChars.Length);
+                    (passwordChars[i], passwordChars[j]) = (passwordChars[j], passwordChars[i]);
+                }
+
+                return new string(passwordChars);
+            }
         }
+
+
 
 
 
@@ -216,7 +224,7 @@ namespace NurseProjectWEB
         {
             try
             {
-                string remitente = "pruebasprueba@gmail.com";
+                string remitente = "pruebasprubea@gmail.com";
                 string contraseñaRemitente = "gnwnnxeytwqgafwc";
                 string servidorSmtp = "smtp.gmail.com";
                 int puertoSmtp = 587;
@@ -232,7 +240,7 @@ namespace NurseProjectWEB
                         clienteSmtp.Credentials = new NetworkCredential(remitente, contraseñaRemitente);
 
                         clienteSmtp.Send(mensaje);
-                        ShowMessage("Se ha enviado un correo con su Usuario y Contraseña.", "success");
+                        ScriptManager.RegisterStartupScript(this, GetType(), "CorreoEnviado", "alert('Se ha enviado un correo con éxito.');", true);
                     }
                 }
             }

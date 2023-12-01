@@ -82,7 +82,7 @@
                 </div>
 
                 <div id="input-box-archivo" class="input-box">
-                    <span class="details">Subir archivo</span>
+                    <span class="details">Sube tu Fotografia</span>
                     <div class="box-archivo">
                         <asp:Image ID="imgPreview" runat="server" />
                     </div>
@@ -99,7 +99,7 @@
                 </div>
 
                 <div id="input-box-file" class="input-box-file-type">
-                    <label class="texto" for="fileUpload">Subir Archivo</label>
+                    <label class="texto" for="fileUpload">Sube tu fotografia</label>
                     <asp:FileUpload ID="fileUpload" runat="server" Width="200px" Height="200px" />
                 </div>
 
@@ -111,22 +111,21 @@
                     <label for="txtLong">Longitud</label>
                     <asp:TextBox ID="txtLong" Text="-66.22559118521447" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-                            <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
-                                <Columns>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="button">
                 <asp:Button ID="btnRegistrar" runat="server" Text="Registrar" OnClick="btnRegistrar_Click" />
                 <asp:Button ID="btnUpdate" runat="server" Text="Actualziar" OnClick="btnUpdate_Click" />
                 <asp:Button ID="btnAtras" runat="server" Text="Volver" OnClick="btnAtras_Click" />
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                        <asp:GridView ID="GridDat" runat="server" CssClass="table table-bordered table-striped table-dark table-sm">
+                            <Columns>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

@@ -52,10 +52,9 @@
                     </div>
                     <div class="item">
                         <a href="PatienteReport.aspx">
-                            <div id="title-sunmenu" class="title"><span>Lista Pacientes</span></div>
+                            <div id="title-sunmenu" class="title"><span>Reporte Pacientes</span></div>
                         </a>
                     </div>
-
                 </div>
             </div>
 
@@ -82,12 +81,17 @@
                             <div id="title-sunmenu" class="title"><span>Solictud Enfermera</span></div>
                         </a>
                     </div>
+                    <div class="item">
+                        <a href="NurseReport.aspx">
+                            <div id="title-sunmenu" class="title"><span>Reporte Enfermera</span></div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
 
             <div class="item">
-                <a href="#">
+                <a href="NurseApplication.aspx">
                     <div class="icon">
                         <img src="Images/icons/Icon notifications.png" alt="">
                     </div>
@@ -96,19 +100,28 @@
             </div>
 
             <div class="item">
-                <a href="#">
+                <a href="Services.aspx">
                     <div class="icon">
                         <img src="Images/icons/Icon address card.png" alt="">
                     </div>
                     <div class="title"><span>Servicios</span></div>
                 </a>
             </div>
-
             <div class="item">
-                <a href="Logout.aspx" class="btn btn-danger">Cerrar Sesión</a>
+                <a href="UpdatePassword.aspx">
+                    <div class="icon">
+                        <img src="Images/icons/Icon settings.png" alt="">
+                    </div>
+                    <div class="title"><span>Cambiar Contraseña</span></div>
+                </a>
             </div>
             <div class="item">
-                <a href="UpdatePassword.aspx" class="btn btn-danger">Cambiar Contraseña</a>
+                <a href="Logout.aspx">
+                    <div class="icon">
+                        <img src="Images/icons/Icon logout.png" alt="">
+                    </div>
+                    <div class="title"><span>Cerrar Sesión</span></div>
+                </a>
             </div>
         </div>
 
