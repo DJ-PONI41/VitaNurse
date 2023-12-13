@@ -420,7 +420,7 @@
         // Carga la API de Google Maps utilizando la función de devolución de llamada
         $(document).ready(function () {
             var script = document.createElement('script');
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDu4hP-gLcmJIsRfg9Lm8yrU58UC_IWKuw&libraries=places&callback=initMap';
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap';
             document.body.appendChild(script);
         });
     </script>
